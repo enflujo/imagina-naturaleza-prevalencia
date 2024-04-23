@@ -131,6 +131,36 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   </main>
 </Plantilla>
 
+<script>
+  const gql = String.raw;
+
+  const Peticion = gql`
+    query {
+      articulos {
+        traducciones {
+          titulo
+        }
+      }
+    }
+  `;
+
+  fetch('http://localhost:8055/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `articulos {
+        traducciones {
+          titulo
+        }
+      }`,
+    }),
+  })
+    .then((res) => res.json())
+    .then((datos) => {
+      console.log(datos);
+    });
+</script>
+
 <style lang='scss'>
   $anchoColumna: 45vw;
 
