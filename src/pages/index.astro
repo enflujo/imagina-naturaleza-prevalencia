@@ -8,44 +8,37 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     <div class='contenido'>
       <section id='grafica' class='columna'>
         <h2>gráfica</h2>
+
         <div class='linea'>
-          <div class='modulo l3'>
-            <h3>Last 12 months</h3>
-          </div>
-          <div class='modulo l3'>
-            <h3>Lifetime</h3>
-          </div>
+          <div id='u12' class='modulo l3 u12'><h3>Last 12 months</h3></div>
+          <div id='vida' class='modulo l3 vida'><h3>Lifetime</h3></div>
         </div>
 
         <div class='linea'>
-          <div class='modulo l2'>
-            <h3>13 - 17</h3>
-          </div>
-          <div class='modulo l2'>
-            <h3>18 - 24</h3>
-          </div>
-          <div class='modulo l2'>
-            <h3>13 - 17</h3>
-          </div>
-          <div class='modulo l2'>
-            <h3>18 - 24</h3>
-          </div>
+          <div id='u12Menor' class='modulo l2 u12'><h3>13 - 17</h3></div>
+          <div id='u12Mayor' class='modulo l2 u12'><h3>18 - 24</h3></div>
+          <div id='vidaMenor' class='modulo l2 vida'><h3>13 - 17</h3></div>
+          <div id='vidaMayor' class='modulo l2 vida'><h3>18 - 24</h3></div>
         </div>
 
         <div class='linea'>
-          <div class='modulo'>
-            <h3>women</h3>
-          </div>
-          <div class='modulo'>
-            <h3>men</h3>
-          </div>
-          <div class='modulo'><h3>women</h3></div>
-          <div class='modulo'><h3>men</h3></div>
-          <div class='modulo'><h3>women</h3></div>
-          <div class='modulo'><h3>men</h3></div>
-          <div class='modulo'><h3>women</h3></div>
-          <div class='modulo'><h3>men</h3></div>
+          <div id='u12MenorM' class='modulo u12'><h3>women</h3></div>
+          <div id='u12MenorH' class='modulo u12'><h3>men</h3></div>
+          <div id='u12MayorM' class='modulo u12'><h3>women</h3></div>
+          <div id='u12MayorH' class='modulo u12'><h3>men</h3></div>
+          <div id='vidaMenorM' class='modulo vida'><h3>women</h3></div>
+          <div id='vidaMenorH' class='modulo vida'><h3>men</h3></div>
+          <div id='vidaMayorM' class='modulo vida'><h3>women</h3></div>
+          <div id='vidaMayorH' class='modulo vida'><h3>men</h3></div>
         </div>
+
+        <svg id='mapa'>
+          <defs>
+            <pattern id='sinInfo' patternUnits='userSpaceOnUse' width='3.5' height='3.5' patternTransform='rotate(45)'>
+              <line x1='0' y1='0' x2='0' y2='3.5' stroke='#46484A' stroke-width='1'></line>
+            </pattern>
+          </defs>
+        </svg>
       </section>
 
       <section id='conclusiones' class='columna'>
@@ -132,36 +125,140 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 </Plantilla>
 
 <script>
-  const gql = String.raw;
+  import { edadPerpetrador } from '@/cerebro/datos';
+  import type { Arbol } from '@/tipos';
+  import { calcularPorcentaje, crearLinea, escalaCoordenadas } from '@/utilidades/ayudas';
+  import { extremosLugar } from '@enflujo/alquimia';
+  import type { IMapearCoordenadas } from '@enflujo/alquimia/libreria/modulos/tipos';
+  const elementosU12 = document.body.querySelectorAll('.u12');
+  const elementosVida = document.body.querySelectorAll('.vida');
+  const mapa = document.getElementById('mapa') as HTMLElement & SVGElement;
 
-  const Peticion = gql`
-    query {
-      articulos {
-        traducciones {
-          titulo
-        }
-      }
+  let mapearCoordenadas: IMapearCoordenadas;
+  let coordenadasAncho = 0;
+  let coordenadasAlto = 0;
+  const proporciones = { ancho: 40, alto: null };
+  let ancho = 0;
+  let alto = 0;
+
+  const datosPaises = await fetch('/paisesVacs.geo.json').then((res) => res.json());
+  const extremosGeo = extremosLugar(datosPaises);
+
+  extremos();
+
+  escalar();
+  console.log(extremosGeo, coordenadasAncho, coordenadasAlto, ancho, alto);
+
+  datosPaises.features.forEach((lugar) => {
+    if (lugar.geometry.type === 'Polygon' || lugar.geometry.type === 'MultiPolygon') {
+      const zona = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const escalaDims = 1;
+      const linea = crearLinea(lugar.geometry, mapearCoordenadas, ancho * escalaDims, alto * escalaDims);
+
+      zona.setAttribute('d', linea);
+      zona.setAttribute('class', lugar.properties.encuestado ? 'encuestado' : '');
+      mapa.appendChild(zona);
     }
-  `;
+  });
 
-  fetch('http://localhost:8055/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: `articulos {
-        traducciones {
-          titulo
-        }
-      }`,
-    }),
-  })
-    .then((res) => res.json())
-    .then((datos) => {
-      console.log(datos);
-    });
+  function extremos() {
+    mapearCoordenadas = escalaCoordenadas(-60, 78, -170, 180);
+
+    coordenadasAncho = extremosGeo.longitudMax - extremosGeo.longitudMin;
+    coordenadasAlto = extremosGeo.latitudMax - extremosGeo.latitudMin;
+  }
+
+  function definirPoporciones() {
+    if (proporciones.ancho && proporciones.ancho <= 100) {
+      ancho = calcularPorcentaje(window.innerWidth, proporciones.ancho);
+    }
+
+    if (proporciones.alto && proporciones.alto <= 100) {
+      alto = calcularPorcentaje(window.innerHeight, proporciones.alto);
+    }
+  }
+
+  function escalar() {
+    definirPoporciones();
+
+    // Revisa las proporciones del mapa para que no se deforme
+    if (coordenadasAncho > coordenadasAlto) {
+      alto = (ancho * (coordenadasAlto / coordenadasAncho)) | 0;
+    } else {
+      ancho = (alto * (coordenadasAncho / coordenadasAlto)) | 0;
+    }
+
+    mapa.setAttribute('width', `${ancho}`);
+    mapa.setAttribute('height', `${alto}`);
+    mapa.setAttribute('shape-rendering', 'geometricPrecision');
+  }
+
+  /**
+   *  | u12                                           | vida                                                |
+   *  | u12Menor              | u12Mayor              | vidaMenor               | vidaMayor                 |
+   *  | u12MenorM | u12MenorH | u12MayorM | u12MayorH | vidaMenorM | vidaMenorH | vidaMayorM  | vidaMayorH  |
+   *  */
+
+  function esconderVacios(datos: Arbol) {
+    if (!datos.ultimos12) {
+      elementosU12.forEach((elemento) => elemento.classList.add('invisible'));
+    } else {
+      elementosU12.forEach((elemento) => elemento.classList.remove('invisible'));
+    }
+
+    if (!datos.vida) {
+      elementosVida.forEach((elemento) => elemento.classList.add('invisible'));
+    } else {
+      elementosVida.forEach((elemento) => elemento.classList.remove('invisible'));
+    }
+  }
+
+  console.log(edadPerpetrador);
+  esconderVacios(edadPerpetrador);
+  // const gql = String.raw;
+
+  // const Peticion = gql`
+  //   query {
+  //     articulos {
+  //       traducciones {
+  //         titulo
+  //       }
+  //     }
+  //   }
+  // `;
+
+  // fetch('http://localhost:8055/graphql', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({
+  //     query: `articulos {
+  //       traducciones {
+  //         titulo
+  //       }
+  //     }`,
+  //   }),
+  // })
+  //   .then((res) => res.json())
+  //   .then((datos) => {
+  //     console.log(datos);
+  //   });
 </script>
 
-<style lang='scss'>
+<style lang='scss' is:global>
+  #mapa {
+    background-color: rgb(54, 37, 39);
+
+    path {
+      fill: transparent;
+      stroke: rgb(110, 101, 101);
+
+      &.encuestado {
+        fill: rgb(245, 162, 162);
+        stroke: rgb(241, 210, 210);
+      }
+    }
+  }
+
   $anchoColumna: 45vw;
 
   .contenido {
@@ -193,6 +290,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     background-color: yellow;
     border: 2px solid black;
     text-align: center;
+    transition: all 0.45s ease-in-out;
 
     &.l2 {
       width: 200px;
@@ -200,6 +298,20 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
     &.l3 {
       width: 400px;
+    }
+
+    &.invisible {
+      width: 1px;
+      border: 0;
+      background-color: black;
+    }
+
+    &.l2.invisible {
+      width: 2px;
+    }
+
+    &.l3.invisible {
+      width: 4px;
     }
   }
 </style>

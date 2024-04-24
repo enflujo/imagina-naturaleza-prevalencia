@@ -9,15 +9,26 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write --list-different ."
+    "lint:fix": "prettier --write --list-different .",
+    "datos": "nodemon ./procesador/procesar.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
+    "@enflujo/alquimia": "^2.0.0",
     "astro": "^4.6.4",
+    "nanostores": "^0.10.3",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "@types/geojson": "^7946.0.14",
+    "geojson": "^0.5.0",
+    "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "sass": "^1.75.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "estaticos/*"
+    ]
   }
 }
