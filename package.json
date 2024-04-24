@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
-    "astro": "^4.5.16",
-    "typescript": "^5.4.4"
+    "astro": "^4.6.4",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
-    "sass": "^1.74.1"
+    "sass": "^1.75.0"
   }
 }
