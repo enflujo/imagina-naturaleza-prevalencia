@@ -1,9 +1,19 @@
 @import './normalizar';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,900;1,100;1,400&display=swap');
 
 :root {
-  --colorFuente: #252424;
+  --fuente: 'Roboto', 'Franklin Gothic Medium', Tahoma, sans-serif;
 }
 
 section {
   margin-bottom: 3em;
+}
+
+main {
+  background: #000000;
+  padding-top: 2em;
+  color: white;
+  font-family: var(--fuente);
+  font-weight: 400;
+  font-style: normal;
 }

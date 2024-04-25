@@ -115,3 +115,23 @@ export const edadPerpetrador: Arbol = {
     },
   },
 };
+
+export const listaPaises = [
+  'Cambodia',
+  'Colombia',
+  'Ivory Coast',
+  'El Salvador',
+  'Haiti',
+  'Honduras',
+  'Kenya',
+  'Lesotho',
+  'Malawi',
+  'Moldova',
+  'Mozambique',
+  'Namibia',
+  'Nigeria',
+  'Eswatini',
+  'Tanzania',
+  'Zambia',
+  'Zimbabwe',
+];

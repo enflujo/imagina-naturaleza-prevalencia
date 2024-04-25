@@ -4,44 +4,60 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
 <Plantilla>
   <main>
-    <h1>Childlight Institute - VACS 17 paises - Naturaleza y Prevalencia de CSEA</h1>
-    <div class='contenido'>
-      <section id='grafica' class='columna'>
-        <h2>gráfica</h2>
+    <h1 class="titulo">Prevalence and nature of child sexual exploitation and abuse</h1>
 
-        <div class='linea'>
-          <div id='u12' class='modulo l3 u12'><h3>Last 12 months</h3></div>
-          <div id='vida' class='modulo l3 vida'><h3>Lifetime</h3></div>
+    <div class="autores">
+      <h2>Research team</h2>
+      <ul>
+        <li>Arturo Harker Roa, PhD</li>
+        <li>Maria Fernanda Rodríguez</li>
+        <li>Jorge Rodríguez</li>
+        <li>Paula Contreras</li>
+        <li>Maria Paula Marmolejo</li>
+        <li>Katherine Jaramillo</li>
+        <li>Julián Lopez</li>
+        <li>Daniel Mendivelso</li>
+        <li>Inga Vermeulen, PhD</li>
+        <li>Deborah Fry, PhD</li>
+      </ul>
+      <p></p>
+    </div>
+
+    <div class="contenido">
+      <section id="grafica" class="columnas">
+        <div class="linea">
+          <div id="u12" class="modulo l3 u12"><h3>Last 12 months</h3></div>
+          <div id="vida" class="modulo l3 vida"><h3>Lifetime</h3></div>
         </div>
 
-        <div class='linea'>
-          <div id='u12Menor' class='modulo l2 u12'><h3>13 - 17</h3></div>
-          <div id='u12Mayor' class='modulo l2 u12'><h3>18 - 24</h3></div>
-          <div id='vidaMenor' class='modulo l2 vida'><h3>13 - 17</h3></div>
-          <div id='vidaMayor' class='modulo l2 vida'><h3>18 - 24</h3></div>
+        <div class="linea">
+          <div id="u12Menor" class="modulo l2 u12"><h3>13 - 17</h3></div>
+          <div id="u12Mayor" class="modulo l2 u12"><h3>18 - 24</h3></div>
+          <div id="vidaMenor" class="modulo l2 vida"><h3>13 - 17</h3></div>
+          <div id="vidaMayor" class="modulo l2 vida"><h3>18 - 24</h3></div>
         </div>
 
-        <div class='linea'>
-          <div id='u12MenorM' class='modulo u12'><h3>women</h3></div>
-          <div id='u12MenorH' class='modulo u12'><h3>men</h3></div>
-          <div id='u12MayorM' class='modulo u12'><h3>women</h3></div>
-          <div id='u12MayorH' class='modulo u12'><h3>men</h3></div>
-          <div id='vidaMenorM' class='modulo vida'><h3>women</h3></div>
-          <div id='vidaMenorH' class='modulo vida'><h3>men</h3></div>
-          <div id='vidaMayorM' class='modulo vida'><h3>women</h3></div>
-          <div id='vidaMayorH' class='modulo vida'><h3>men</h3></div>
+        <div class="linea">
+          <div id="u12MenorM" class="modulo u12"><h3>women</h3></div>
+          <div id="u12MenorH" class="modulo u12"><h3>men</h3></div>
+          <div id="u12MayorM" class="modulo u12"><h3>women</h3></div>
+          <div id="u12MayorH" class="modulo u12"><h3>men</h3></div>
+          <div id="vidaMenorM" class="modulo vida"><h3>women</h3></div>
+          <div id="vidaMenorH" class="modulo vida"><h3>men</h3></div>
+          <div id="vidaMayorM" class="modulo vida"><h3>women</h3></div>
+          <div id="vidaMayorH" class="modulo vida"><h3>men</h3></div>
         </div>
 
-        <svg id='mapa'>
+        <svg id="mapa">
           <defs>
-            <pattern id='sinInfo' patternUnits='userSpaceOnUse' width='3.5' height='3.5' patternTransform='rotate(45)'>
-              <line x1='0' y1='0' x2='0' y2='3.5' stroke='#46484A' stroke-width='1'></line>
+            <pattern id="sinInfo" patternUnits="userSpaceOnUse" width="3.5" height="3.5" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="3.5" stroke="#46484A" stroke-width="1"></line>
             </pattern>
           </defs>
         </svg>
       </section>
 
-      <section id='conclusiones' class='columna'>
+      <section id="conclusiones" class="columna">
         <h2>Conclusiones</h2>
 
         <section>
@@ -137,7 +153,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   let mapearCoordenadas: IMapearCoordenadas;
   let coordenadasAncho = 0;
   let coordenadasAlto = 0;
-  const proporciones = { ancho: 40, alto: null };
+  const proporciones = { ancho: 70, alto: null };
   let ancho = 0;
   let alto = 0;
 
@@ -162,7 +178,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   });
 
   function extremos() {
-    mapearCoordenadas = escalaCoordenadas(-60, 78, -170, 180);
+    mapearCoordenadas = escalaCoordenadas(-60, 78, -120, 120);
 
     coordenadasAncho = extremosGeo.longitudMax - extremosGeo.longitudMin;
     coordenadasAlto = extremosGeo.latitudMax - extremosGeo.latitudMin;
@@ -244,13 +260,61 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   //   });
 </script>
 
-<style lang='scss' is:global>
+<style lang="scss" is:global>
+  .titulo {
+    font-weight: 100;
+    font-size: 3em;
+    max-width: 500px;
+    margin: 0 0 0 2em;
+    padding: 0;
+    line-height: 1;
+    letter-spacing: 11px;
+    border-left: 4px solid;
+    padding-left: 0.3em;
+  }
+
+  .autores {
+    width: 80%;
+    margin: 0 0 0 100px;
+    border-bottom: 1px dotted white;
+    font-size: 0.75em;
+
+    h2 {
+      font-weight: 100;
+      //border-bottom: 2px solid white;
+      //border-top: 1px solid white;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-style: italic;
+
+      li {
+        display: inline-block;
+        &:after {
+          content: ',';
+          display: inline-block;
+          margin: 0 3px;
+        }
+
+        &:last-child {
+          &:after {
+            content: '';
+          }
+        }
+      }
+    }
+  }
+
   #mapa {
-    background-color: rgb(54, 37, 39);
+    background-color: rgb(0, 0, 0);
+    border: 3px solid white;
 
     path {
       fill: transparent;
-      stroke: rgb(110, 101, 101);
+      stroke: rgb(77, 69, 69);
 
       &.encuestado {
         fill: rgb(245, 162, 162);
@@ -262,7 +326,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   $anchoColumna: 45vw;
 
   .contenido {
-    display: flex;
+    //sdisplay: flex;
     position: relative;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -276,7 +340,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
   #grafica {
     position: sticky;
-    top: 100px;
+    top: 10px;
   }
 
   .linea {
@@ -285,19 +349,23 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   }
 
   .modulo {
-    height: 100px;
-    width: 100px;
+    width: 25%;
+    // height: 100px;
+    // width: 100px;
     background-color: yellow;
     border: 2px solid black;
     text-align: center;
     transition: all 0.45s ease-in-out;
+    color: black;
 
     &.l2 {
-      width: 200px;
+      width: 25%;
+      //width: 200px;
     }
 
     &.l3 {
-      width: 400px;
+      width: 50%;
+      //width: 400px;
     }
 
     &.invisible {
