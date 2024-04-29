@@ -1,4 +1,5 @@
 ---
+import Mapa from '@/componentes/Mapa.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
@@ -48,13 +49,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           <div id="vidaMayorH" class="modulo vida"><h3>men</h3></div>
         </div>
 
-        <svg id="mapa">
-          <defs>
-            <pattern id="sinInfo" patternUnits="userSpaceOnUse" width="3.5" height="3.5" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="3.5" stroke="#46484A" stroke-width="1"></line>
-            </pattern>
-          </defs>
-        </svg>
+        <Mapa />
       </section>
 
       <section id="conclusiones" class="columna">
@@ -137,99 +132,14 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </section>
       </section>
     </div>
-    <div id="map"></div>
   </main>
 </Plantilla>
 
 <script>
-  import 'node_modules/mapbox-gl/';
-  import { edadPerpetrador, listaPaises } from '@/cerebro/datos';
-  import mapbox from 'mapbox-gl';
+  import { edadPerpetrador } from '@/cerebro/datos';
   import type { Arbol } from '@/tipos';
-  import { calcularPorcentaje, crearLinea, escalaCoordenadas } from '@/utilidades/ayudas';
-  import { extremosLugar } from '@enflujo/alquimia';
-  import type { IMapearCoordenadas } from '@enflujo/alquimia/libreria/modulos/tipos';
   const elementosU12 = document.body.querySelectorAll('.u12');
   const elementosVida = document.body.querySelectorAll('.vida');
-  const mapa = document.getElementById('mapa') as HTMLElement & SVGElement;
-
-  const estiloMapa = 'mapbox://styles/enflujo/cl3kdh8bp006b14lowcxmiwyd';
-  const llave = 'pk.eyJ1IjoiZW5mbHVqbyIsImEiOiJjbDNrOXNndXQwMnZsM2lvNDd4N2x0M3dvIn0.eWs4BHs67PcETEUI00T66Q';
-  mapbox.accessToken = llave;
-  const map = new mapbox.Map({
-    container: 'map',
-    style: estiloMapa,
-    zoom: 1,
-    center: [30, 15],
-  });
-
-  map.on('load', () => {
-    map.setLayoutProperty('country-label', 'text-field', [
-      'format',
-
-      // ['get', 'name_en'],
-      ['case', ['in', ['get', 'name_en'], ['literal', listaPaises]], ['get', 'name_en'], ''],
-      { 'font-scale': 1.2 },
-    ]);
-  });
-
-  // let mapearCoordenadas: IMapearCoordenadas;
-  // let coordenadasAncho = 0;
-  // let coordenadasAlto = 0;
-  // const proporciones = { ancho: 70, alto: null };
-  // let ancho = 0;
-  // let alto = 0;
-
-  // const datosPaises = await fetch('/paisesVacs.geo.json').then((res) => res.json());
-  // const extremosGeo = extremosLugar(datosPaises);
-
-  // extremos();
-  // escalar();
-  // console.log(extremosGeo, coordenadasAncho, coordenadasAlto, ancho, alto);
-
-  // datosPaises.features.forEach((lugar) => {
-  //   if (lugar.geometry.type === 'Polygon' || lugar.geometry.type === 'MultiPolygon') {
-  //     const zona = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  //     const escalaDims = 1;
-  //     const linea = crearLinea(lugar.geometry, mapearCoordenadas, ancho * escalaDims, alto * escalaDims);
-
-  //     zona.setAttribute('d', linea);
-  //     zona.setAttribute('class', lugar.properties.encuestado ? 'encuestado' : '');
-  //     mapa.appendChild(zona);
-  //   }
-  // });
-
-  // function extremos() {
-  //   mapearCoordenadas = escalaCoordenadas(-60, 78, -120, 120);
-
-  //   coordenadasAncho = extremosGeo.longitudMax - extremosGeo.longitudMin;
-  //   coordenadasAlto = extremosGeo.latitudMax - extremosGeo.latitudMin;
-  // }
-
-  // function definirPoporciones() {
-  //   if (proporciones.ancho && proporciones.ancho <= 100) {
-  //     ancho = calcularPorcentaje(window.innerWidth, proporciones.ancho);
-  //   }
-
-  //   if (proporciones.alto && proporciones.alto <= 100) {
-  //     alto = calcularPorcentaje(window.innerHeight, proporciones.alto);
-  //   }
-  // }
-
-  // function escalar() {
-  //   definirPoporciones();
-
-  //   // Revisa las proporciones del mapa para que no se deforme
-  //   if (coordenadasAncho > coordenadasAlto) {
-  //     alto = (ancho * (coordenadasAlto / coordenadasAncho)) | 0;
-  //   } else {
-  //     ancho = (alto * (coordenadasAncho / coordenadasAlto)) | 0;
-  //   }
-
-  //   mapa.setAttribute('width', `${ancho}`);
-  //   mapa.setAttribute('height', `${alto}`);
-  //   mapa.setAttribute('shape-rendering', 'geometricPrecision');
-  // }
 
   /**
    *  | u12                                           | vida                                                |
@@ -282,14 +192,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   //   });
 </script>
 
-<style lang="scss" is:global>
-  #map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-  }
-
+<style lang="scss">
   .titulo {
     font-weight: 100;
     font-size: 3em;

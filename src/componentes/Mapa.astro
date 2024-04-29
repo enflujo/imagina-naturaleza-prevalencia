@@ -1,0 +1,40 @@
+---
+
+---
+
+<div id="mapa"></div>
+
+<script>
+  import { listaPaises } from '@/cerebro/datos';
+  import mapbox from 'mapbox-gl';
+  mapbox.accessToken = 'pk.eyJ1IjoiZW5mbHVqbyIsImEiOiJjbDNrOXNndXQwMnZsM2lvNDd4N2x0M3dvIn0.eWs4BHs67PcETEUI00T66Q';
+
+  const map = new mapbox.Map({
+    container: 'mapa',
+    style: 'mapbox://styles/enflujo/cl3kdh8bp006b14lowcxmiwyd',
+    zoom: 1,
+    center: [30, 15],
+  });
+
+  map.on('load', () => {
+    /**
+     * Mostrar nombre de los países que hacen parte de la investigación, el resto se reemplazan por texto vacío.
+     */
+    map.setLayoutProperty('country-label', 'text-field', [
+      'format',
+      // esto es igual a: listaPaises.includes(name_en) ? name_en : '';
+      ['case', ['in', ['get', 'name_en'], ['literal', listaPaises]], ['get', 'name_en'], ''],
+      { 'font-scale': 1.2 },
+    ]);
+  });
+</script>
+
+<style lang="scss">
+  #mapa {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 400px;
+  }
+</style>
