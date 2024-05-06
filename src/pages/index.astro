@@ -5,9 +5,9 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
 <Plantilla>
   <main>
-    <h1 class="titulo">Prevalence and nature of child sexual exploitation and abuse</h1>
+    <h1 class='titulo'>Prevalence and nature of child sexual exploitation and abuse</h1>
 
-    <div class="autores">
+    <div class='autores'>
       <h2>Research team</h2>
       <ul>
         <li>Arturo Harker Roa, PhD</li>
@@ -24,35 +24,37 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       <p></p>
     </div>
 
-    <div class="contenido">
-      <section id="grafica" class="columnas">
-        <div class="linea">
-          <div id="u12" class="modulo l3 u12"><h3>Last 12 months</h3></div>
-          <div id="vida" class="modulo l3 vida"><h3>Lifetime</h3></div>
+    <div class='contenido'>
+      <div id='grafica' class='columnas'>
+        <div class='linea'>
+          <div id='u12' class='modulo l3 u12'><h3>Last 12 months</h3></div>
+          <div id='vida' class='modulo l3 vida'><h3>Lifetime</h3></div>
         </div>
 
-        <div class="linea">
-          <div id="u12Menor" class="modulo l2 u12"><h3>13 - 17</h3></div>
-          <div id="u12Mayor" class="modulo l2 u12"><h3>18 - 24</h3></div>
-          <div id="vidaMenor" class="modulo l2 vida"><h3>13 - 17</h3></div>
-          <div id="vidaMayor" class="modulo l2 vida"><h3>18 - 24</h3></div>
+        <div class='linea'>
+          <div id='u12Menor' class='modulo l2 u12'><h3>13 - 17</h3></div>
+          <div id='u12Mayor' class='modulo l2 u12'><h3>18 - 24</h3></div>
+          <div id='vidaMenor' class='modulo l2 vida'><h3>13 - 17</h3></div>
+          <div id='vidaMayor' class='modulo l2 vida'><h3>18 - 24</h3></div>
         </div>
 
-        <div class="linea">
-          <div id="u12MenorM" class="modulo u12"><h3>women</h3></div>
-          <div id="u12MenorH" class="modulo u12"><h3>men</h3></div>
-          <div id="u12MayorM" class="modulo u12"><h3>women</h3></div>
-          <div id="u12MayorH" class="modulo u12"><h3>men</h3></div>
-          <div id="vidaMenorM" class="modulo vida"><h3>women</h3></div>
-          <div id="vidaMenorH" class="modulo vida"><h3>men</h3></div>
-          <div id="vidaMayorM" class="modulo vida"><h3>women</h3></div>
-          <div id="vidaMayorH" class="modulo vida"><h3>men</h3></div>
+        <div class='linea'>
+          <div id='u12MenorM' class='modulo u12'><h3>women</h3></div>
+          <div id='u12MenorH' class='modulo u12'><h3>men</h3></div>
+          <div id='u12MayorM' class='modulo u12'><h3>women</h3></div>
+          <div id='u12MayorH' class='modulo u12'><h3>men</h3></div>
+          <div id='vidaMenorM' class='modulo vida'><h3>women</h3></div>
+          <div id='vidaMenorH' class='modulo vida'><h3>men</h3></div>
+          <div id='vidaMayorM' class='modulo vida'><h3>women</h3></div>
+          <div id='vidaMayorH' class='modulo vida'><h3>men</h3></div>
         </div>
+      </div>
 
+      <div id='contenedorMapa'>
         <Mapa />
-      </section>
+      </div>
 
-      <section id="conclusiones" class="columna">
+      <section id='conclusiones' class='columna'>
         <h2>Conclusiones</h2>
 
         <section>
@@ -192,7 +194,13 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   //   });
 </script>
 
-<style lang="scss">
+<style lang='scss'>
+  #contenedorMapa {
+    position: relative;
+    width: 80vw;
+    margin: 0 auto;
+  }
+
   .titulo {
     font-weight: 100;
     font-size: 3em;

@@ -1,5 +1,5 @@
 {
-  "name": "enflujo-plantilla-astro",
+  "name": "imagina-naturaleza-prevalencia",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -15,7 +15,7 @@
   "dependencies": {
     "@astrojs/check": "^0.5.10",
     "@enflujo/alquimia": "^2.0.0",
-    "astro": "^4.7.0",
+    "astro": "^4.7.1",
     "mapbox-gl": "^3.3.0",
     "nanostores": "^0.10.3",
     "typescript": "^5.4.5"
@@ -26,7 +26,7 @@
     "geojson": "^0.5.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
-    "sass": "^1.75.0"
+    "sass": "^1.76.0"
   },
   "nodemonConfig": {
     "ignore": [
