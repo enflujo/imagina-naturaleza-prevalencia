@@ -1,5 +1,4 @@
 export interface TEdadPerpetrador {
-  pais: string;
   n: number;
   menor14: number;
   entre15y18: number;
@@ -8,9 +7,13 @@ export interface TEdadPerpetrador {
   mayor51: number;
 }
 
+export interface TEdadPerpetradorDatos extends TEdadPerpetrador {
+  pais: string;
+}
+
 export interface GrupoSexo {
-  mujeres?: TEdadPerpetrador[];
-  hombres?: TEdadPerpetrador[];
+  mujeres?: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
+  hombres?: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
 }
 
 export interface GrupoEdad {
@@ -19,6 +22,7 @@ export interface GrupoEdad {
 }
 
 export interface Arbol {
+  nombres: { [llave: string]: string };
   vida?: GrupoEdad;
   ultimos12?: GrupoEdad;
 }
