@@ -1,14 +1,15 @@
 ---
 import Conexiones from '@/componentes/Conexiones.astro';
 import Mapa from '@/componentes/Mapa.astro';
+import Sankey from '@/componentes/Sankey.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
 <Plantilla>
   <main>
-    <h1 class="titulo">Prevalence and nature of child sexual exploitation and abuse</h1>
+    <h1 class='titulo'>Prevalence and nature of child sexual exploitation and abuse</h1>
 
-    <div class="autores">
+    <div class='autores'>
       <h2>Research team</h2>
       <ul>
         <li>Arturo Harker Roa, PhD</li>
@@ -25,7 +26,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       <p></p>
     </div>
 
-    <div class="contenido">
+    <div class='contenido'>
       <!-- <div id="grafica" class="columnas">
         <div class="linea">
           <div id="u12" class="modulo l3 u12"><h3>Last 12 months</h3></div>
@@ -55,7 +56,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <Mapa />
       </div> -->
 
-      <section id="conclusiones" class="columna">
+      <section id='conclusiones'>
         <h2>Conclusiones</h2>
 
         <section>
@@ -120,14 +121,18 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           </p>
         </section>
 
-        <section>
-          <h3>According to the VACS data, CSEA perpetrators are young (9 countries)</h3>
-          <p>
-            Approximately one third of the CSEA victims report that the first perpetrator was 14 years old or less, and
-            another third that the perpetrator was between 15 and 18 years old. This pattern is similar for young men
-            and women.
-          </p>
-          <Conexiones />
+        <section class='columnas'>
+          <div class='texto'>
+            <h3>According to the VACS data, CSEA perpetrators are young (9 countries)</h3>
+            <p>
+              Approximately one third of the CSEA victims report that the first perpetrator was 14 years old or less,
+              and another third that the perpetrator was between 15 and 18 years old. This pattern is similar for young
+              men and women.
+            </p>
+          </div>
+
+          <Sankey />
+          <!-- <Conexiones /> -->
         </section>
 
         <section>
@@ -202,7 +207,19 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   //   });
 </script>
 
-<style lang="scss">
+<style lang='scss'>
+  .columnas {
+    display: flex;
+
+    .texto {
+      padding-right: 5em;
+
+      h3 {
+        font-weight: 100;
+        font-size: 2.5em;
+      }
+    }
+  }
   #contenedorMapa {
     position: relative;
     width: 80vw;
@@ -213,17 +230,17 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     font-weight: 100;
     font-size: 3em;
     max-width: 500px;
-    margin: 0 0 0 2em;
-    padding: 0;
+    margin: 0;
+    padding: 2em 0 0 0;
     line-height: 1;
     letter-spacing: 11px;
-    border-left: 4px solid;
-    padding-left: 0.3em;
+    // border-left: 4px solid;
+    // padding-left: 0.3em;
   }
 
   .autores {
     width: 80%;
-    margin: 0 0 0 100px;
+    margin: 0;
     border-bottom: 1px dotted white;
     font-size: 0.75em;
 
@@ -281,9 +298,9 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     justify-content: space-around;
   }
 
-  #conclusiones {
-    width: $anchoColumna;
-  }
+  // #conclusiones {
+  //   width: $anchoColumna;
+  // }
 
   #grafica {
     position: sticky;

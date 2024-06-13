@@ -1,8 +1,12 @@
 ---
 import { edadPerpetrador } from '@/cerebro/datos';
-const mujeres = edadPerpetrador.vida?.mayor18?.mujeres;
+import type { GrupoSexo } from '@/tipos';
+import { convertirEscala } from '@enflujo/alquimia';
+const {mujeres} = edadPerpetrador.vida?.mayor18 as GrupoSexo;
 const totalesMujeres = mujeres.totales;
 let y = 0;
+const alto = (valor: number) => convertirEscala(valor,0,100,50, 100);
+
 const origenes = Object.keys(edadPerpetrador.nombres)
   .filter((nombre) => nombre !== 'n')
   .sort((a, b) => totalesMujeres[b] - totalesMujeres[a])
@@ -44,7 +48,7 @@ const colores = [
   {
     origenes.map((origen, i) => (
       <g class="origen" style={`transform: translateY(${origen.y}%);fill:${colores[i]}`}>
-        <rect x="0" y="0" width="40" height={`${origen.valor}%`} />
+        <rect x="0" y="0" width="40" height={`${alto(origen.valor)}%`} />
         <text x="0" y="5%">{`${origen.valor}%`}</text>
         <text x="5%" y="10%"}>{edadPerpetrador.nombres[origen.llave]}</text>
       </g>
