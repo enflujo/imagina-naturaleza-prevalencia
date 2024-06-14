@@ -5,65 +5,63 @@
 <div id='contenedorSankey'></div>
 
 <script>
-  import { edadPerpetrador } from '@/cerebro/datos';
-
-  const { mujeres, hombres } = edadPerpetrador.vida?.mayor18;
-  const paises = mujeres.datos.map((lugar) => ({ name: lugar.pais, value: 0 }));
-
-  const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n');
-  const links: any = [];
-  mujeres.datos.forEach((lugar) => {
-    const target = paises.find((pais) => pais.name === lugar.pais);
-
-    links.push({ source: '14 or less', target: target.name, value: lugar.menor14 });
-    links.push({ source: '19 to 35', target: target.name, value: lugar.entre19y35 });
-    links.push({ source: '15 to 18', target: target.name, value: lugar.entre15y18 });
-    links.push({ source: '36 to 50', target: target.name, value: lugar.entre36y50 });
-    links.push({ source: '51 or older', target: target.name, value: lugar.mayor51 });
-  });
-
-  const origenes = llaves
-    .sort((a, b) => mujeres.totales[b] - mujeres.totales[a])
-    .map((nombre) => {
-      const respuesta = { llave: nombre, valor: mujeres.totales[nombre] };
-      return respuesta;
-    });
-
-  origenes.forEach((grupo) => {});
-
-  console.log(paises);
-
-  const data = {
-    river: 'Seine',
-    size: 100,
-    tributaries: [
-      { name: '14 or less', side: 'l' },
-      { name: '19 to 35', side: 'l' },
-      { name: '15 to 18', side: 'l' },
-      { name: '36 to 50', side: 'l' },
-      { name: '51 or older', side: 'l' },
-
-      // { name: 'h 14 or less', size: 32.2, side: 'r' },
-      // { name: 'h 19 to 35', size: 30.8, side: 'r' },
-      // { name: 'h 15 to 18', size: 30.7, side: 'r' },
-      // { name: 'h 36 to 50', size: 4.7, side: 'r' },
-      // { name: 'h 51 or older', size: 1.6, side: 'r' },
-
-      // { name: '' },
-      // { name: 'Risle', size: 2310, side: 'l' },
-      // { name: 'Eure', size: 5935, side: 'l' },
-      // { name: 'Loing', size: 4150, side: 'l' },
-      // { name: 'Yonne', size: 10887, side: 'l' },
-      // { name: 'Epte', size: 1403, side: 'r' },
-      // { name: 'Oise', size: 17000, side: 'r' },
-      // { name: 'Marne', size: 12800, side: 'r' },
-      // { name: 'Aube', size: 3600, side: 'r' },
-      // { name: 'Ource', size: 736, side: 'r' },
-    ],
+  type Nodo = {
+    name: string;
+    value: number;
+    side: 'l' | 'r';
   };
-
+  import { edadPerpetrador } from '@/cerebro/datos';
   import { select, format } from 'd3';
   import { sankey, sankeyLinkHorizontal } from 'd3-sankey';
+
+  const { mujeres, hombres } = edadPerpetrador.vida?.mayor18;
+  // console.log(mujeres);
+  const paises: Nodo[] = mujeres.datos.map((lugar) => ({ name: lugar.pais, value: 0 }));
+
+  const llaves = Object.keys(edadPerpetrador.nombres)
+    .filter((nombre) => nombre !== 'n')
+    .sort((a, b) => mujeres.totales[b] - mujeres.totales[a]);
+
+  const links: any = [];
+  // console.log(llaves);
+
+  const nodos: Nodo[] = [
+    { name: '14 or less', value: 0, side: 'l' },
+    { name: '19 to 35', value: 0, side: 'l' },
+    { name: '15 to 18', value: 0, side: 'l' },
+    { name: '36 to 50', value: 0, side: 'l' },
+    { name: '51 or older', value: 0, side: 'l' },
+
+    // { name: 'h 14 or less', value: 32.2, side: 'r' },
+    // { name: 'h 19 to 35', value: 30.8, side: 'r' },
+    // { name: 'h 15 to 18', value: 30.7, side: 'r' },
+    // { name: 'h 36 to 50', value: 4.7, side: 'r' },
+    // { name: 'h 51 or older', value: 1.6, side: 'r' },
+  ];
+
+  mujeres.datos.forEach((lugar) => {
+    const pais = paises.find((pais) => pais.name === lugar.pais);
+
+    if (pais) {
+      links.push({ source: '14 or less', target: pais.name, value: lugar.menor14 });
+      links.push({ source: '19 to 35', target: pais.name, value: lugar.entre19y35 });
+      links.push({ source: '15 to 18', target: pais.name, value: lugar.entre15y18 });
+      links.push({ source: '36 to 50', target: pais.name, value: lugar.entre36y50 });
+      links.push({ source: '51 or older', target: pais.name, value: lugar.mayor51 });
+    }
+  });
+
+  // hombres.datos.forEach((lugar) => {
+  //   const pais = paises.find((pais) => pais.name === lugar.pais);
+
+  //   if (pais) {
+  //     links.push({ source: 'h 14 or less', target: pais.name, value: lugar.menor14 });
+  //     links.push({ source: 'h 19 to 35', target: pais.name, value: lugar.entre19y35 });
+  //     links.push({ source: 'h 15 to 18', target: pais.name, value: lugar.entre15y18 });
+  //     links.push({ source: 'h 36 to 50', target: pais.name, value: lugar.entre36y50 });
+  //     links.push({ source: 'h 51 or older', target: pais.name, value: lugar.mayor51 });
+  //   }
+  // });
 
   const formatThousand = format(',');
 
@@ -72,53 +70,42 @@
   drawSankeyDiagram();
 
   function drawSankeyDiagram() {
-    const dataTributaries = data.tributaries.map(({ name, size: value, side }) => ({ name, value, side }));
-    console.log(dataTributaries);
-    const nodes = [...dataTributaries, ...paises];
+    const datos: Nodo[] = [...nodos, ...paises];
 
-    // const links = dataTributaries.map(({ name, value, side }) => {
-    //   const source = side === 'l' ? name : data.river;
-    //   const target = source === name ? data.river : name;
-    //   return {
-    //     source,
-    //     target,
-    //     value,
-    //   };
-    // });
-
-    const dimensions = {
-      width: window.innerWidth * 0.5,
-      height: 600,
-      margin: {
-        top: 30,
-        right: 0,
-        bottom: 0,
-        left: 0,
+    const dims = {
+      ancho: window.innerWidth * 0.5,
+      alto: 600,
+      margen: {
+        arriba: 30,
+        der: 0,
+        abajo: 0,
+        izq: 0,
       },
+      anchoViz: 0,
+      altoViz: 0,
     };
 
-    dimensions.boundedWidth = dimensions.width - (dimensions.margin.left + dimensions.margin.right);
-    dimensions.boundedHeight = dimensions.height - (dimensions.margin.top + dimensions.margin.bottom);
+    dims.anchoViz = dims.ancho - (dims.margen.izq + dims.margen.der);
+    dims.altoViz = dims.alto - (dims.margen.arriba + dims.margen.abajo);
 
     const sankeyGenerator = sankey()
       .nodeId((d) => d.name)
       .nodePadding(35)
-      .size([dimensions.boundedWidth, dimensions.boundedHeight]);
+      .size([dims.anchoViz, dims.altoViz])
+      .nodeSort(null);
 
-    const sankeyData = sankeyGenerator({ nodes, links });
+    const sankeyData = sankeyGenerator({ nodes: datos, links });
     const sankeyLinkGenerator = sankeyLinkHorizontal();
-
+    // console.log(sankeyData);
     const svg = root
       .append('svg')
-      .attr('viewBox', [0, 0, dimensions.width, dimensions.height])
-      .attr('width', dimensions.width)
-      .attr('height', dimensions.height);
+      .attr('viewBox', [0, 0, dims.ancho, dims.alto])
+      .attr('width', dims.ancho)
+      .attr('height', dims.alto);
 
     // const mouthGroup = svg.append('g');
 
-    const riverGroup = svg
-      .append('g')
-      .attr('transform', `translate(${dimensions.margin.left} ${dimensions.margin.top})`);
+    const riverGroup = svg.append('g').attr('transform', `translate(${dims.margen.izq} ${dims.margen.arriba})`);
 
     const linksGroup = riverGroup.append('g');
     const nodesGroup = riverGroup.append('g');
@@ -128,12 +115,12 @@
       .data(sankeyData.links)
       .enter()
       .append('path')
-      .attr('class', (d) => `tributary tributary-${d.source.name === data.river ? d.target.name : d.source.name}`)
+      // .attr('class', (d) => `tributary tributary-${d.source.name === data.river ? d.target.name : d.source.name}`)
       .attr('d', sankeyLinkGenerator)
-      .attr('stroke', (d) =>
-        d.source.name === '14 or less' ? '#e64e74' : d.source.name === '15 to 18' ? '#e67b4e' : '#c6e4da'
+      .attr('stroke', ({ source }) =>
+        source.name === '14 or less' ? '#e64e74' : source.name === '15 to 18' ? '#e67b4e' : '#c6e4da'
       )
-      .attr('stroke-width', (d) => d.width)
+      .attr('stroke-width', ({ width }) => width)
       .attr('fill', 'none');
 
     const nodesGroups = nodesGroup
@@ -143,7 +130,7 @@
       .append('g')
       .attr('transform', ({ x0, y0 }) => `translate(${x0} ${y0})`);
 
-    nodesGroups.filter((d) => d.name !== data.river).attr('class', (d) => `tributary tributary-${d.name}`);
+    // nodesGroups.filter((d) => d.name !== data.river).attr('class', (d) => `tributary tributary-${d.name}`);
 
     nodesGroups
       .append('rect')
@@ -169,39 +156,5 @@
       .html(({ value }) => `${formatThousand(value)}%`)
       .attr('y', -4)
       .attr('font-size', 11);
-
-    textGroup
-      .filter((d) => d.name === data.river)
-      .attr('text-anchor', 'middle')
-      .attr('transform', ({ x1, x0 }) => `translate(${(x1 - x0) / 2} 0)`)
-      .select('text')
-      .attr('font-size', 18);
-
-    const linkGenerator = linkVertical();
-    const { x0, x1, y0 } = sankeyData.nodes.find((d) => d.name === data.river);
-
-    mouthGroup
-      .append('path')
-      .attr(
-        'd',
-        `${linkGenerator({
-          source: [0, 0],
-          target: [x0, y0 + dimensions.margin.top],
-        })} h ${x1 - x0} ${linkGenerator({
-          source: [x1, y0 + dimensions.margin.top],
-          target: [dimensions.boundedWidth, 0],
-        })} L 0 0`
-      )
-      .attr('fill', '#c6e4da');
-
-    mouthGroup
-      .append('text')
-      .attr('fill', 'currentColor')
-      .attr('text-anchor', 'middle')
-      .attr('x', dimensions.boundedWidth / 2)
-      .attr('y', 15)
-      .text(data.mouth)
-      .attr('font-weight', 'bold')
-      .attr('font-size', 12);
   }
 </script>

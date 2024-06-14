@@ -1,0 +1,159 @@
+---
+
+---
+
+<div id='contenedorSankey2'></div>
+
+<script>
+  type Nodo = {
+    name: string;
+    value: number;
+    side: 'l' | 'r';
+  };
+  import { edadPerpetrador } from '@/cerebro/datos';
+  // import { select, format } from 'd3';
+  // import { sankey, sankeyLinkHorizontal } from 'd3-sankey';
+
+  const { mujeres, hombres } = edadPerpetrador.vida?.mayor18;
+  // console.log(mujeres);
+  const paises: Nodo[] = mujeres.datos.map((lugar) => ({ name: lugar.pais, value: 0 }));
+
+  const llaves = Object.keys(edadPerpetrador.nombres)
+    .filter((nombre) => nombre !== 'n')
+    .sort((a, b) => mujeres.totales[b] - mujeres.totales[a]);
+
+  const links: any = [];
+
+  const nodos: Nodo[] = [
+    { name: '14 or less', value: 0, side: 'l' },
+    { name: '19 to 35', value: 0, side: 'l' },
+    { name: '15 to 18', value: 0, side: 'l' },
+    { name: '36 to 50', value: 0, side: 'l' },
+    { name: '51 or older', value: 0, side: 'l' },
+
+    { name: 'h 14 or less', value: 32.2, side: 'r' },
+    { name: 'h 19 to 35', value: 30.8, side: 'r' },
+    { name: 'h 15 to 18', value: 30.7, side: 'r' },
+    { name: 'h 36 to 50', value: 4.7, side: 'r' },
+    { name: 'h 51 or older', value: 1.6, side: 'r' },
+  ];
+
+  mujeres.datos.forEach((lugar) => {
+    const pais = paises.find((pais) => pais.name === lugar.pais);
+
+    if (pais) {
+      links.push({ source: '14 or less', target: pais.name, value: lugar.menor14 });
+      links.push({ source: '19 to 35', target: pais.name, value: lugar.entre19y35 });
+      links.push({ source: '15 to 18', target: pais.name, value: lugar.entre15y18 });
+      links.push({ source: '36 to 50', target: pais.name, value: lugar.entre36y50 });
+      links.push({ source: '51 or older', target: pais.name, value: lugar.mayor51 });
+    }
+  });
+
+  hombres.datos.forEach((lugar) => {
+    const pais = paises.find((pais) => pais.name === lugar.pais);
+
+    if (pais) {
+      links.push({ source: 'h 14 or less', target: pais.name, value: lugar.menor14 });
+      links.push({ source: 'h 19 to 35', target: pais.name, value: lugar.entre19y35 });
+      links.push({ source: 'h 15 to 18', target: pais.name, value: lugar.entre15y18 });
+      links.push({ source: 'h 36 to 50', target: pais.name, value: lugar.entre36y50 });
+      links.push({ source: 'h 51 or older', target: pais.name, value: lugar.mayor51 });
+    }
+  });
+
+  // const formatThousand = format(',');
+
+  // const root = select('#contenedorSankey');
+
+  // drawSankeyDiagram();
+
+  // function drawSankeyDiagram() {
+  //   const datos: Nodo[] = [...nodos, ...paises];
+
+  //   const dims = {
+  //     ancho: window.innerWidth * 0.5,
+  //     alto: 600,
+  //     margen: {
+  //       arriba: 30,
+  //       der: 0,
+  //       abajo: 0,
+  //       izq: 0,
+  //     },
+  //     anchoViz: 0,
+  //     altoViz: 0,
+  //   };
+
+  //   dims.anchoViz = dims.ancho - (dims.margen.izq + dims.margen.der);
+  //   dims.altoViz = dims.alto - (dims.margen.arriba + dims.margen.abajo);
+
+  //   const sankeyGenerator = sankey()
+  //     .nodeId((d) => d.name)
+  //     .nodePadding(35)
+  //     .size([dims.anchoViz, dims.altoViz])
+  //     .nodeSort(null);
+
+  //   const sankeyData = sankeyGenerator({ nodes: datos, links });
+  //   const sankeyLinkGenerator = sankeyLinkHorizontal();
+  //   console.log(sankeyData);
+  //   const svg = root
+  //     .append('svg')
+  //     .attr('viewBox', [0, 0, dims.ancho, dims.alto])
+  //     .attr('width', dims.ancho)
+  //     .attr('height', dims.alto);
+
+  //   // const mouthGroup = svg.append('g');
+
+  //   const riverGroup = svg.append('g').attr('transform', `translate(${dims.margen.izq} ${dims.margen.arriba})`);
+
+  //   const linksGroup = riverGroup.append('g');
+  //   const nodesGroup = riverGroup.append('g');
+
+  //   linksGroup
+  //     .selectAll('path')
+  //     .data(sankeyData.links)
+  //     .enter()
+  //     .append('path')
+  //     // .attr('class', (d) => `tributary tributary-${d.source.name === data.river ? d.target.name : d.source.name}`)
+  //     .attr('d', sankeyLinkGenerator)
+  //     .attr('stroke', ({ source }) =>
+  //       source.name === '14 or less' ? '#e64e74' : source.name === '15 to 18' ? '#e67b4e' : '#c6e4da'
+  //     )
+  //     .attr('stroke-width', ({ width }) => width)
+  //     .attr('fill', 'none');
+
+  //   const nodesGroups = nodesGroup
+  //     .selectAll('g')
+  //     .data(sankeyData.nodes)
+  //     .enter()
+  //     .append('g')
+  //     .attr('transform', ({ x0, y0 }) => `translate(${x0} ${y0})`);
+
+  //   // nodesGroups.filter((d) => d.name !== data.river).attr('class', (d) => `tributary tributary-${d.name}`);
+
+  //   nodesGroups
+  //     .append('rect')
+  //     .attr('width', ({ x0, x1 }) => x1 - x0)
+  //     .attr('height', ({ y0, y1 }) => y1 - y0)
+  //     .attr('fill', '#74a6b0');
+
+  //   const textGroup = nodesGroups
+  //     .append('g')
+  //     .attr('fill', 'currentColor')
+  //     .attr('text-anchor', ({ side }) => (side === 'l' ? 'start' : 'end'))
+  //     .attr('transform', ({ side, x1, x0 }) => (side === 'l' ? '' : `translate(${x1 - x0} 0)`));
+
+  //   textGroup
+  //     .append('text')
+  //     .text(({ name }) => name)
+  //     .attr('y', -17)
+  //     .attr('font-weight', 'bold')
+  //     .attr('font-size', 15);
+
+  //   textGroup
+  //     .append('text')
+  //     .html(({ value }) => `${formatThousand(value)}%`)
+  //     .attr('y', -4)
+  //     .attr('font-size', 11);
+  // }
+</script>

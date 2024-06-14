@@ -2,6 +2,7 @@
 import Conexiones from '@/componentes/Conexiones.astro';
 import Mapa from '@/componentes/Mapa.astro';
 import Sankey from '@/componentes/Sankey.astro';
+import Sankey2 from '@/componentes/Sankey2.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
@@ -120,7 +121,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
             salient relationship with the perpetrator was by far “friend, classmate, or neighbour”.
           </p>
         </section>
-
+        <Sankey2 />
         <section class='columnas'>
           <div class='texto'>
             <h3>According to the VACS data, CSEA perpetrators are young (9 countries)</h3>
@@ -132,9 +133,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           </div>
 
           <Sankey />
-          <!-- <Conexiones /> -->
         </section>
-
+        <Conexiones />
         <section>
           <h3>The evidence provided by the VACS suggests home is not the safest place (6 countries)</h3>
           <p>According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home.</p>

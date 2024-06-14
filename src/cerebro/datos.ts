@@ -43,10 +43,10 @@ export const edadPerpetrador: Arbol = {
   nombres: {
     n: 'Número de personas encuestadas',
     menor14: '14 or less',
-    entre15y18: '15 - 18',
-    entre19y35: '19 - 35',
-    entre36y50: '36 - 50',
-    mayor51: '51+',
+    entre15y18: '15 to 18',
+    entre19y35: '19 to 35',
+    entre36y50: '36 to 50',
+    mayor51: '51 or older',
   },
 
   vida: {
