@@ -7,24 +7,21 @@ export interface TEdadPerpetrador {
   mayor51: number;
 }
 
+export type LlavesEP = keyof TEdadPerpetrador;
+
 export interface TEdadPerpetradorDatos extends TEdadPerpetrador {
   pais: string;
 }
 
-export interface GrupoSexo {
-  mujeres?: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
-  hombres?: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
+export interface GrupoSexoEP {
+  mujeres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
+  hombres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
 }
 
-export interface GrupoEdad {
-  mayor18?: GrupoSexo;
-  menor17?: GrupoSexo;
-}
+export interface GrupoEdad {}
 
 export interface Arbol {
   nombres: { [llave: string]: string };
-  vida?: GrupoEdad;
-  ultimos12?: GrupoEdad;
 }
 
 export interface ExtremosCoordenadas {
@@ -32,4 +29,10 @@ export interface ExtremosCoordenadas {
   latitudMax: number;
   longitudMin: number;
   longitudMax: number;
+}
+
+export interface DatosEdadPerpetrador extends Arbol {
+  vida: {
+    mayor18: GrupoSexoEP;
+  };
 }

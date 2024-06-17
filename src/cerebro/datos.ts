@@ -17,7 +17,7 @@
 // Zimbabwe
 // Total 	        3687 	32.2%	  30.7%	  30.8%	  4.7%	  1.6%
 
-import type { Arbol } from '@/tipos';
+import type { Arbol, DatosEdadPerpetrador } from '@/tipos';
 
 // Country 	      N 	  <14 	  15-18 	19-35 	36-50 	>51
 // Cambodia
@@ -39,7 +39,7 @@ import type { Arbol } from '@/tipos';
 // Zimbabwe
 // Total 	        3462 	32.5%	  32.7%	  29.1%	  4.3%	  1.4%
 
-export const edadPerpetrador: Arbol = {
+export const edadPerpetrador: DatosEdadPerpetrador = {
   nombres: {
     n: 'Número de personas encuestadas',
     menor14: '14 or less',

@@ -1,26 +1,40 @@
 ---
 import { edadPerpetrador } from '@/cerebro/datos';
-import type { GrupoSexo } from '@/tipos';
+import type { TEdadPerpetrador } from '@/tipos';
 import { convertirEscala } from '@enflujo/alquimia';
-const {mujeres} = edadPerpetrador.vida?.mayor18 as GrupoSexo;
+const {mujeres, hombres} = edadPerpetrador.vida.mayor18;
 const totalesMujeres = mujeres.totales;
+const totalesHombres = hombres.totales;
+const paises = mujeres.datos.map((lugar) => lugar.pais);
 let y = 0;
 
 const altoViz = 600;
 const espacioEntre = 35;
 const maxAlto = altoViz - (espacioEntre * 5);
 const alto = (valor: number) => convertirEscala(valor, 0, 100, 0, maxAlto);
-console.log(maxAlto, alto(32))
-const origenes = Object.keys(edadPerpetrador.nombres)
-  .filter((nombre) => nombre !== 'n')
-  .sort((a, b) => totalesMujeres[b] - totalesMujeres[a])
+const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n') ;
+
+const origenesMujeres = llaves
+  .sort((a, b) => totalesMujeres[b as keyof TEdadPerpetrador] - totalesMujeres[a as keyof TEdadPerpetrador])
   .map((nombre) => {
-    const respuesta = { llave: nombre, y, valor: totalesMujeres[nombre] };
-    y += totalesMujeres[nombre];
+    const valor = totalesMujeres[nombre as keyof TEdadPerpetrador]
+    const respuesta = { llave: nombre, y, valor };
+    y += valor;
     return respuesta;
   });
 
-// console.log(origenes);
+  y = 0;
+
+  const origenesHombres = llaves.sort((a, b) => totalesHombres[b as keyof TEdadPerpetrador] - totalesHombres[a as keyof TEdadPerpetrador]).map((nombre) => {
+  const valor = totalesHombres[nombre as keyof TEdadPerpetrador];
+  const respuesta = {llave: nombre, y, valor};
+  y+= valor;
+  return respuesta
+  
+})
+
+
+
 const colores = [
   '#69d2e7',
   '#a7dbd8',
@@ -43,14 +57,15 @@ const colores = [
   '#ff6b6b',
   '#c44d58',
 ];
-// const posY = (valor) =>
+
+
 ---
 
 <svg width="100%" height="600px">
   <rect width="100%" height="100%" fill="white"></rect>
 
   {
-    origenes.map((origen, i) => (
+    origenesMujeres.map((origen, i) => (
       <g class="origen" style={`transform: translateY(${espacioEntre * (i + 1) + alto(origen.y )}px);fill:${colores[i]}`}>
         <rect x="3px" y="0" width="40" height={`${alto(origen.valor)}px`} />
         <text x="3px" y="-17px"} font-weight="bold" font-size="15">{edadPerpetrador.nombres[origen.llave]}</text>
@@ -58,6 +73,25 @@ const colores = [
       </g>
     ))
   }
+
+  {
+    paises.map((pais, i) => (
+      <g class="pais" style={`transform: translate(45%, ${espacioEntre * (i + 1) + alto(i * 7)}px);fill:${colores[i + 5]}`}>
+        <rect x="3px" y="0" width="40" height={`${alto(10)}px`} />
+        <text x="25px" y="-5px"} font-weight="bold" font-size="15" text-anchor="middle">{pais}</text>
+      </g>
+    ))
+  }
+
+{
+  origenesHombres.map((origen, i) => (
+  <g class="origen" style={`transform: translateY(${espacioEntre * (i + 1) + alto(origen.y )}px);fill:${colores[i + 14]}`}>
+      <rect x="calc(100% - 45px)" y="0" width="40" height={`${alto(origen.valor)}px`} />
+      <text x="99.5%" y="-17px"} font-weight="bold" font-size="15" text-anchor="end">{edadPerpetrador.nombres[origen.llave]}</text>
+      <text x="99.5%" y="-3px" font-size="11" text-anchor="end">{`${origen.valor}%`} </text>
+    </g>
+  ))
+}
 </svg>
 
 <style lang="scss">
