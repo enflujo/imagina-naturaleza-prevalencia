@@ -13,6 +13,10 @@ export interface TEdadPerpetradorDatos extends TEdadPerpetrador {
   pais: string;
 }
 
+export interface GrupoEP {
+  totales: TEdadPerpetrador;
+  datos: TEdadPerpetradorDatos[];
+}
 export interface GrupoSexoEP {
   mujeres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
   hombres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };

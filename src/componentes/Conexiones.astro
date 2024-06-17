@@ -1,51 +1,47 @@
 ---
 import { edadPerpetrador } from '@/cerebro/datos';
-import type { TEdadPerpetrador } from '@/tipos';
+import type { GrupoEP, TEdadPerpetrador } from '@/tipos';
 import { convertirEscala } from '@enflujo/alquimia';
-const {mujeres, hombres} = edadPerpetrador.vida.mayor18;
-const totalesMujeres = mujeres.totales;
-const totalesHombres = hombres.totales;
-const paises = mujeres.datos.map((lugar) => lugar.pais);
-let y = 0;
-
+const { mujeres, hombres } = edadPerpetrador.vida.mayor18;
 const altoViz = 600;
 const espacioEntre = 35;
-const maxAlto = altoViz - (espacioEntre * 5);
+const margenY = 30;
+const margenX = 5;
+const maxAlto = altoViz - margenY * 2 - espacioEntre * 5;
 const alto = (valor: number) => convertirEscala(valor, 0, 100, 0, maxAlto);
-const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n') ;
+const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n');
+type Conexion = {
+  pais: string;
+  valor: number;
+  origenY1: number;
+  origenY2: number;
+  destinoY1: number;
+  destinoY2: number;
+};
+const coloresGrupos = {
+  n: '#000',
+  menor14: '#69d2e7',
+  entre15y18: '#ecd078',
+  entre19y35: '#83af9b',
+  entre36y50: '#fc9d9a',
+  mayor51: '#fa6900',
+};
 
-const origenesMujeres = llaves
-  .sort((a, b) => totalesMujeres[b as keyof TEdadPerpetrador] - totalesMujeres[a as keyof TEdadPerpetrador])
-  .map((nombre) => {
-    const valor = totalesMujeres[nombre as keyof TEdadPerpetrador]
-    const respuesta = { llave: nombre, y, valor };
-    y += valor;
-    return respuesta;
-  });
+const origenesMujeres = procesarGrupoEtario(mujeres);
+const origenesHombres = procesarGrupoEtario(hombres);
+const paises = origenesMujeres[0].conexiones.map((lugar, i) => {
+  return { nombre: lugar.pais, y: margenY + espacioEntre * (i + 1) + alto(i * 7) };
+});
 
-  y = 0;
-
-  const origenesHombres = llaves.sort((a, b) => totalesHombres[b as keyof TEdadPerpetrador] - totalesHombres[a as keyof TEdadPerpetrador]).map((nombre) => {
-  const valor = totalesHombres[nombre as keyof TEdadPerpetrador];
-  const respuesta = {llave: nombre, y, valor};
-  y+= valor;
-  return respuesta
-  
-})
-
-
+definirConexiones();
 
 const colores = [
-  '#69d2e7',
   '#a7dbd8',
-  '#e0e4cc',
   '#f38630',
-  '#fa6900',
   '#fe4365',
   '#fc9d9a',
   '#f9cdad',
   '#c8c8a9',
-  '#83af9b',
   '#ecd078',
   '#d95b43',
   '#c02942',
@@ -53,52 +49,151 @@ const colores = [
   '#53777a',
   '#556270',
   '#4ecdc4',
-  '#c7f464',
   '#ff6b6b',
   '#c44d58',
 ];
 
+function procesarGrupoEtario(grupo: GrupoEP) {
+  let y = 0;
 
+  return llaves
+    .sort((a, b) => grupo.totales[b as keyof TEdadPerpetrador] - grupo.totales[a as keyof TEdadPerpetrador])
+    .map((nombre) => {
+      const valor = grupo.totales[nombre as keyof TEdadPerpetrador];
+
+      const conexiones = grupo.datos
+        .map((lugar) => {
+          return {
+            pais: lugar.pais,
+            origen: nombre,
+            valor: lugar[nombre as keyof TEdadPerpetrador],
+            origenY1: 0,
+            origenY2: 0,
+            destinoY1: 0,
+            destinoY2: 0,
+            color: coloresGrupos[nombre as keyof TEdadPerpetrador],
+          };
+        })
+        .sort((a, b) => b.valor - a.valor);
+
+      const respuesta = { llave: nombre as keyof TEdadPerpetrador, y, valor, conexiones };
+      y += alto(valor);
+      return respuesta;
+    });
+}
+
+function definirConexiones() {
+  origenesMujeres.forEach((origen) => {
+    const valor = origen.valor;
+    const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, 100, 0, valor));
+    const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
+
+    origen.conexiones.forEach((lugar, i) => {
+      const pais = paises.find((pais) => pais.nombre === lugar.pais);
+      // if (i === 0) {
+      lugar.origenY1 = margenY + espacioEntre;
+      lugar.origenY1 += i === 0 ? 0 : origen.conexiones[i - 1].origenY2;
+      lugar.origenY2 = lugar.origenY1;
+      lugar.origenY2 += escalaYOrigen(lugar.valor) | 0;
+      lugar.destinoY1 = pais ? pais.y : 0;
+      lugar.destinoY1 += i === 0 ? 0 : origen.conexiones[i - 1].destinoY2;
+      lugar.destinoY2 = lugar.destinoY1;
+      lugar.destinoY2 += escalaYDestino(lugar.valor) | 0;
+
+      console.log(lugar);
+      // }
+    });
+  });
+}
+
+function curva(conexion: Conexion) {
+  let forma = `M40,${conexion.origenY1}`;
+  forma += `L730,${conexion.destinoY1}`;
+  // conexiones.forEach((conexion, i) => {
+  //   if (i === 0) {
+  //   forma +=
+  // } else {
+
+  // }
+
+  forma += `L730,${conexion.destinoY2}`;
+  forma += `L40,${conexion.origenY2}`;
+  // });
+
+  forma += 'Z';
+  return forma;
+}
 ---
 
-<svg width="100%" height="600px">
-  <rect width="100%" height="100%" fill="white"></rect>
-
+<svg width='100%' height='600px' class='graficaConexiones'>
+  <text x='100px' y='20px' class='nombreColumna'>Women</text>
   {
     origenesMujeres.map((origen, i) => (
-      <g class="origen" style={`transform: translateY(${espacioEntre * (i + 1) + alto(origen.y )}px);fill:${colores[i]}`}>
-        <rect x="3px" y="0" width="40" height={`${alto(origen.valor)}px`} />
-        <text x="3px" y="-17px"} font-weight="bold" font-size="15">{edadPerpetrador.nombres[origen.llave]}</text>
-        <text x="3px" y="-3px" font-size="11">{`${origen.valor}%`} </text>
+      <g
+        class='origen origenMujeres'
+        style={`transform: translate(3px, ${espacioEntre * (i + 1) + margenY + origen.y}px);fill:${coloresGrupos[origen.llave]}`}
+      >
+        <rect x='0' y='0' width='40' height={`${alto(origen.valor)}px`} />
+        <text x='0' y='-17px' font-weight='bold' font-size='15'>
+          {edadPerpetrador.nombres[origen.llave]}
+        </text>
+        <text x='0' y='-3px' font-size='11'>
+          {`${origen.valor}%`}{' '}
+        </text>
       </g>
     ))
   }
 
   {
-    paises.map((pais, i) => (
-      <g class="pais" style={`transform: translate(45%, ${espacioEntre * (i + 1) + alto(i * 7)}px);fill:${colores[i + 5]}`}>
-        <rect x="3px" y="0" width="40" height={`${alto(10)}px`} />
-        <text x="25px" y="-5px"} font-weight="bold" font-size="15" text-anchor="middle">{pais}</text>
+    origenesMujeres.map((origen, i) =>
+      origen.conexiones.map((conexion) => (i < 1 ? <path d={curva(conexion)} fill={conexion.color} /> : ''))
+    )
+  }
+
+  {
+    paises.map((pais) => (
+      <g class='pais' style={`transform: translate(45%, ${pais.y}px);`}>
+        <rect x='0' y='0' width='1' height={`${alto(10)}px`} />
+        <text x='0' y='-5px' font-weight='bold' font-size='15' text-anchor='middle'>
+          {pais.nombre}
+        </text>
       </g>
     ))
   }
 
-{
-  origenesHombres.map((origen, i) => (
-  <g class="origen" style={`transform: translateY(${espacioEntre * (i + 1) + alto(origen.y )}px);fill:${colores[i + 14]}`}>
-      <rect x="calc(100% - 45px)" y="0" width="40" height={`${alto(origen.valor)}px`} />
-      <text x="99.5%" y="-17px"} font-weight="bold" font-size="15" text-anchor="end">{edadPerpetrador.nombres[origen.llave]}</text>
-      <text x="99.5%" y="-3px" font-size="11" text-anchor="end">{`${origen.valor}%`} </text>
-    </g>
-  ))
-}
+  <text x='80%' y='20px' class='nombreColumna'>Men</text>
+  {
+    origenesHombres.map((origen, i) => (
+      <g
+        class='origen origenHombres'
+        style={`transform: translate(calc(100% - 5px), ${espacioEntre * (i + 1) + margenY + origen.y}px);fill:${coloresGrupos[origen.llave]}`}
+      >
+        <rect x='-40px' y='0' width='40' height={`${alto(origen.valor)}px`} />
+        <text x='0' y='-17px' font-weight='bold' font-size='15' text-anchor='end'>
+          {edadPerpetrador.nombres[origen.llave]}
+        </text>
+        <text x='0' y='-3px' font-size='11' text-anchor='end'>
+          {`${origen.valor}%`}{' '}
+        </text>
+      </g>
+    ))
+  }
 </svg>
 
-<style lang="scss">
+<script></script>
+
+<style lang='scss'>
+  .graficaConexiones {
+    text {
+      fill: white;
+    }
+  }
   .origen {
     font-size: 0.75em;
-    text {
-      fill: black;
-    }
+  }
+
+  .nombreColumna {
+    font-size: 19px;
+    font-weight: bold;
   }
 </style>

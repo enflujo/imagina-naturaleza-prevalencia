@@ -17,7 +17,7 @@
 // Zimbabwe
 // Total 	        3687 	32.2%	  30.7%	  30.8%	  4.7%	  1.6%
 
-import type { Arbol, DatosEdadPerpetrador } from '@/tipos';
+import type { DatosEdadPerpetrador } from '@/tipos';
 
 // Country 	      N 	  <14 	  15-18 	19-35 	36-50 	>51
 // Cambodia
