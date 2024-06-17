@@ -54,13 +54,13 @@ const colores = [
 ];
 
 function procesarGrupoEtario(grupo: GrupoEP) {
-  let y = 0;
+  let yAcumulado = 0;
 
   return llaves
     .sort((a, b) => grupo.totales[b as keyof TEdadPerpetrador] - grupo.totales[a as keyof TEdadPerpetrador])
-    .map((nombre) => {
+    .map((nombre, i) => {
       const valor = grupo.totales[nombre as keyof TEdadPerpetrador];
-
+      const y = espacioEntre * (i + 1) + margenY + yAcumulado;
       const conexiones = grupo.datos
         .map((lugar) => {
           return {
@@ -77,7 +77,7 @@ function procesarGrupoEtario(grupo: GrupoEP) {
         .sort((a, b) => b.valor - a.valor);
 
       const respuesta = { llave: nombre as keyof TEdadPerpetrador, y, valor, conexiones };
-      y += alto(valor);
+      yAcumulado += alto(valor);
       return respuesta;
     });
 }
@@ -91,8 +91,7 @@ function definirConexiones() {
     origen.conexiones.forEach((lugar, i) => {
       const pais = paises.find((pais) => pais.nombre === lugar.pais);
       // if (i === 0) {
-      lugar.origenY1 = margenY + espacioEntre;
-      lugar.origenY1 += i === 0 ? 0 : origen.conexiones[i - 1].origenY2;
+      lugar.origenY1 = i === 0 ? origen.y : origen.conexiones[i - 1].origenY2;
       lugar.origenY2 = lugar.origenY1;
       lugar.origenY2 += escalaYOrigen(lugar.valor) | 0;
       lugar.destinoY1 = pais ? pais.y : 0;
@@ -131,7 +130,7 @@ function curva(conexion: Conexion) {
     origenesMujeres.map((origen, i) => (
       <g
         class='origen origenMujeres'
-        style={`transform: translate(3px, ${espacioEntre * (i + 1) + margenY + origen.y}px);fill:${coloresGrupos[origen.llave]}`}
+        style={`transform: translate(3px, ${origen.y}px);fill:${coloresGrupos[origen.llave]}`}
       >
         <rect x='0' y='0' width='40' height={`${alto(origen.valor)}px`} />
         <text x='0' y='-17px' font-weight='bold' font-size='15'>
@@ -146,7 +145,13 @@ function curva(conexion: Conexion) {
 
   {
     origenesMujeres.map((origen, i) =>
-      origen.conexiones.map((conexion) => (i < 1 ? <path d={curva(conexion)} fill={conexion.color} /> : ''))
+      origen.conexiones.map((conexion) =>
+        i < 1 ? (
+          <path class='conexion' d={curva(conexion)} fill={conexion.color} data-datos={JSON.stringify(conexion)} />
+        ) : (
+          ''
+        )
+      )
     )
   }
 
@@ -166,7 +171,7 @@ function curva(conexion: Conexion) {
     origenesHombres.map((origen, i) => (
       <g
         class='origen origenHombres'
-        style={`transform: translate(calc(100% - 5px), ${espacioEntre * (i + 1) + margenY + origen.y}px);fill:${coloresGrupos[origen.llave]}`}
+        style={`transform: translate(calc(100% - 5px), ${origen.y}px);fill:${coloresGrupos[origen.llave]}`}
       >
         <rect x='-40px' y='0' width='40' height={`${alto(origen.valor)}px`} />
         <text x='0' y='-17px' font-weight='bold' font-size='15' text-anchor='end'>
@@ -180,7 +185,14 @@ function curva(conexion: Conexion) {
   }
 </svg>
 
-<script></script>
+<script>
+  const conexiones = document.querySelectorAll<SVGPathElement>('.conexion');
+  conexiones.forEach((conexion) => {
+    conexion.addEventListener('mouseenter', (evento) => {
+      console.log(evento.target);
+    });
+  });
+</script>
 
 <style lang='scss'>
   .graficaConexiones {
