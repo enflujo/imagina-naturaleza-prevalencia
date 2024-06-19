@@ -49,4 +49,13 @@ export type Conexion = {
   origenY2: number;
   destinoY1: number;
   destinoY2: number;
+  color: string;
 };
+
+export interface GrupoConexion {
+  llave: keyof LlavesEP;
+  y: number;
+  valor: number;
+  conexiones: Conexion[];
+  totalOrigen: number;
+}

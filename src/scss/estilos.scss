@@ -18,3 +18,76 @@ main {
   font-style: normal;
   padding: 0 10em;
 }
+
+.conexionConGrafica {
+  color: rgb(142, 229, 136);
+  cursor: crosshair;
+  border-bottom: 1px dotted;
+  transition: all 0.15s ease-out;
+
+  &:hover {
+    font-weight: bold;
+  }
+}
+
+#info {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 200px;
+  min-height: 50px;
+  background-color: rgba(255, 255, 255, 1);
+  color: rgb(37, 35, 77);
+  padding: 0.5em;
+  border-radius: 0.3em;
+  font-size: 0.85em;
+  border: 1px;
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+
+  .grave {
+    color: #ba4a4a;
+  }
+
+  .resaltar {
+    font-weight: bold;
+  }
+
+  .subrayar {
+    border-bottom: 1px solid;
+  }
+
+  .agrandar1-1 {
+    font-size: 1.1em;
+  }
+
+  .agrandar1-3 {
+    font-size: 1.3em;
+  }
+
+  .agrandar1-4 {
+    font-size: 1.4em;
+  }
+
+  .agrandar1-5 {
+    font-size: 1.5em;
+  }
+
+  .agrandar1-6 {
+    font-size: 1.6em;
+  }
+
+  .agrandar1-2 {
+    font-size: 1.2em;
+  }
+
+  .agrandar2 {
+    font-size: 2em;
+  }
+
+  &.visible {
+    opacity: 1;
+  }
+}

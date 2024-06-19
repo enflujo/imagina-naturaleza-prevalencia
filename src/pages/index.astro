@@ -121,18 +121,20 @@ import Plantilla from '@/plantillas/Plantilla.astro';
             salient relationship with the perpetrator was by far “friend, classmate, or neighbour”.
           </p>
         </section>
-        <Sankey2 />
+
         <section class='columnas'>
           <div class='texto'>
-            <h3>According to the VACS data, CSEA perpetrators are young (9 countries)</h3>
+            <h3>
+              <img class='icono' src='/alerta.svg' /> According to the VACS data, CSEA perpetrators are young (9 countries)
+            </h3>
             <p>
-              Approximately one third of the CSEA victims report that the first perpetrator was 14 years old or less,
-              and another third that the perpetrator was between 15 and 18 years old. This pattern is similar for young
-              men and women.
+              Approximately <span id='epUnTercio14' class='conexionConGrafica'>
+                one third of the CSEA victims report that the first perpetrator was 14 years old or less</span
+              >, and <span id='epUnTercio15' class='conexionConGrafica'
+                >another third that the perpetrator was between 15 and 18 years old</span
+              >. This pattern is similar for young men and women.
             </p>
           </div>
-
-          <Sankey />
         </section>
         <Conexiones />
         <section>
@@ -146,7 +148,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
 <script>
   import { edadPerpetrador } from '@/cerebro/datos';
-  import type { Arbol, GrupoSexo } from '@/tipos';
+  import type { Arbol, GrupoSexoEP } from '@/tipos';
   const elementosU12 = document.body.querySelectorAll('.u12');
   const elementosVida = document.body.querySelectorAll('.vida');
 
@@ -170,7 +172,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     }
   }
 
-  const { mujeres, hombres } = edadPerpetrador.vida?.mayor18 as GrupoSexo;
+  const { mujeres, hombres } = edadPerpetrador.vida?.mayor18 as GrupoSexoEP;
   if (mujeres && hombres) {
     const menores14 = mujeres.datos.reduce((acumulado, valor) => acumulado + valor.menor14, 0) / mujeres.datos.length;
 
@@ -215,8 +217,15 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       padding-right: 5em;
 
       h3 {
+        display: flex;
         font-weight: 100;
         font-size: 2.5em;
+        text-align: center;
+        margin-bottom: 1.5em;
+
+        .icono {
+          height: 50px;
+        }
       }
     }
   }
@@ -330,6 +339,14 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
     &.invisible {
       background-color: rgb(121, 121, 121);
+    }
+  }
+
+  section {
+    h3,
+    p {
+      width: 70%;
+      margin: 0 auto;
     }
   }
 </style>

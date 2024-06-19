@@ -1,225 +1,326 @@
 ---
-import { edadPerpetrador } from '@/cerebro/datos';
-import type { Conexion, LlavesEP } from '@/tipos';
-import type { GrupoEP } from '@/tipos';
-import { convertirEscala } from '@enflujo/alquimia';
-const { mujeres, hombres } = edadPerpetrador.vida.mayor18;
-const altoViz = 600;
-const espacioEntre = 35;
-const margenY = 30;
-const maxAlto = altoViz - margenY * 2 - espacioEntre * 5;
-const alto = (valor: number) => convertirEscala(valor, 0, 100, 0, maxAlto);
-const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n');
 
-const coloresGrupos = {
-  menor14: '#69d2e7',
-  entre15y18: '#ecd078',
-  entre19y35: '#83af9b',
-  entre36y50: '#fc9d9a',
-  mayor51: '#fa6900',
-};
-
-const origenesMujeres = procesarGrupoEtario(mujeres);
-const origenesHombres = procesarGrupoEtario(hombres);
-const paises = origenesMujeres[0].conexiones.map((lugar, i) => {
-  return { nombre: lugar.pais, y: margenY + espacioEntre * (i + 1) + alto(i * 7) };
-});
-
-definirConexiones();
-
-const colores = [
-  '#a7dbd8',
-  '#f38630',
-  '#fe4365',
-  '#fc9d9a',
-  '#f9cdad',
-  '#c8c8a9',
-  '#ecd078',
-  '#d95b43',
-  '#c02942',
-  '#542437',
-  '#53777a',
-  '#556270',
-  '#4ecdc4',
-  '#ff6b6b',
-  '#c44d58',
-];
-
-function procesarGrupoEtario(grupo: GrupoEP) {
-  let yAcumulado = 0;
-
-  return llaves
-    .sort((a, b) => grupo.totales[b as keyof LlavesEP] - grupo.totales[a as keyof LlavesEP])
-    .map((nombre, i) => {
-      const valor = grupo.totales[nombre as keyof LlavesEP];
-      const y = espacioEntre * (i + 1) + margenY + yAcumulado;
-      const acumulados: LlavesEP = { menor14: 0, entre15y18: 0, entre19y35: 0, entre36y50: 0, mayor51: 0 };
-
-      const conexiones = grupo.datos
-        .map((lugar) => {
-          const valorLinea = lugar[nombre as keyof LlavesEP];
-          acumulados[nombre as keyof LlavesEP] += valorLinea;
-
-          return {
-            pais: lugar.pais,
-            origen: nombre,
-            valor: valorLinea,
-            origenY1: 0,
-            origenY2: 0,
-            destinoY1: 0,
-            destinoY2: 0,
-            color: coloresGrupos[nombre as keyof LlavesEP],
-          };
-        })
-        .sort((a, b) => b.valor - a.valor);
-
-      const respuesta = {
-        llave: nombre as keyof LlavesEP,
-        y,
-        valor,
-        conexiones,
-        totalOrigen: acumulados[nombre as keyof LlavesEP] | 0,
-      };
-      yAcumulado += alto(valor);
-      return respuesta;
-    });
-}
-
-function definirConexiones() {
-  origenesMujeres.forEach((origen, i) => {
-    const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, origen.totalOrigen, 0, origen.valor));
-    const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
-    let suma = 0;
-    origen.conexiones.forEach((lugar, ii) => {
-      const pais = paises.find((pais) => pais.nombre === lugar.pais);
-      const y2 = i > 0 ? origenesMujeres[i - 1].conexiones.find((l) => l.pais === lugar.pais)?.destinoY2 : pais?.y;
-
-      lugar.origenY1 = ii === 0 ? origen.y : origen.conexiones[ii - 1].origenY2;
-      lugar.origenY2 = lugar.origenY1;
-      lugar.origenY2 += escalaYOrigen(lugar.valor);
-      lugar.destinoY1 = y2 || 0;
-      lugar.destinoY2 = lugar.destinoY1;
-      lugar.destinoY2 += escalaYDestino(lugar.valor) | 0;
-      suma += lugar.valor;
-    });
-  });
-
-  origenesMujeres.reverse(); // invertir orden para que se pinten las más gruesas encima de las menos
-}
-
-function curva(conexion: Conexion) {
-  let forma = `M40,${conexion.origenY1}`;
-  const x1 = 730 / 2;
-  const x2 = 730 / 3;
-  const y1 = conexion.origenY1;
-  const y2 = conexion.origenY1;
-  forma += ` C${x1},${y1}`;
-  forma += ` ${x2},${y2}`;
-  forma += ` 730,${conexion.destinoY1}`;
-  forma += `L730,${conexion.destinoY2}`;
-  const x3 = 730 / 3;
-  const y3 = conexion.origenY2;
-  const x4 = 730 / 2;
-  const y4 = conexion.origenY2;
-  forma += ` C${x3},${y3}`;
-  forma += ` ${x4},${y4}`;
-  forma += ` 40,${conexion.origenY2}`;
-  forma += 'Z';
-  return forma;
-}
 ---
 
-<div class='contenedorConexiones'>
-  <div id='info'></div>
+<div id='edadPerpetrador' class='contenedorConexiones'>
   <svg width='100%' height='600px' class='graficaConexiones'>
-    <text x='100px' y='20px' class='nombreColumna'>Women</text>
-    {
-      origenesMujeres.map((origen, i) => (
-        <g
-          class='origen origenMujeres'
-          style={`transform: translate(3px, ${origen.y}px);fill:${coloresGrupos[origen.llave]}`}
-        >
-          <rect x='0' y='0' width='40' height={`${alto(origen.valor)}px`} />
-          <text x='0' y='-17px' font-weight='bold' font-size='15'>
-            {edadPerpetrador.nombres[origen.llave]}
-          </text>
-          <text x='0' y='-3px' font-size='11'>
-            {`${origen.valor}%`}{' '}
-          </text>
-        </g>
-      ))
-    }
-
-    {
-      origenesMujeres.map((origen) =>
-        origen.conexiones.map((conexion) => (
-          <path class='conexion' d={curva(conexion)} fill={conexion.color} stroke='white' stroke-width='0.1' />
-        ))
-      )
-    }
-
-    {
-      paises.map((pais) => (
-        <g class='pais' style={`transform: translate(45%, ${pais.y}px);`}>
-          <rect x='0' y='0' width='1' height={`${alto(10)}px`} />
-          <text x='0' y='-5px' font-weight='bold' font-size='15' text-anchor='middle'>
-            {pais.nombre} {pais.y}
-          </text>
-        </g>
-      ))
-    }
-
-    <text x='80%' y='20px' class='nombreColumna'>Men</text>
-    {
-      origenesHombres.map((origen, i) => (
-        <g
-          class='origen origenHombres'
-          style={`transform: translate(calc(100% - 5px), ${origen.y}px);fill:${coloresGrupos[origen.llave]}`}
-        >
-          <rect x='-40px' y='0' width='40' height={`${alto(origen.valor)}px`} />
-          <text x='0' y='-17px' font-weight='bold' font-size='15' text-anchor='end'>
-            {edadPerpetrador.nombres[origen.llave]}
-          </text>
-          <text x='0' y='-3px' font-size='11' text-anchor='end'>
-            {`${origen.valor}%`}{' '}
-          </text>
-        </g>
-      ))
-    }
+    <text x='25%' y='20px' class='nombreColumna' text-anchor='middle'>Data for female victims</text>
+    <text x='75%' y='20px' class='nombreColumna' text-anchor='middle'>Data for male victims</text>
   </svg>
 </div>
 
 <script>
+  import { edadPerpetrador } from '@/cerebro/datos';
+  import info from '@/modulos/info';
+  import type { Conexion, GrupoConexion, LlavesEP } from '@/tipos';
+  import type { GrupoEP } from '@/tipos';
+  import { convertirEscala } from '@enflujo/alquimia';
+
   const svg = document.querySelector<SVGAElement>('.graficaConexiones');
-  const conexiones = document.querySelectorAll<SVGPathElement>('.conexion');
-  const info = document.getElementById('info') as HTMLDivElement;
+  const contenedorInfo = info.elemento();
+  const { mujeres, hombres } = edadPerpetrador.vida.mayor18;
+  const altoViz = 600;
+  const espacioEntre = 35;
+  const margenY = 30;
+  const margenCentro = 50;
+  const maxAlto = altoViz - margenY * 2 - espacioEntre * 5;
+  const alto = (valor: number) => convertirEscala(valor, 0, 100, 1, maxAlto);
+  const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n');
 
-  conexiones.forEach((conexion) => {
-    conexion.addEventListener('mouseenter', () => {
-      info.innerText = 'hey';
-      svg?.classList.add('interactuando');
-      info.classList.add('visible');
-      conexion.classList.add('activo');
+  const coloresGrupos = {
+    menor14: '#69d2e7',
+    entre15y18: '#ecd078',
+    entre19y35: '#83af9b',
+    entre36y50: '#fc9d9a',
+    mayor51: '#fa6900',
+  };
+
+  const origenesMujeres = procesarGrupoEtario(mujeres);
+  const origenesHombres = procesarGrupoEtario(hombres);
+  const paises = origenesMujeres[0].conexiones.map((lugar, i) => {
+    return { nombre: lugar.pais, y: margenY + espacioEntre * (i + 1) + alto(i * 7) };
+  });
+
+  definirConexiones();
+  crearGrupo(origenesMujeres, 'izq');
+  crearGrupo(origenesHombres, 'der');
+  crearInteracciones();
+
+  paises.forEach((pais) => {
+    const grupo = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    grupo.setAttribute('class', 'pais');
+    grupo.setAttribute('style', `transform: translate(50%, ${pais.y}px);`);
+
+    const eje = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    eje.setAttribute('x', `-50`);
+    eje.setAttribute('y', '0');
+    eje.setAttribute('width', '100');
+    eje.setAttribute('height', `${alto(10.5)}`);
+    eje.setAttribute('fill', '#5b5e5d');
+
+    const nombre = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    nombre.setAttribute('x', '0');
+    nombre.setAttribute('y', `${alto(6.5)}px`);
+    nombre.setAttribute('font-weight', 'bold');
+    nombre.setAttribute('font-size', '15');
+    nombre.setAttribute('text-anchor', 'middle');
+    nombre.setAttribute('fill', 'rgba(0,0,0,1)');
+    nombre.innerHTML = pais.nombre;
+
+    grupo.appendChild(eje);
+    grupo.appendChild(nombre);
+
+    svg?.appendChild(grupo);
+  });
+
+  function crearGrupo(grupo: GrupoConexion[], lado: 'izq' | 'der') {
+    grupo.forEach((origen) => {
+      const grupo = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      grupo.setAttribute('class', 'origen');
+      const xGrupo = lado === 'izq' ? '3px' : 'calc(100% - 5px)';
+      grupo.setAttribute('style', `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave]}`);
+      const nombreGrupo = edadPerpetrador.nombres[origen.llave];
+      const semilla = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      semilla.setAttribute('x', lado === 'izq' ? '0' : '-40px');
+      semilla.setAttribute('y', '0');
+      semilla.setAttribute('width', '40px');
+      semilla.setAttribute('height', `${alto(origen.valor)}px`);
+
+      const nombre = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      nombre.setAttribute('x', '0');
+      nombre.setAttribute('y', '-17px');
+      nombre.setAttribute('font-weight', 'bold');
+      nombre.setAttribute('font-size', '15');
+      if (lado === 'der') nombre.setAttribute('text-anchor', 'end');
+      nombre.innerHTML = nombreGrupo;
+
+      const valor = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      valor.setAttribute('x', '0');
+      valor.setAttribute('y', '-3px');
+      valor.setAttribute('font-size', '11');
+      if (lado === 'der') valor.setAttribute('text-anchor', 'end');
+      valor.innerHTML = `${origen.valor}%`;
+
+      origen.conexiones.forEach((conexion) => {
+        const elemento = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        elemento.setAttribute('class', `conexion c${origen.llave}`);
+        elemento.setAttribute('d', curva(conexion, lado));
+        elemento.setAttribute('fill', conexion.color);
+        elemento.setAttribute('data-datos', JSON.stringify(conexion));
+        elemento.setAttribute('data-lado', lado);
+
+        elemento.addEventListener('mouseenter', () => {
+          let mensaje = `In <span class="resaltar agrandar1-2 subrayar">${conexion.pais}</span>,`;
+          mensaje += `<span class="resaltar agrandar1-4${conexion.valor >= 10 ? ' grave' : ''}"> ${conexion.valor}%</span> of first time perpetrators are within the ages of: `;
+          mensaje += `<span class="resaltar agrandar1-2">${nombreGrupo}</span>`;
+          contenedorInfo.innerHTML = mensaje;
+          // info.llenar([['hola', 'tu']]);
+          // info.innerHTML =;
+          svg?.classList.add('interactuando');
+          info.mostrar();
+          elemento.classList.add('activo');
+        });
+
+        elemento.addEventListener('mouseleave', () => {
+          // info.innerText = '';
+          svg?.querySelector('.conexion.activo')?.classList.remove('activo');
+          info.esconder();
+          svg?.classList.remove('interactuando');
+        });
+
+        elemento.addEventListener('mousemove', (evento) => {
+          Object.assign(contenedorInfo.style, {
+            top: `${evento.pageY - contenedorInfo.clientHeight - 10}px`,
+            left: `${evento.pageX}px`,
+          });
+        });
+        svg?.appendChild(elemento);
+      });
+
+      grupo.appendChild(semilla);
+      grupo.appendChild(nombre);
+      grupo.appendChild(valor);
+
+      svg?.append(grupo);
     });
+  }
+  function procesarGrupoEtario(grupo: GrupoEP) {
+    let yAcumulado = 0;
 
-    conexion.addEventListener('mouseleave', () => {
-      // info.innerText = '';
-      svg?.querySelector('.conexion.activo')?.classList.remove('activo');
-      info.classList.remove('visible');
-      svg?.classList.remove('interactuando');
-    });
+    return llaves
+      .sort((a, b) => grupo.totales[b as keyof LlavesEP] - grupo.totales[a as keyof LlavesEP])
+      .map((nombre, i) => {
+        const valor = grupo.totales[nombre as keyof LlavesEP];
+        const y = espacioEntre * (i + 1) + margenY + yAcumulado;
+        const acumulados: LlavesEP = { menor14: 0, entre15y18: 0, entre19y35: 0, entre36y50: 0, mayor51: 0 };
 
-    conexion.addEventListener('mousemove', (evento) => {
-      console.log(evento.clientX, evento.clientY);
-      Object.assign(info.style, {
-        top: `${evento.pageY - 500}px`,
-        left: `${evento.pageX - 200}px`,
+        const conexiones = grupo.datos
+          .map((lugar) => {
+            const valorLinea = lugar[nombre as keyof LlavesEP];
+            acumulados[nombre as keyof LlavesEP] += valorLinea;
+
+            return {
+              pais: lugar.pais,
+              origen: nombre,
+              valor: valorLinea,
+              origenY1: 0,
+              origenY2: 0,
+              destinoY1: 0,
+              destinoY2: 0,
+              color: coloresGrupos[nombre as keyof LlavesEP],
+            };
+          })
+          .sort((a, b) => b.valor - a.valor);
+
+        const respuesta = {
+          llave: nombre as keyof LlavesEP,
+          y,
+          valor,
+          conexiones,
+          totalOrigen: acumulados[nombre as keyof LlavesEP] | 0,
+        };
+        yAcumulado += alto(valor);
+        return respuesta;
+      });
+  }
+
+  function definirConexiones() {
+    origenesMujeres.forEach((origen, i) => {
+      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, origen.totalOrigen, 0, origen.valor - 2.2));
+      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
+      origen.conexiones.forEach((lugar, ii) => {
+        const pais = paises.find((pais) => pais.nombre === lugar.pais);
+        const y2 = i > 0 ? origenesMujeres[i - 1].conexiones.find((l) => l.pais === lugar.pais)?.destinoY2 : pais?.y;
+
+        lugar.origenY1 = ii === 0 ? origen.y : origen.conexiones[ii - 1].origenY2;
+        lugar.origenY2 = lugar.origenY1;
+        lugar.origenY2 += escalaYOrigen(lugar.valor);
+        lugar.destinoY1 = y2 || 0;
+        lugar.destinoY2 = lugar.destinoY1;
+        lugar.destinoY2 += escalaYDestino(lugar.valor) | 0;
       });
     });
+
+    origenesMujeres.reverse(); // invertir orden para que se pinten las más gruesas encima de las menos
+
+    origenesHombres.forEach((destino, i) => {
+      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
+      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, destino.totalOrigen, 0, destino.valor - 1.2));
+
+      destino.conexiones.forEach((lugar, ii) => {
+        const pais = paises.find((pais) => pais.nombre === lugar.pais);
+        // const y2 = ii > 0 ? pais?.y : origenesHombres[ii - 1].conexiones.find((l) => l.pais === lugar.pais)?.destinoY2;
+        // const y1 = pais ? pais.y : 0;
+        const y1 = i === 0 ? pais?.y : origenesHombres[i - 1].conexiones.find((l) => l.pais === lugar.pais)?.origenY2;
+
+        lugar.origenY1 = y1 || 0;
+        lugar.origenY2 = lugar.origenY1;
+        lugar.origenY2 += escalaYOrigen(lugar.valor);
+        lugar.destinoY1 = ii === 0 ? destino.y : destino.conexiones[ii - 1].destinoY2;
+        lugar.destinoY2 = lugar.destinoY1;
+        lugar.destinoY2 += escalaYDestino(lugar.valor) | 0;
+      });
+    });
+
+    origenesHombres.reverse();
+  }
+
+  function curva(conexion: Conexion, lado: 'izq' | 'der') {
+    const anchoGrafica = svg?.clientWidth || 0;
+    const mitad = anchoGrafica / 2;
+    const centroCurva = lado === 'izq' ? mitad / 2 - margenCentro : mitad + margenCentro + mitad / 2;
+    const xOrigen = lado === 'izq' ? 40 : mitad + margenCentro;
+    const xDestino = lado === 'izq' ? mitad - margenCentro : anchoGrafica - 44;
+    const x1 = centroCurva;
+    const x2 = centroCurva;
+    const y1 = conexion.origenY1;
+    const y2 = conexion.destinoY1;
+    let forma = `M${xOrigen},${conexion.origenY1}`;
+
+    forma += ` C${x1},${y1}`;
+    forma += ` ${x2},${y2}`;
+    forma += ` ${xDestino},${conexion.destinoY1}`;
+    forma += `L${xDestino},${conexion.destinoY2}`;
+    const x3 = centroCurva;
+    const y3 = conexion.destinoY2;
+    const x4 = centroCurva;
+    const y4 = conexion.origenY2;
+    forma += ` C${x3},${y3}`;
+    forma += ` ${x4},${y4}`;
+    forma += ` ${xOrigen},${conexion.origenY2}`;
+    forma += 'Z';
+    return forma;
+  }
+
+  window.addEventListener('resize', () => {
+    if (!svg) return;
+
+    const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+
+    if (conexiones.length) {
+      conexiones.forEach((conexion) => {
+        const { datos, lado } = conexion.dataset;
+        if (datos && lado) conexion.setAttribute('d', curva(JSON.parse(datos), lado as 'izq' | 'der'));
+      });
+    }
   });
+
+  function crearInteracciones() {
+    const epUnTercio14 = document.getElementById('epUnTercio14');
+    if (epUnTercio14) {
+      epUnTercio14.onmouseenter = () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.add('interactuando');
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+        const menor14 = svg.querySelectorAll(`.conexion.cmenor14`);
+        if (menor14.length) {
+          menor14.forEach((nodo) => nodo.classList.add('activo'));
+        }
+      };
+
+      epUnTercio14.onmouseleave = () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.remove('interactuando');
+
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+      };
+    }
+
+    const epUnTercio15 = document.getElementById('epUnTercio15');
+    if (epUnTercio15) {
+      epUnTercio15.onmouseenter = () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.add('interactuando');
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+        const menor15 = svg.querySelectorAll(`.conexion.centre15y18`);
+        if (menor15.length) {
+          menor15.forEach((nodo) => nodo.classList.add('activo'));
+        }
+      };
+
+      epUnTercio15.onmouseleave = () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.remove('interactuando');
+
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+      };
+    }
+  }
 </script>
 
-<style lang='scss'>
+<style lang='scss' is:global>
   .graficaConexiones {
     text {
       fill: white;
@@ -230,38 +331,21 @@ function curva(conexion: Conexion) {
 
     &.interactuando {
       .conexion {
-        opacity: 0.4;
+        opacity: 0.2;
 
         &.activo {
           opacity: 1;
         }
       }
     }
-  }
 
-  .activo {
-  }
-  #info {
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100px;
-    min-height: 50px;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: rgb(37, 35, 77);
-    padding: 0.5em;
-    border-radius: 0.3em;
-    font-size: 0.85em;
-    border: 1px;
-  }
+    .origen {
+      font-size: 0.75em;
+    }
 
-  .origen {
-    font-size: 0.75em;
-  }
-
-  .nombreColumna {
-    font-size: 19px;
-    font-weight: bold;
+    .nombreColumna {
+      font-size: 19px;
+      font-weight: bold;
+    }
   }
 </style>
