@@ -1,5 +1,4 @@
-export interface TEdadPerpetrador {
-  n: number;
+export interface LlavesEP {
   menor14: number;
   entre15y18: number;
   entre19y35: number;
@@ -7,7 +6,9 @@ export interface TEdadPerpetrador {
   mayor51: number;
 }
 
-export type LlavesEP = keyof TEdadPerpetrador;
+export interface TEdadPerpetrador extends LlavesEP {
+  n: number;
+}
 
 export interface TEdadPerpetradorDatos extends TEdadPerpetrador {
   pais: string;
@@ -40,3 +41,12 @@ export interface DatosEdadPerpetrador extends Arbol {
     mayor18: GrupoSexoEP;
   };
 }
+
+export type Conexion = {
+  pais: string;
+  valor: number;
+  origenY1: number;
+  origenY2: number;
+  destinoY1: number;
+  destinoY2: number;
+};
