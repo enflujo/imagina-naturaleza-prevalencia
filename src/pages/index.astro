@@ -7,6 +7,27 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
 <Plantilla>
+  <nav id='navegacion'>
+    <p class='tituloMenu'>...</p>
+    <ul>
+      <li><a href='#conclusion1'><span class='nombre'>Mean lifetime CSEA prevalence is very high</span></a></li>
+      <li>
+        <a href='#conclusion2'><span class='nombre'>Variation in CSEA prevalence across countries is huge</span></a>
+      </li>
+      <li>
+        <a href='#conclusion3'
+          ><span class='nombre'>Mean lifetime CSEA prevalence is especially high for girls and youg woman</span></a>
+      </li>
+      <li><a href='#conclusion4'><span class='nombre'>CSEA happens very early in life</span></a></li>
+      <li><a href='#conclusion5'><span class='nombre'>Poly-victimization is very common</span></a></li>
+      <li><a href='#conclusion6'><span class='nombre'>Educational attainment is very low</span></a></li>
+      <li>
+        <a href='#conclusion7'><span class='nombre'>Relationship between victims and their first perpetrator</span></a>
+      </li>
+      <li><a href='#conclusion8'><span class='nombre'>Perpetrators are very young</span></a></li>
+      <li><a href='#conclusion9'><span class='nombre'>Home is not the safest place</span></a></li>
+    </ul>
+  </nav>
   <main>
     <h1 class='titulo'>Prevalence and nature of child sexual exploitation and abuse</h1>
 
@@ -59,7 +80,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
       <h2>Conclusiones</h2>
 
-      <section>
+      <section id='conclusion1'>
         <h3>The mean lifetime CSEA prevalence rate is very high (17 countries)</h3>
         <p>
           16.54% for women and 9.01% for men (as reported retrospectively by persons 18 to 24 years old). The
@@ -68,7 +89,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section>
+      <section id='conclusion2'>
         <h3>Variation in CSEA prevalence across countries is huge (17 countries)</h3>
         <p>
           for both lifetime and last year prevalences, and from the reports of both age groups (13-17 and 18-24). The
@@ -76,14 +97,14 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section>
+      <section id='conclusion3'>
         <h3>The mean lifetime CSEA prevalence is especially high for girls and young woman (17 countries)</h3>
         <p>
           Lifetime exposure to CSEA reported by children and youth 13 to 17 years old is 1.97 times higher for females.
         </p>
       </section>
 
-      <section>
+      <section id='conclusion4'>
         <h3>CSEA happens very early in life, for both men and women (12 countries)</h3>
         <p>
           Approximately half of CSEA victims say that the first perpetration happened before they were 13 years old.
@@ -92,7 +113,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section>
+      <section id='conclusion5'>
         <h3>Poly-victimization is very common among CSEA victims (17 countries)</h3>
         <p>
           According to the VACS data, the proportion of CSEA victims that were also victims of physical or emotional
@@ -100,7 +121,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section>
+      <section id='conclusion6'>
         <h3>Average educational attainment of both female and male CSEA victims is very low (15 countries)</h3>
         <p>
           Less than 6% of the victims (18 to 24 years old) report having more than secondary education, and almost two
@@ -108,7 +129,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section>
+      <section id='conclusion7'>
         <h3>
           The situation varies significantly across countries, and between men and woman in terms of the relationship
           between victims of CSEA and their first perpetrator (6 countries)
@@ -120,23 +141,21 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section class='columnas'>
-        <div class='texto'>
-          <h3>According to the VACS data, CSEA perpetrators are young</h3>
-          <p class='paisesAnalizados'>(9 countries)</p>
-          <p>
-            Approximately <span id='epUnTercio14' class='conexionConGrafica' style='color:#69d2e7'>
-              one third of the CSEA victims report that the first perpetrator was 14 years old or less</span
-            >, and <span id='epUnTercio15' class='conexionConGrafica' style='color:#ecd078'
-              >another third that the perpetrator was between 15 and 18 years old</span
-            >. This pattern is similar for young men and women.
-          </p>
-        </div>
+      <section id='conclusion8'>
+        <h3>According to the VACS data, CSEA perpetrators are young</h3>
+        <p class='paisesAnalizados'>(9 countries)</p>
+        <p>
+          Approximately <span id='epUnTercio14' class='conexionConGrafica' style='color:#69d2e7'>
+            one third of the CSEA victims report that the first perpetrator was 14 years old or less</span
+          >, and <span id='epUnTercio15' class='conexionConGrafica' style='color:#ecd078'
+            >another third that the perpetrator was between 15 and 18 years old</span
+          >. This pattern is similar for young men and women.
+        </p>
 
         <Conexiones />
       </section>
 
-      <section>
+      <section id='conclusion9'>
         <h3>The evidence provided by the VACS suggests home is not the safest place (6 countries)</h3>
         <p>According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home.</p>
       </section>
@@ -210,26 +229,23 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 <style lang='scss'>
   section {
     margin: 10em 0 0 0;
-    .texto {
-      padding-right: 5em;
 
-      h3 {
-        display: flex;
-        font-weight: 800;
-        font-size: 2.5em;
-        text-align: center;
+    h3 {
+      display: flex;
+      font-weight: 800;
+      font-size: 2.5em;
+      text-align: center;
 
-        .icono {
-          height: 50px;
-        }
+      .icono {
+        height: 50px;
       }
+    }
 
-      .paisesAnalizados {
-        font-weight: 500;
-        font-size: 1.2em;
-        text-align: center;
-        margin-bottom: 1.5em;
-      }
+    .paisesAnalizados {
+      font-weight: 500;
+      font-size: 1.2em;
+      text-align: center;
+      margin-bottom: 1.5em;
     }
   }
   #contenedorMapa {
