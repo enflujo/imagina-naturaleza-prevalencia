@@ -5,7 +5,7 @@ const guardarJSON = (json, nombre) => {
   writeFileSync(`./estaticos/${nombre}.json`, JSON.stringify(json));
 };
 
-const redondearDecimal = (num, minimo, maximo) => +(Math.round(+(num + 'e+2')) + 'e-2');
+// const redondearDecimal = (num, minimo, maximo) => +(Math.round(+(num + 'e+2')) + 'e-2');
 
 const listaPaises = [
   'Cambodia',

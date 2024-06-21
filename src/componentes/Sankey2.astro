@@ -5,38 +5,38 @@
 <div id='contenedorSankey2'></div>
 
 <script>
-  type Nodo = {
-    name: string;
-    value: number;
-    side: 'l' | 'r';
-  };
+  // type Nodo = {
+  //   name: string;
+  //   value: number;
+  //   side: 'l' | 'r';
+  // };
   import { edadPerpetrador } from '@/cerebro/datos';
   // import { select, format } from 'd3';
   // import { sankey, sankeyLinkHorizontal } from 'd3-sankey';
 
   const { mujeres, hombres } = edadPerpetrador.vida?.mayor18;
   // console.log(mujeres);
-  const paises: Nodo[] = mujeres.datos.map((lugar) => ({ name: lugar.pais, value: 0 }));
+  const paises: any[] = mujeres.datos.map((lugar) => ({ name: lugar.pais, value: 0 }));
 
-  const llaves = Object.keys(edadPerpetrador.nombres)
-    .filter((nombre) => nombre !== 'n')
-    .sort((a, b) => mujeres.totales[b] - mujeres.totales[a]);
+  // const llaves = Object.keys(edadPerpetrador.nombres)
+  //   .filter((nombre) => nombre !== 'n')
+  //   .sort((a, b) => mujeres.totales[b] - mujeres.totales[a]);
 
   const links: any = [];
 
-  const nodos: Nodo[] = [
-    { name: '14 or less', value: 0, side: 'l' },
-    { name: '19 to 35', value: 0, side: 'l' },
-    { name: '15 to 18', value: 0, side: 'l' },
-    { name: '36 to 50', value: 0, side: 'l' },
-    { name: '51 or older', value: 0, side: 'l' },
+  // const nodos: Nodo[] = [
+  //   { name: '14 or less', value: 0, side: 'l' },
+  //   { name: '19 to 35', value: 0, side: 'l' },
+  //   { name: '15 to 18', value: 0, side: 'l' },
+  //   { name: '36 to 50', value: 0, side: 'l' },
+  //   { name: '51 or older', value: 0, side: 'l' },
 
-    { name: 'h 14 or less', value: 32.2, side: 'r' },
-    { name: 'h 19 to 35', value: 30.8, side: 'r' },
-    { name: 'h 15 to 18', value: 30.7, side: 'r' },
-    { name: 'h 36 to 50', value: 4.7, side: 'r' },
-    { name: 'h 51 or older', value: 1.6, side: 'r' },
-  ];
+  //   { name: 'h 14 or less', value: 32.2, side: 'r' },
+  //   { name: 'h 19 to 35', value: 30.8, side: 'r' },
+  //   { name: 'h 15 to 18', value: 30.7, side: 'r' },
+  //   { name: 'h 36 to 50', value: 4.7, side: 'r' },
+  //   { name: 'h 51 or older', value: 1.6, side: 'r' },
+  // ];
 
   mujeres.datos.forEach((lugar) => {
     const pais = paises.find((pais) => pais.name === lugar.pais);

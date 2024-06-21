@@ -1,8 +1,5 @@
 ---
 import Conexiones from '@/componentes/Conexiones.astro';
-import Mapa from '@/componentes/Mapa.astro';
-import Sankey from '@/componentes/Sankey.astro';
-import Sankey2 from '@/componentes/Sankey2.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
@@ -16,7 +13,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       </li>
       <li>
         <a href='#conclusion3'
-          ><span class='nombre'>Mean lifetime CSEA prevalence is especially high for girls and youg woman</span></a>
+          ><span class='nombre'>Mean lifetime CSEA prevalence is especially high for girls and youg woman</span></a
+        >
       </li>
       <li><a href='#conclusion4'><span class='nombre'>CSEA happens very early in life</span></a></li>
       <li><a href='#conclusion5'><span class='nombre'>Poly-victimization is very common</span></a></li>
@@ -50,7 +48,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
     <div class='contenido'>
       <!-- <div id="grafica" class="columnas">
-        <div class="linea">
+        <div class="linea"> 
           <div id="u12" class="modulo l3 u12"><h3>Last 12 months</h3></div>
           <div id="vida" class="modulo l3 vida"><h3>Lifetime</h3></div>
         </div>
@@ -164,10 +162,10 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 </Plantilla>
 
 <script>
-  import { edadPerpetrador } from '@/cerebro/datos';
-  import type { Arbol, GrupoSexoEP } from '@/tipos';
-  const elementosU12 = document.body.querySelectorAll('.u12');
-  const elementosVida = document.body.querySelectorAll('.vida');
+  // import { edadPerpetrador } from '@/cerebro/datos';
+  // import type { Arbol, GrupoSexoEP } from '@/tipos';
+  // const elementosU12 = document.body.querySelectorAll('.u12');
+  // const elementosVida = document.body.querySelectorAll('.vida');
 
   /**
    *  | u12                                           | vida                                                |
@@ -175,28 +173,28 @@ import Plantilla from '@/plantillas/Plantilla.astro';
    *  | u12MenorM | u12MenorH | u12MayorM | u12MayorH | vidaMenorM | vidaMenorH | vidaMayorM  | vidaMayorH  |
    *  */
 
-  function esconderVacios(datos: Arbol) {
-    if (!datos.ultimos12) {
-      elementosU12.forEach((elemento) => elemento.classList.add('invisible'));
-    } else {
-      elementosU12.forEach((elemento) => elemento.classList.remove('invisible'));
-    }
+  // function esconderVacios(datos: Arbol) {
+  //   if (!datos.ultimos12) {
+  //     elementosU12.forEach((elemento) => elemento.classList.add('invisible'));
+  //   } else {
+  //     elementosU12.forEach((elemento) => elemento.classList.remove('invisible'));
+  //   }
 
-    if (!datos.vida) {
-      elementosVida.forEach((elemento) => elemento.classList.add('invisible'));
-    } else {
-      elementosVida.forEach((elemento) => elemento.classList.remove('invisible'));
-    }
-  }
+  //   if (!datos.vida) {
+  //     elementosVida.forEach((elemento) => elemento.classList.add('invisible'));
+  //   } else {
+  //     elementosVida.forEach((elemento) => elemento.classList.remove('invisible'));
+  //   }
+  // }
 
-  const { mujeres, hombres } = edadPerpetrador.vida?.mayor18 as GrupoSexoEP;
-  if (mujeres && hombres) {
-    const menores14 = mujeres.datos.reduce((acumulado, valor) => acumulado + valor.menor14, 0) / mujeres.datos.length;
+  // const { mujeres, hombres } = edadPerpetrador.vida?.mayor18 as GrupoSexoEP;
+  // if (mujeres && hombres) {
+  //   const menores14 = mujeres.datos.reduce((acumulado, valor) => acumulado + valor.menor14, 0) / mujeres.datos.length;
 
-    console.log(menores14);
-  }
+  //   console.log(menores14);
+  // }
 
-  esconderVacios(edadPerpetrador);
+  // esconderVacios(edadPerpetrador);
   // const gql = String.raw;
 
   // const Peticion = gql`
