@@ -3,7 +3,7 @@
 ---
 
 <div id="edadPerpetrador" class="contenedorConexiones">
-  <svg width="100%" height="600px" class="graficaConexiones">
+  <svg width="100%" height="600px" id="conexiones1" class="graficaConexiones">
     <text x="25%" y="20px" class="nombreColumna" text-anchor="middle">Data for female victims</text>
     <text x="75%" y="20px" class="nombreColumna" text-anchor="middle">Data for male victims</text>
   </svg>
@@ -16,7 +16,7 @@
   import type { GrupoEP } from '@/tipos';
   import { convertirEscala } from '@enflujo/alquimia';
 
-  const svg = document.querySelector<SVGAElement>('.graficaConexiones');
+  const svg = document.querySelector<SVGAElement>('#conexiones1');
   const contenedorInfo = info.elemento();
   const { mujeres, hombres } = edadPerpetrador.vida.mayor18;
   const altoViz = 600;
@@ -117,8 +117,6 @@
           mensaje += `<span class="resaltar agrandar1-4${conexion.valor >= 10 ? ' grave' : ''}"> ${conexion.valor}%</span> of first time perpetrators are within the ages of: `;
           mensaje += `<span class="resaltar agrandar1-2">${nombreGrupo}</span>`;
           contenedorInfo.innerHTML = mensaje;
-          // info.llenar([['hola', 'tu']]);
-          // info.innerHTML =;
           svg?.classList.add('interactuando');
           info.mostrar();
           elemento.classList.add('activo');
@@ -271,7 +269,7 @@
   function crearInteracciones() {
     const epUnTercio14 = document.getElementById('epUnTercio14');
     if (epUnTercio14) {
-      epUnTercio14.onmouseenter = () => {
+      epUnTercio14.addEventListener('mouseenter', () => {
         if (!svg) return;
         const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
         svg.classList.add('interactuando');
@@ -282,9 +280,9 @@
         if (menor14.length) {
           menor14.forEach((nodo) => nodo.classList.add('activo'));
         }
-      };
+      });
 
-      epUnTercio14.onmouseleave = () => {
+      epUnTercio14.addEventListener('mouseleave', () => {
         if (!svg) return;
         const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
         svg.classList.remove('interactuando');
@@ -292,12 +290,12 @@
         conexiones.forEach((conexion) => {
           conexion.classList.remove('activo');
         });
-      };
+      });
     }
 
     const epUnTercio15 = document.getElementById('epUnTercio15');
     if (epUnTercio15) {
-      epUnTercio15.onmouseenter = () => {
+      epUnTercio15.addEventListener('mouseenter', () => {
         if (!svg) return;
         const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
         svg.classList.add('interactuando');
@@ -308,9 +306,9 @@
         if (menor15.length) {
           menor15.forEach((nodo) => nodo.classList.add('activo'));
         }
-      };
+      });
 
-      epUnTercio15.onmouseleave = () => {
+      epUnTercio15.addEventListener('mouseleave', () => {
         if (!svg) return;
         const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
         svg.classList.remove('interactuando');
@@ -318,7 +316,7 @@
         conexiones.forEach((conexion) => {
           conexion.classList.remove('activo');
         });
-      };
+      });
     }
   }
 </script>

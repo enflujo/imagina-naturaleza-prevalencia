@@ -1,29 +1,176 @@
 import type { DatosEdadPerpetrador } from '@/tipos';
 /**
  * 
-Country 	N 	Current or Former Romantic Partners 	Family member 	Friend, classmate, or neighbour 	Other 
-Cambodia	45	11.6%	28.1%	12.1%	48.1%
-Colombia	100	14.0%	9.0%	62.6%	14.4%
-Cote d'Ivoire					
-El Salvador					
-Haiti	89	17.8%	78.1%	0.0%	4.1%
-Honduras					
-Kenya					
-Lesotho					
-Malawi					
-Moldova					
-Mozambique	27	27.8%	0.2%	66.9%	5.1%
-Namibia					
-Nigeria	140	19.7%	6.8%	68.6%	4.9%
-Tanzania					
-Zambia	43	32.5%	1.3%	61.5%	4.7%
-Zimbabwe	6	0.0%	65.2%	0.0%	34.8%
-__
-Total 	450	17.6%	27.0%	38.8%	16.6%
-
 
 
  */
+
+export const lugarViolencia = {
+  nombres: {
+    n: 'Número de personas encuestadas',
+    casa: 'Home',
+    fuera: 'Outdoor',
+    otro: 'Other public venue/spaces',
+  },
+  vida: {
+    entre13y17: {
+      mujeres: {
+        totales: { n: 1012, casa: 69.3, fuera: 25.3, otro: 5.3 },
+        datos: [
+          { pais: 'Cambodia', n: 21, casa: 96.1, fuera: 3.9, otro: 0.0 },
+          { pais: 'Colombia', n: 98, casa: 69.4, fuera: 30.5, otro: 0.1 },
+          { pais: 'Haiti', n: 98, casa: 64.7, fuera: 35.3, otro: 0.0 },
+          { pais: 'Nigeria', n: 190, casa: 68.1, fuera: 31.3, otro: 0.6 },
+          { pais: 'Eswatini', n: 171, casa: 57.2, fuera: 23.8, otro: 19.0 },
+          { pais: 'Tanzania', n: 121, casa: 42.0, fuera: 41.9, otro: 16.1 },
+          { pais: 'Zambia', n: 92, casa: 61.7, fuera: 35.3, otro: 3.0 },
+          { pais: 'Zimbabwe', n: 221, casa: 95.2, fuera: 0.8, otro: 4.0 },
+        ],
+      },
+      hombres: {
+        totales: { n: 419, casa: 67.0, fuera: 31.4, otro: 1.6 },
+        datos: [
+          { pais: 'Cambodia', n: 17, casa: 100.0, fuera: 0.0, otro: 0.0 },
+          { pais: 'Colombia', n: 50, casa: 51.9, fuera: 48.0, otro: 0.0 },
+          { pais: 'Haiti', n: 84, casa: 59.9, fuera: 40.1, otro: 0.0 },
+          { pais: 'Nigeria', n: 126, casa: 62.7, fuera: 37.3, otro: 0.0 },
+          { pais: 'Tanzania', n: 98, casa: 44.3, fuera: 44.5, otro: 11.2 },
+          { pais: 'Zambia', n: 41, casa: 50.0, fuera: 50.0, otro: 0.0 },
+          { pais: 'Zimbabwe', n: 3, casa: 100.0, fuera: 0.0, otro: 0.0 },
+        ],
+      },
+    },
+    entre18y24: {
+      mujeres: {
+        totales: { n: 1926, casa: 76.3, fuera: 19.4, otro: 4.3 },
+        datos: [
+          { pais: 'Cambodia', n: 40, casa: 95.5, fuera: 4.5, otro: 0.0 },
+          { pais: 'Colombia', n: 179, casa: 70.1, fuera: 22.8, otro: 7.1 },
+          { pais: 'Haiti', n: 203, casa: 75.7, fuera: 23.9, otro: 0.4 },
+          { pais: 'Nigeria', n: 244, casa: 74.7, fuera: 24.9, otro: 0.5 },
+          { pais: 'Eswatini', n: 417, casa: 66.1, fuera: 18.7, otro: 15.3 },
+          { pais: 'Tanzania', n: 138, casa: 61.5, fuera: 31.2, otro: 7.2 },
+          { pais: 'Zambia', n: 104, casa: 69.6, fuera: 29.3, otro: 1.1 },
+          { pais: 'Zimbabwe', n: 601, casa: 97.2, fuera: 0.2, otro: 2.6 },
+        ],
+      },
+      hombres: {
+        totales: { n: 577, casa: 77.8, fuera: 19.1, otro: 3.1 },
+        datos: [
+          { pais: 'Cambodia', n: 33, casa: 93.0, fuera: 7.0, otro: 0.0 },
+          { pais: 'Colombia', n: 98, casa: 63.1, fuera: 28.2, otro: 8.7 },
+          { pais: 'Haiti', n: 162, casa: 81.0, fuera: 19.0, otro: 0.0 },
+          { pais: 'Nigeria', n: 140, casa: 71.8, fuera: 26.6, otro: 1.6 },
+          { pais: 'Tanzania', n: 87, casa: 62.0, fuera: 27.5, otro: 10.5 },
+          { pais: 'Zambia', n: 51, casa: 73.5, fuera: 25.3, otro: 1.2 },
+          { pais: 'Zimbabwe', n: 6, casa: 100.0, fuera: 0.0, otro: 0.0 },
+        ],
+      },
+    },
+  },
+};
+
+export const edadVictimas = {
+  nombres: {
+    n: 'Número de personas encuestadas',
+    menor14: '0 to 13',
+    entre14y15: '14 to 15',
+    entre16y17: '16 to 17',
+  },
+  vida: {
+    entre13y17: {
+      mujeres: {
+        totales: { n: 2172, menor14: 47.4, entre14y15: 37.0, entre16y17: 15.6 },
+        datos: [
+          { pais: 'Cambodia', n: 31, menor14: 44.4, entre14y15: 23.7, entre16y17: 31.9 },
+          { pais: 'Colombia', n: 81, menor14: 46.3, entre14y15: 48.4, entre16y17: 5.3 },
+          { pais: "Côte d'Ivoire", n: 118, menor14: 38.2, entre14y15: 43.8, entre16y17: 18.1 },
+          { pais: 'El Salvador', n: 37, menor14: 42.4, entre14y15: 28.2, entre16y17: 29.4 },
+          { pais: 'Haiti', n: 99, menor14: 44.5, entre14y15: 44.1, entre16y17: 11.4 },
+          { pais: 'Honduras', n: 157, menor14: 60.2, entre14y15: 29.0, entre16y17: 10.8 },
+          { pais: 'Kenya', n: 115, menor14: 39.4, entre14y15: 43.8, entre16y17: 16.8 },
+          { pais: 'Lesotho', n: 339, menor14: 32.7, entre14y15: 41.3, entre16y17: 26.0 },
+          { pais: 'Malawi', n: 102, menor14: 62.6, entre14y15: 32.0, entre16y17: 5.4 },
+          { pais: 'Moldova', n: 65, menor14: 38.0, entre14y15: 45.5, entre16y17: 16.5 },
+          { pais: 'Mozambique', n: 128, menor14: 47.5, entre14y15: 38.3, entre16y17: 14.2 },
+          { pais: 'Namibia', n: 222, menor14: 51.4, entre14y15: 33.6, entre16y17: 15.0 },
+          { pais: 'Nigeria', n: 200, menor14: 54.1, entre14y15: 37.1, entre16y17: 8.8 },
+          { pais: 'Eswatini', n: 171, menor14: 25.3, entre14y15: 43.4, entre16y17: 31.4 },
+          { pais: 'Tanzania', n: 137, menor14: 39.4, entre14y15: 47.5, entre16y17: 13.1 },
+          { pais: 'Zambia', n: 97, menor14: 39.4, entre14y15: 49.7, entre16y17: 10.9 },
+          { pais: 'Zimbabwe', n: 73, menor14: 100.0, entre14y15: 0.0, entre16y17: 0.0 },
+        ],
+      },
+      hombres: {
+        totales: { n: 849, menor14: 49.7, entre14y15: 37.4, entre16y17: 13.0 },
+        datos: [
+          { pais: 'Cambodia', n: 29, menor14: 88.8, entre14y15: 9.9, entre16y17: 1.2 },
+          { pais: 'Colombia', n: 31, menor14: 32.9, entre14y15: 61.3, entre16y17: 5.9 },
+          { pais: "Côte d'Ivoire", n: 63, menor14: 43.7, entre14y15: 39.8, entre16y17: 16.6 },
+          { pais: 'El Salvador', n: 25, menor14: 56.1, entre14y15: 33.5, entre16y17: 10.4 },
+          { pais: 'Haiti', n: 91, menor14: 68.1, entre14y15: 25.4, entre16y17: 6.6 },
+          { pais: 'Honduras', n: 102, menor14: 48.1, entre14y15: 40.2, entre16y17: 11.7 },
+          { pais: 'Kenya', n: 29, menor14: 62.5, entre14y15: 33.2, entre16y17: 4.3 },
+          { pais: 'Lesotho', n: 21, menor14: 37.9, entre14y15: 52.5, entre16y17: 9.6 },
+          { pais: 'Malawi', n: 81, menor14: 69.1, entre14y15: 20.9, entre16y17: 10.0 },
+          { pais: 'Moldova', n: 33, menor14: 12.9, entre14y15: 53.4, entre16y17: 33.7 },
+          { pais: 'Mozambique', n: 34, menor14: 61.5, entre14y15: 28.8, entre16y17: 9.7 },
+          { pais: 'Namibia', n: 35, menor14: 34.9, entre14y15: 55.2, entre16y17: 9.9 },
+          { pais: 'Nigeria', n: 127, menor14: 44.2, entre14y15: 33.4, entre16y17: 22.5 },
+          { pais: 'Tanzania', n: 102, menor14: 54.5, entre14y15: 32.8, entre16y17: 12.8 },
+          { pais: 'Zambia', n: 44, menor14: 40.5, entre14y15: 49.5, entre16y17: 10.0 },
+          { pais: 'Zimbabwe', n: 2, menor14: 100.0, entre14y15: 0.0, entre16y17: 0.0 },
+        ],
+      },
+    },
+    entre18y24: {
+      mujeres: {
+        totales: { n: 2815, menor14: 28.8, entre14y15: 28.5, entre16y17: 42.7 },
+        datos: [
+          { pais: 'Cambodia', n: 27, menor14: 26.2, entre14y15: 11.6, entre16y17: 62.2 },
+          { pais: 'Colombia', n: 99, menor14: 37.2, entre14y15: 42.8, entre16y17: 20.0 },
+          { pais: "Côte d'Ivoire", n: 124, menor14: 15.6, entre14y15: 38.9, entre16y17: 45.5 },
+          { pais: 'El Salvador', n: 69, menor14: 35.4, entre14y15: 32.1, entre16y17: 32.4 },
+          { pais: 'Haiti', n: 138, menor14: 24.8, entre14y15: 34.8, entre16y17: 40.4 },
+          { pais: 'Honduras', n: 234, menor14: 54.9, entre14y15: 16.5, entre16y17: 28.6 },
+          { pais: 'Kenya', n: 100, menor14: 18.4, entre14y15: 26.6, entre16y17: 54.9 },
+          { pais: 'Lesotho', n: 479, menor14: 13.1, entre14y15: 26.7, entre16y17: 60.2 },
+          { pais: 'Malawi', n: 116, menor14: 28.8, entre14y15: 35.7, entre16y17: 35.6 },
+          { pais: 'Moldova', n: 59, menor14: 8.6, entre14y15: 21.7, entre16y17: 69.8 },
+          { pais: 'Mozambique', n: 128, menor14: 20.2, entre14y15: 39.1, entre16y17: 40.7 },
+          { pais: 'Namibia', n: 250, menor14: 21.9, entre14y15: 34.7, entre16y17: 43.4 },
+          { pais: 'Nigeria', n: 250, menor14: 19.8, entre14y15: 31.8, entre16y17: 48.4 },
+          { pais: 'Eswatini', n: 244, menor14: 17.0, entre14y15: 30.5, entre16y17: 52.5 },
+          { pais: 'Tanzania', n: 164, menor14: 19.2, entre14y15: 39.6, entre16y17: 41.2 },
+          { pais: 'Zambia', n: 110, menor14: 28.4, entre14y15: 20.9, entre16y17: 50.7 },
+          { pais: 'Zimbabwe', n: 224, menor14: 100.0, entre14y15: 0.0, entre16y17: 0.0 },
+        ],
+      },
+      hombres: {
+        totales: { n: 930, menor14: 29.4, entre14y15: 20.6, entre16y17: 50.0 },
+        datos: [
+          { pais: 'Cambodia', n: 34, menor14: 72.3, entre14y15: 4.2, entre16y17: 23.4 },
+          { pais: 'Colombia', n: 38, menor14: 37.7, entre14y15: 17.9, entre16y17: 44.3 },
+          { pais: "Côte d'Ivoire", n: 68, menor14: 36.0, entre14y15: 19.3, entre16y17: 44.7 },
+          { pais: 'El Salvador', n: 18, menor14: 13.1, entre14y15: 19.4, entre16y17: 67.6 },
+          { pais: 'Haiti', n: 110, menor14: 27.7, entre14y15: 37.5, entre16y17: 34.8 },
+          { pais: 'Honduras', n: 133, menor14: 30.0, entre14y15: 26.6, entre16y17: 43.5 },
+          { pais: 'Kenya', n: 23, menor14: 9.3, entre14y15: 11.8, entre16y17: 78.9 },
+          { pais: 'Lesotho', n: 29, menor14: 11.9, entre14y15: 36.5, entre16y17: 51.6 },
+          { pais: 'Malawi', n: 78, menor14: 31.9, entre14y15: 23.0, entre16y17: 45.1 },
+          { pais: 'Moldova', n: 25, menor14: 0.0, entre14y15: 31.2, entre16y17: 68.8 },
+          { pais: 'Mozambique', n: 27, menor14: 9.7, entre14y15: 14.8, entre16y17: 75.5 },
+          { pais: 'Namibia', n: 46, menor14: 14.7, entre14y15: 28.9, entre16y17: 56.4 },
+          { pais: 'Nigeria', n: 147, menor14: 28.9, entre14y15: 16.1, entre16y17: 55.0 },
+          { pais: 'Tanzania', n: 96, menor14: 14.7, entre14y15: 26.9, entre16y17: 58.4 },
+          { pais: 'Zambia', n: 55, menor14: 32.5, entre14y15: 15.4, entre16y17: 52.1 },
+          { pais: 'Zimbabwe', n: 3, menor14: 100.0, entre14y15: 0.0, entre16y17: 0.0 },
+        ],
+      },
+    },
+  },
+};
+
 export const tipoPerpetrador = {
   nombres: {
     n: 'Número de personas encuestadas',

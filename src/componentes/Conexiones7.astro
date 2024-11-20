@@ -2,40 +2,38 @@
 
 ---
 
-<div id="tipoPerpretador" class="contenedorConexiones">
-  <svg width="100%" height="600px" id="conexiones2" class="graficaConexiones">
+<div id="tipoPerpretador2" class="contenedorConexiones">
+  <svg width="100%" height="600px" id="conexiones7" class="graficaConexiones">
     <text x="25%" y="20px" class="nombreColumna" text-anchor="middle">Data for female victims</text>
     <text x="75%" y="20px" class="nombreColumna" text-anchor="middle">Data for male victims</text>
   </svg>
 </div>
 
 <script>
-  import { tipoPerpetrador } from '@/cerebro/datos';
+  import { lugarViolencia } from '@/cerebro/datos';
   import info from '@/modulos/info';
-  import type { Conexion, GrupoConexion, LlavesTP } from '@/tipos';
-  import type { GrupoTP } from '@/tipos';
+  import type { Conexion, GrupoConexion, LlavesLV, GrupoLV } from '@/tipos';
   import { convertirEscala } from '@enflujo/alquimia';
 
-  const svg = document.querySelector<SVGAElement>('#conexiones2');
+  const svg = document.querySelector<SVGAElement>('#conexiones7');
   const contenedorInfo = info.elemento();
-  const { mujeres: mujeresMenor, hombres: hombresMenor } = tipoPerpetrador.vida.entre13y17;
+  const { mujeres, hombres } = lugarViolencia.vida.entre18y24;
   const altoViz = 600;
   const espacioEntre = 35;
   const margenY = 30;
   const margenCentro = 50;
   const maxAlto = altoViz - margenY * 2 - espacioEntre * 5;
   const alto = (valor: number) => convertirEscala(valor, 0, 100, 1, maxAlto);
-  const llaves = Object.keys(tipoPerpetrador.nombres).filter((nombre) => nombre !== 'n');
+  const llaves = Object.keys(lugarViolencia.nombres).filter((nombre) => nombre !== 'n');
 
   const coloresGrupos = {
-    pareja: '#69d2e7',
-    familiar: '#ecd078',
-    amigo: '#83af9b',
-    otro: '#fc9d9a',
+    casa: '#69d2e7',
+    fuera: '#ecd078',
+    otro: '#83af9b',
   };
 
-  const origenesMujeres = procesarGrupoEtario(mujeresMenor);
-  const origenesHombres = procesarGrupoEtario(hombresMenor);
+  const origenesMujeres = procesarGrupoEtario(mujeres);
+  const origenesHombres = procesarGrupoEtario(hombres);
   const paises: { nombre: string; y: number }[] = [];
 
   [...origenesMujeres[0].conexiones, ...origenesHombres[0].conexiones].forEach((lugar, i) => {
@@ -83,9 +81,9 @@
       const xGrupo = lado === 'izq' ? '3px' : 'calc(100% - 5px)';
       grupo.setAttribute(
         'style',
-        `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave as keyof LlavesTP]};`
+        `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave as keyof LlavesLV]};`
       );
-      const nombreGrupo = tipoPerpetrador.nombres[origen.llave as keyof LlavesTP];
+      const nombreGrupo = lugarViolencia.nombres[origen.llave as keyof LlavesLV];
       const semilla = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       semilla.setAttribute('x', lado === 'izq' ? '0' : '-40px');
       semilla.setAttribute('y', '0');
@@ -147,20 +145,20 @@
       svg?.append(grupo);
     });
   }
-  function procesarGrupoEtario(grupo: GrupoTP) {
+  function procesarGrupoEtario(grupo: GrupoLV) {
     let yAcumulado = 0;
 
     return llaves
-      .sort((a, b) => grupo.totales[b as keyof LlavesTP] - grupo.totales[a as keyof LlavesTP])
+      .sort((a, b) => grupo.totales[b as keyof LlavesLV] - grupo.totales[a as keyof LlavesLV])
       .map((nombre, i) => {
-        const valor = grupo.totales[nombre as keyof LlavesTP];
+        const valor = grupo.totales[nombre as keyof LlavesLV];
         const y = espacioEntre * (i + 1) + margenY + yAcumulado;
-        const acumulados: LlavesTP = { pareja: 0, familiar: 0, amigo: 0, otro: 0 };
+        const acumulados: LlavesLV = { casa: 0, fuera: 0, otro: 0 };
 
         const conexiones = grupo.datos
           .map((lugar) => {
-            const valorLinea = lugar[nombre as keyof LlavesTP];
-            acumulados[nombre as keyof LlavesTP] += valorLinea;
+            const valorLinea = lugar[nombre as keyof LlavesLV];
+            acumulados[nombre as keyof LlavesLV] += valorLinea;
 
             return {
               pais: lugar.pais,
@@ -170,17 +168,17 @@
               origenY2: 0,
               destinoY1: 0,
               destinoY2: 0,
-              color: coloresGrupos[nombre as keyof LlavesTP],
+              color: coloresGrupos[nombre as keyof LlavesLV],
             };
           })
           .sort((a, b) => b.valor - a.valor);
 
         const respuesta = {
-          llave: nombre as keyof LlavesTP,
+          llave: nombre as keyof LlavesLV,
           y,
           valor,
           conexiones,
-          totalOrigen: acumulados[nombre as keyof LlavesTP] | 0,
+          totalOrigen: acumulados[nombre as keyof LlavesLV] | 0,
         };
         yAcumulado += alto(valor);
         return respuesta;
@@ -189,7 +187,7 @@
 
   function definirConexiones() {
     origenesMujeres.forEach((origen, i) => {
-      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, origen.totalOrigen, 0, origen.valor - 2.2));
+      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, origen.totalOrigen, 0, origen.valor - 2));
       const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
       origen.conexiones.forEach((lugar, ii) => {
         const pais = paises.find((pais) => pais.nombre === lugar.pais);
@@ -208,12 +206,10 @@
 
     origenesHombres.forEach((destino, i) => {
       const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
-      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, destino.totalOrigen, 0, destino.valor - 1.2));
+      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, destino.totalOrigen, 0, destino.valor - 1));
 
       destino.conexiones.forEach((lugar, ii) => {
         const pais = paises.find((pais) => pais.nombre === lugar.pais);
-        // const y2 = ii > 0 ? pais?.y : origenesHombres[ii - 1].conexiones.find((l) => l.pais === lugar.pais)?.destinoY2;
-        // const y1 = pais ? pais.y : 0;
         const y1 = i === 0 ? pais?.y : origenesHombres[i - 1].conexiones.find((l) => l.pais === lugar.pais)?.origenY2;
 
         lugar.origenY1 = y1 || 0;
@@ -269,67 +265,60 @@
   });
 
   function crearInteracciones() {
-    const epUnTercio14 = document.getElementById('epUnTercio14');
-    if (epUnTercio14) {
-      epUnTercio14.onmouseenter = () => {
-        if (!svg) return;
-        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-        svg.classList.add('interactuando');
-        conexiones.forEach((conexion) => {
-          conexion.classList.remove('activo');
-        });
-        const menor14 = svg.querySelectorAll(`.conexion.cmenor14`);
-        if (menor14.length) {
-          menor14.forEach((nodo) => nodo.classList.add('activo'));
-        }
-      };
-
-      epUnTercio14.onmouseleave = () => {
-        if (!svg) return;
-        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-        svg.classList.remove('interactuando');
-
-        conexiones.forEach((conexion) => {
-          conexion.classList.remove('activo');
-        });
-      };
-    }
-
-    const epUnTercio15 = document.getElementById('epUnTercio15');
-    if (epUnTercio15) {
-      epUnTercio15.onmouseenter = () => {
-        if (!svg) return;
-        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-        svg.classList.add('interactuando');
-        conexiones.forEach((conexion) => {
-          conexion.classList.remove('activo');
-        });
-        const menor15 = svg.querySelectorAll(`.conexion.centre15y18`);
-        if (menor15.length) {
-          menor15.forEach((nodo) => nodo.classList.add('activo'));
-        }
-      };
-
-      epUnTercio15.onmouseleave = () => {
-        if (!svg) return;
-        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-        svg.classList.remove('interactuando');
-
-        conexiones.forEach((conexion) => {
-          conexion.classList.remove('activo');
-        });
-      };
-    }
+    // const epUnTercio14 = document.getElementById('epUnTercio14');
+    // if (epUnTercio14) {
+    //   epUnTercio14.onmouseenter = () => {
+    //     if (!svg) return;
+    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+    //     svg.classList.add('interactuando');
+    //     conexiones.forEach((conexion) => {
+    //       conexion.classList.remove('activo');
+    //     });
+    //     const menor14 = svg.querySelectorAll(`.conexion.cmenor14`);
+    //     if (menor14.length) {
+    //       menor14.forEach((nodo) => nodo.classList.add('activo'));
+    //     }
+    //   };
+    //   epUnTercio14.onmouseleave = () => {
+    //     if (!svg) return;
+    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+    //     svg.classList.remove('interactuando');
+    //     conexiones.forEach((conexion) => {
+    //       conexion.classList.remove('activo');
+    //     });
+    //   };
+    // }
+    // const epUnTercio15 = document.getElementById('epUnTercio15');
+    // if (epUnTercio15) {
+    //   epUnTercio15.onmouseenter = () => {
+    //     if (!svg) return;
+    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+    //     svg.classList.add('interactuando');
+    //     conexiones.forEach((conexion) => {
+    //       conexion.classList.remove('activo');
+    //     });
+    //     const menor15 = svg.querySelectorAll(`.conexion.centre15y18`);
+    //     if (menor15.length) {
+    //       menor15.forEach((nodo) => nodo.classList.add('activo'));
+    //     }
+    //   };
+    //   epUnTercio15.onmouseleave = () => {
+    //     if (!svg) return;
+    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+    //     svg.classList.remove('interactuando');
+    //     conexiones.forEach((conexion) => {
+    //       conexion.classList.remove('activo');
+    //     });
+    //   };
+    // }
   }
 </script>
 
 <style lang="scss" is:global>
   .graficaConexiones {
-    z-index: 1;
     margin-top: 4em;
     text {
       fill: white;
-      z-index: 9;
     }
     .conexion {
       transition: all 0.15s ease-in-out;

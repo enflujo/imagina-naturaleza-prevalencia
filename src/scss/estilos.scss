@@ -20,6 +20,10 @@ main {
   font-optical-sizing: auto;
 }
 
+.contenedorConexiones {
+  position: relative;
+}
+
 .conexionConGrafica {
   color: rgb(142, 229, 136);
   cursor: crosshair;

@@ -12,6 +12,17 @@ export interface LlavesTP {
   amigo: number;
   otro: number;
 }
+export interface LlavesEV {
+  menor14: number;
+  entre14y15: number;
+  entre16y17: number;
+}
+
+export interface LlavesLV {
+  casa: number;
+  fuera: number;
+  otro: number;
+}
 
 export interface TEdadPerpetrador extends LlavesEP {
   n: number;
@@ -21,11 +32,27 @@ export interface TTipoPerpetrador extends LlavesTP {
   n: number;
 }
 
+export interface TLugarVictima extends LlavesLV {
+  n: number;
+}
+
+export interface TEdadVictima extends LlavesEV {
+  n: number;
+}
+
 export interface TEdadPerpetradorDatos extends TEdadPerpetrador {
   pais: string;
 }
 
 export interface TTipoPerpetradorDatos extends TTipoPerpetrador {
+  pais: string;
+}
+
+export interface TEdadVictimaDatos extends TEdadVictima {
+  pais: string;
+}
+
+export interface TLugarVictimaDatos extends TLugarVictima {
   pais: string;
 }
 
@@ -38,6 +65,17 @@ export interface GrupoTP {
   totales: TTipoPerpetrador;
   datos: TTipoPerpetradorDatos[];
 }
+
+export interface GrupoEV {
+  totales: TEdadVictima;
+  datos: TEdadVictimaDatos[];
+}
+
+export interface GrupoLV {
+  totales: TLugarVictima;
+  datos: TLugarVictimaDatos[];
+}
+
 export interface GrupoSexoEP {
   mujeres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
   hombres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
@@ -73,7 +111,7 @@ export type Conexion = {
 };
 
 export interface GrupoConexion {
-  llave: keyof LlavesEP | keyof LlavesTP;
+  llave: keyof LlavesEP | keyof LlavesTP | keyof LlavesEV | keyof LlavesLV;
   y: number;
   valor: number;
   conexiones: Conexion[];

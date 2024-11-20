@@ -1,6 +1,11 @@
 ---
 import Conexiones from '@/componentes/Conexiones.astro';
 import Conexiones2 from '@/componentes/Conexiones2.astro';
+import Conexiones3 from '@/componentes/Conexiones3.astro';
+import Conexiones4 from '@/componentes/Conexiones4.astro';
+import Conexiones5 from '@/componentes/Conexiones5.astro';
+import Conexiones6 from '@/componentes/Conexiones6.astro';
+import Conexiones7 from '@/componentes/Conexiones7.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
@@ -14,7 +19,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       </li>
       <li>
         <a href="#conclusion3"
-          ><span class="nombre">Mean lifetime CSEA prevalence is especially high for girls and youg woman</span></a
+          ><span class="nombre">Mean lifetime CSEA prevalence is especially high for girls and young woman</span></a
         >
       </li>
       <li><a href="#conclusion4"><span class="nombre">CSEA happens very early in life</span></a></li>
@@ -119,6 +124,12 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           Yet, it happens even earlier in life for girls: more than one third (37.6%) of the young woman (18-24 years
           old) affected by CSEA report that the first perpetration happened before they were 13.
         </p>
+
+        <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
+        <Conexiones4 />
+
+        <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
+        <Conexiones5 />
       </section>
 
       <section id="conclusion5">
@@ -148,7 +159,11 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           salient relationship with the perpetrator was by far “friend, classmate, or neighbour”.
         </p>
 
+        <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
         <Conexiones2 />
+
+        <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
+        <Conexiones3 />
       </section>
 
       <section id="conclusion8">
@@ -168,6 +183,12 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       <section id="conclusion9">
         <h3>The evidence provided by the VACS suggests home is not the safest place (6 countries)</h3>
         <p>According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home.</p>
+
+        <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
+        <Conexiones6 />
+
+        <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
+        <Conexiones7 />
       </section>
     </div>
   </main>
@@ -237,6 +258,13 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 </script>
 
 <style lang="scss">
+  .tituloGrafica {
+    font-size: 2em;
+    margin: 1em 0 0 0;
+    border-bottom: 2px solid;
+    padding: 0 0 0.4em 0;
+  }
+
   section {
     margin: 10em 0 0 0;
 
