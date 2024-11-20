@@ -2,7 +2,7 @@
 
 ---
 
-<div id="edadPerpetrador" class="contenedorConexiones">
+<div id="tipoPerpretador" class="contenedorConexiones">
   <svg width="100%" height="600px" class="graficaConexiones">
     <text x="25%" y="20px" class="nombreColumna" text-anchor="middle">Data for female victims</text>
     <text x="75%" y="20px" class="nombreColumna" text-anchor="middle">Data for male victims</text>
@@ -10,33 +10,32 @@
 </div>
 
 <script>
-  import { edadPerpetrador } from '@/cerebro/datos';
+  import { tipoPerpetrador } from '@/cerebro/datos';
   import info from '@/modulos/info';
-  import type { Conexion, GrupoConexion, LlavesEP } from '@/tipos';
-  import type { GrupoEP } from '@/tipos';
+  import type { Conexion, GrupoConexion, LlavesTP } from '@/tipos';
+  import type { GrupoTP } from '@/tipos';
   import { convertirEscala } from '@enflujo/alquimia';
 
   const svg = document.querySelector<SVGAElement>('.graficaConexiones');
   const contenedorInfo = info.elemento();
-  const { mujeres, hombres } = edadPerpetrador.vida.mayor18;
+  const { mujeres: mujeresMenor, hombres: hombresMenor } = tipoPerpetrador.vida.entre13y17;
   const altoViz = 600;
   const espacioEntre = 35;
   const margenY = 30;
   const margenCentro = 50;
   const maxAlto = altoViz - margenY * 2 - espacioEntre * 5;
   const alto = (valor: number) => convertirEscala(valor, 0, 100, 1, maxAlto);
-  const llaves = Object.keys(edadPerpetrador.nombres).filter((nombre) => nombre !== 'n');
+  const llaves = Object.keys(tipoPerpetrador.nombres).filter((nombre) => nombre !== 'n');
 
   const coloresGrupos = {
-    menor14: '#69d2e7',
-    entre15y18: '#ecd078',
-    entre19y35: '#83af9b',
-    entre36y50: '#fc9d9a',
-    mayor51: '#fa6900',
+    pareja: '#69d2e7',
+    familiar: '#ecd078',
+    amigo: '#83af9b',
+    otro: '#fc9d9a',
   };
 
-  const origenesMujeres = procesarGrupoEtario(mujeres);
-  const origenesHombres = procesarGrupoEtario(hombres);
+  const origenesMujeres = procesarGrupoEtario(mujeresMenor);
+  const origenesHombres = procesarGrupoEtario(hombresMenor);
   const paises = origenesMujeres[0].conexiones.map((lugar, i) => {
     return { nombre: lugar.pais, y: margenY + espacioEntre * (i + 1) + alto(i * 7) };
   });
@@ -80,9 +79,9 @@
       const xGrupo = lado === 'izq' ? '3px' : 'calc(100% - 5px)';
       grupo.setAttribute(
         'style',
-        `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave as keyof LlavesEP]};`
+        `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave as keyof LlavesTP]};`
       );
-      const nombreGrupo = edadPerpetrador.nombres[origen.llave];
+      const nombreGrupo = tipoPerpetrador.nombres[origen.llave as keyof LlavesTP];
       const semilla = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       semilla.setAttribute('x', lado === 'izq' ? '0' : '-40px');
       semilla.setAttribute('y', '0');
@@ -147,20 +146,20 @@
       svg?.append(grupo);
     });
   }
-  function procesarGrupoEtario(grupo: GrupoEP) {
+  function procesarGrupoEtario(grupo: GrupoTP) {
     let yAcumulado = 0;
 
     return llaves
-      .sort((a, b) => grupo.totales[b as keyof LlavesEP] - grupo.totales[a as keyof LlavesEP])
+      .sort((a, b) => grupo.totales[b as keyof LlavesTP] - grupo.totales[a as keyof LlavesTP])
       .map((nombre, i) => {
-        const valor = grupo.totales[nombre as keyof LlavesEP];
+        const valor = grupo.totales[nombre as keyof LlavesTP];
         const y = espacioEntre * (i + 1) + margenY + yAcumulado;
-        const acumulados: LlavesEP = { menor14: 0, entre15y18: 0, entre19y35: 0, entre36y50: 0, mayor51: 0 };
+        const acumulados: LlavesTP = { pareja: 0, familiar: 0, amigo: 0, otro: 0 };
 
         const conexiones = grupo.datos
           .map((lugar) => {
-            const valorLinea = lugar[nombre as keyof LlavesEP];
-            acumulados[nombre as keyof LlavesEP] += valorLinea;
+            const valorLinea = lugar[nombre as keyof LlavesTP];
+            acumulados[nombre as keyof LlavesTP] += valorLinea;
 
             return {
               pais: lugar.pais,
@@ -170,17 +169,17 @@
               origenY2: 0,
               destinoY1: 0,
               destinoY2: 0,
-              color: coloresGrupos[nombre as keyof LlavesEP],
+              color: coloresGrupos[nombre as keyof LlavesTP],
             };
           })
           .sort((a, b) => b.valor - a.valor);
 
         const respuesta = {
-          llave: nombre as keyof LlavesEP,
+          llave: nombre as keyof LlavesTP,
           y,
           valor,
           conexiones,
-          totalOrigen: acumulados[nombre as keyof LlavesEP] | 0,
+          totalOrigen: acumulados[nombre as keyof LlavesTP] | 0,
         };
         yAcumulado += alto(valor);
         return respuesta;

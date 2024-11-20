@@ -1,43 +1,94 @@
-// Country 	      N 	  <14 	  15-18   19-35   36-50   >51
-// Colombia 	      338	  14.2%	  25.8%	  39.9%	  16.1%	  4.0%
-// Côte d'Ivoire 	388	  87.0%	  7.0%	  5.8%	  0.2%	  0.0%
-// El Salvador 	  142	  10.3%	  35.8%	  38.7%	  9.6%	  5.6%
-// Haiti
-// Honduras 	      601	  11.4%	  34.9%	  42.3%	  9.6%	  1.7%
-// Kenya 	        274	  26.1%	  35.5%	  37.7%	  0.2%	  0.5%
-// Lesotho 	      849	  21.2%	  36.8%	  38.9%	  2.2%	  0.9%
-// Malawi
-// Moldova 	      177	  10.1%	  49.6%	  38.0%	  1.9%	  0.4%
-// Mozambique 	    265	  16.1%	  48.2%	  33.5%	  2.2%	  0.0%
-// Namibia 	      653	  93.6%	  2.9%	  2.1%	  0.1%	  1.4%
-// Nigeria
-// Eswatini
-// Tanzania
-// Zambia
-// Zimbabwe
-// Total 	        3687 	32.2%	  30.7%	  30.8%	  4.7%	  1.6%
-
 import type { DatosEdadPerpetrador } from '@/tipos';
+/**
+ * 
+Country 	N 	Current or Former Romantic Partners 	Family member 	Friend, classmate, or neighbour 	Other 
+Cambodia	45	11.6%	28.1%	12.1%	48.1%
+Colombia	100	14.0%	9.0%	62.6%	14.4%
+Cote d'Ivoire					
+El Salvador					
+Haiti	89	17.8%	78.1%	0.0%	4.1%
+Honduras					
+Kenya					
+Lesotho					
+Malawi					
+Moldova					
+Mozambique	27	27.8%	0.2%	66.9%	5.1%
+Namibia					
+Nigeria	140	19.7%	6.8%	68.6%	4.9%
+Tanzania					
+Zambia	43	32.5%	1.3%	61.5%	4.7%
+Zimbabwe	6	0.0%	65.2%	0.0%	34.8%
+__
+Total 	450	17.6%	27.0%	38.8%	16.6%
 
-// Country 	      N 	  <14 	  15-18 	19-35 	36-50 	>51
-// Cambodia
-// Colombia 	      352	  13.6%	  27.4%	  41.1%	  14.9%	  3.0%
-// Cote d'Ivoire 	393	  89.3%	  5.5%	  5.0%	  0.2%	  0.0%
-// El Salvador 	  141	  10.5%	  38.4%	  37.2%	  9.1%	  4.9%
-// Haiti
-// Honduras 	      602	  11.4%	  35.5%	  42.1%	  9.2%	  1.7%
-// Kenya 	        249	  27.0%	  39.8%	  32.8%	  0.2%	  0.3%
-// Lesotho 	      744	  20.1%	  39.2%	  37.7%	  2.1%	  0.8%
-// Malawi
-// Moldova 	      180	  10.1%	  52.3%	  36.3%	  0.9%	  0.4%
-// Mozambique 	    248 	16.4%	  52.7%	  29.0%	  1.8%	  0.0%
-// Namibia 	      553	  94.4%	  2.9%	  1.2%	  0.1%	  1.3%
-// Nigeria
-// Eswatini
-// Tanzania
-// Zambia
-// Zimbabwe
-// Total 	        3462 	32.5%	  32.7%	  29.1%	  4.3%	  1.4%
+
+
+ */
+export const tipoPerpetrador = {
+  nombres: {
+    n: 'Número de personas encuestadas',
+    pareja: 'Current or Former Romantic Partners',
+    familiar: 'Family member',
+    amigo: 'Friend, classmate, or neighbour',
+    otro: 'Other',
+  },
+
+  vida: {
+    entre13y17: {
+      mujeres: {
+        totales: { n: 1002, pareja: 38.0, familiar: 12.1, amigo: 27.8, otro: 22.1 },
+        datos: [
+          { pais: 'Cambodia', n: 31, pareja: 21.6, familiar: 7.8, amigo: 6.2, otro: 64.4 },
+          { pais: 'Colombia', n: 99, pareja: 15.5, familiar: 47.6, amigo: 15.7, otro: 21.3 },
+          { pais: 'Haiti', n: 104, pareja: 79.9, familiar: 13.1, amigo: 0.0, otro: 7.0 },
+          { pais: 'Mozambique', n: 127, pareja: 40.2, familiar: 1.6, amigo: 43.9, otro: 14.3 },
+          { pais: 'Nigeria', n: 187, pareja: 31.2, familiar: 5.2, amigo: 52.5, otro: 11.0 },
+          { pais: 'Eswatini', n: 163, pareja: 29.7, familiar: 14.6, amigo: 40.5, otro: 15.1 },
+          { pais: 'Zambia', n: 80, pareja: 43.6, familiar: 4.4, amigo: 44.3, otro: 7.7 },
+          { pais: 'Zimbabwe', n: 211, pareja: 42.0, familiar: 2.3, amigo: 19.6, otro: 36.1 },
+        ],
+      },
+      hombres: {
+        totales: { n: 293, pareja: 22.7, familiar: 12.5, amigo: 52.1, otro: 12.7 },
+        datos: [
+          { pais: 'Cambodia', n: 28, pareja: 0.0, familiar: 29.6, amigo: 22.0, otro: 48.5 },
+          { pais: 'Colombia', n: 51, pareja: 14.6, familiar: 2.4, amigo: 73.3, otro: 9.7 },
+          { pais: 'Haiti', n: 22, pareja: 63.9, familiar: 36.1, amigo: 0.0, otro: 0.0 },
+          { pais: 'Mozambique', n: 34, pareja: 24.4, familiar: 0.0, amigo: 66.1, otro: 9.4 },
+          { pais: 'Nigeria', n: 120, pareja: 19.0, familiar: 5.6, amigo: 70.4, otro: 5.0 },
+          { pais: 'Zambia', n: 38, pareja: 14.1, familiar: 1.0, amigo: 81.2, otro: 3.7 },
+        ],
+      },
+    },
+    entre18y24: {
+      mujeres: {
+        totales: { n: 2015, pareja: 55.6, familiar: 6.0, amigo: 20.7, otro: 17.7 },
+        datos: [
+          { pais: 'Cambodia', n: 57, pareja: 37.2, familiar: 0.0, amigo: 9.8, otro: 53.0 },
+          { pais: 'Colombia', n: 183, pareja: 40.0, familiar: 11.6, amigo: 27.1, otro: 21.4 },
+          { pais: 'Haiti', n: 211, pareja: 75.8, familiar: 13.8, amigo: 0.2, otro: 10.2 },
+          { pais: 'Mozambique', n: 126, pareja: 66.9, familiar: 0.1, amigo: 20.8, otro: 12.2 },
+          { pais: 'Nigeria', n: 233, pareja: 45.2, familiar: 5.6, amigo: 38.4, otro: 10.7 },
+          { pais: 'Eswatini', n: 408, pareja: 60.9, familiar: 10.1, amigo: 16.7, otro: 12.4 },
+          { pais: 'Zambia', n: 95, pareja: 48.9, familiar: 3.7, amigo: 40.8, otro: 6.6 },
+          { pais: 'Zimbabwe', n: 702, pareja: 70.1, familiar: 2.9, amigo: 12.0, otro: 15.0 },
+        ],
+      },
+      hombres: {
+        totales: { n: 450, pareja: 17.6, familiar: 27.0, amigo: 38.8, otro: 16.6 },
+        datos: [
+          { pais: 'Cambodia', n: 45, pareja: 11.6, familiar: 28.1, amigo: 12.1, otro: 48.1 },
+          { pais: 'Colombia', n: 100, pareja: 14.0, familiar: 9.0, amigo: 62.6, otro: 14.4 },
+          { pais: 'Haiti', n: 89, pareja: 17.8, familiar: 78.1, amigo: 0.0, otro: 4.1 },
+          { pais: 'Mozambique', n: 27, pareja: 27.8, familiar: 0.2, amigo: 66.9, otro: 5.1 },
+          { pais: 'Nigeria', n: 140, pareja: 19.7, familiar: 6.8, amigo: 68.6, otro: 4.9 },
+          { pais: 'Zambia', n: 43, pareja: 32.5, familiar: 1.3, amigo: 61.5, otro: 4.7 },
+          { pais: 'Zimbabwe', n: 6, pareja: 0.0, familiar: 65.2, amigo: 0.0, otro: 34.8 },
+        ],
+      },
+    },
+  },
+};
 
 export const edadPerpetrador: DatosEdadPerpetrador = {
   nombres: {

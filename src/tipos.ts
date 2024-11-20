@@ -6,7 +6,18 @@ export interface LlavesEP {
   mayor51: number;
 }
 
+export interface LlavesTP {
+  pareja: number;
+  familiar: number;
+  amigo: number;
+  otro: number;
+}
+
 export interface TEdadPerpetrador extends LlavesEP {
+  n: number;
+}
+
+export interface TTipoPerpetrador extends LlavesTP {
   n: number;
 }
 
@@ -14,9 +25,18 @@ export interface TEdadPerpetradorDatos extends TEdadPerpetrador {
   pais: string;
 }
 
+export interface TTipoPerpetradorDatos extends TTipoPerpetrador {
+  pais: string;
+}
+
 export interface GrupoEP {
   totales: TEdadPerpetrador;
   datos: TEdadPerpetradorDatos[];
+}
+
+export interface GrupoTP {
+  totales: TTipoPerpetrador;
+  datos: TTipoPerpetradorDatos[];
 }
 export interface GrupoSexoEP {
   mujeres: { totales: TEdadPerpetrador; datos: TEdadPerpetradorDatos[] };
@@ -53,7 +73,7 @@ export type Conexion = {
 };
 
 export interface GrupoConexion {
-  llave: keyof LlavesEP;
+  llave: keyof LlavesEP | keyof LlavesTP;
   y: number;
   valor: number;
   conexiones: Conexion[];
