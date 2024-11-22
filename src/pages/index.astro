@@ -1,11 +1,11 @@
 ---
-import Conexiones from '@/componentes/Conexiones.astro';
-import Conexiones2 from '@/componentes/Conexiones2.astro';
-import Conexiones3 from '@/componentes/Conexiones3.astro';
-import Conexiones4 from '@/componentes/Conexiones4.astro';
-import Conexiones5 from '@/componentes/Conexiones5.astro';
-import Conexiones6 from '@/componentes/Conexiones6.astro';
-import Conexiones7 from '@/componentes/Conexiones7.astro';
+import ConexionesEdadPerpretador from '@/componentes/ConexionesEdadPerpretador.astro';
+import ConexionesRelacionPVMenores from '@/componentes/ConexionesRelacionPVMenores.astro';
+import ConexionesRelacionPVMayores from '@/componentes/ConexionesRelacionPVMayores.astro';
+import ConexionesTipoPerpretadorMenores from '@/componentes/ConexionesTipoPerpretadorMenores.astro';
+import ConexionesTipoPerpretadorMayores from '@/componentes/ConexionesTipoPerpretadorMayores.astro';
+import ConexionesLugarMenores from '@/componentes/ConexionesLugarMenores.astro';
+import ConexionesLugarMayores from '@/componentes/ConexionesLugarMayores.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
 ---
 
@@ -18,9 +18,9 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <a href="#conclusion2"><span class="nombre">Variation in CSEA prevalence across countries is huge</span></a>
       </li>
       <li>
-        <a href="#conclusion3"
-          ><span class="nombre">Mean lifetime CSEA prevalence is especially high for girls and young woman</span></a
-        >
+        <a href="#conclusion3">
+          <span class="nombre">Mean lifetime CSEA prevalence is especially high for girls and young woman</span>
+        </a>
       </li>
       <li><a href="#conclusion4"><span class="nombre">CSEA happens very early in life</span></a></li>
       <li><a href="#conclusion5"><span class="nombre">Poly-victimization is very common</span></a></li>
@@ -62,35 +62,6 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <li>Exposure in the las 12 months ("during the last 12 months have you been")</li>
       </ol>
 
-      <!-- <div id="grafica" class="columnas">
-        <div class="linea"> 
-          <div id="u12" class="modulo l3 u12"><h3>Last 12 months</h3></div>
-          <div id="vida" class="modulo l3 vida"><h3>Lifetime</h3></div>
-        </div>
-
-        <div class="linea">
-          <div id="u12Menor" class="modulo l2 u12"><h3>13 - 17</h3></div>
-          <div id="u12Mayor" class="modulo l2 u12"><h3>18 - 24</h3></div>
-          <div id="vidaMenor" class="modulo l2 vida"><h3>13 - 17</h3></div>
-          <div id="vidaMayor" class="modulo l2 vida"><h3>18 - 24</h3></div>
-        </div>
-
-        <div class="linea">
-          <div id="u12MenorM" class="modulo u12"><h3>women</h3></div>
-          <div id="u12MenorH" class="modulo u12"><h3>men</h3></div>
-          <div id="u12MayorM" class="modulo u12"><h3>women</h3></div>
-          <div id="u12MayorH" class="modulo u12"><h3>men</h3></div>
-          <div id="vidaMenorM" class="modulo vida"><h3>women</h3></div>
-          <div id="vidaMenorH" class="modulo vida"><h3>men</h3></div>
-          <div id="vidaMayorM" class="modulo vida"><h3>women</h3></div>
-          <div id="vidaMayorH" class="modulo vida"><h3>men</h3></div>
-        </div>
-      </div>
-
-      <div id="contenedorMapa">
-        <Mapa />
-      </div> -->
-
       <h2>Conclusiones</h2>
 
       <section id="conclusion1">
@@ -126,10 +97,10 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
 
         <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
-        <Conexiones4 />
+        <ConexionesTipoPerpretadorMenores />
 
         <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
-        <Conexiones5 />
+        <ConexionesTipoPerpretadorMayores />
       </section>
 
       <section id="conclusion5">
@@ -160,10 +131,10 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
 
         <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
-        <Conexiones2 />
+        <ConexionesRelacionPVMenores />
 
         <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
-        <Conexiones3 />
+        <ConexionesRelacionPVMayores />
       </section>
 
       <section id="conclusion8">
@@ -177,7 +148,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           >. This pattern is similar for young men and women.
         </p>
 
-        <Conexiones />
+        <ConexionesEdadPerpretador />
       </section>
 
       <section id="conclusion9">
@@ -185,77 +156,16 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <p>According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home.</p>
 
         <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
-        <Conexiones6 />
+        <ConexionesLugarMenores />
 
         <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
-        <Conexiones7 />
+        <ConexionesLugarMayores />
       </section>
     </div>
   </main>
 </Plantilla>
 
-<script>
-  // import { edadPerpetrador } from '@/cerebro/datos';
-  // import type { Arbol, GrupoSexoEP } from '@/tipos';
-  // const elementosU12 = document.body.querySelectorAll('.u12');
-  // const elementosVida = document.body.querySelectorAll('.vida');
-
-  /**
-   *  | u12                                           | vida                                                |
-   *  | u12Menor              | u12Mayor              | vidaMenor               | vidaMayor                 |
-   *  | u12MenorM | u12MenorH | u12MayorM | u12MayorH | vidaMenorM | vidaMenorH | vidaMayorM  | vidaMayorH  |
-   *  */
-
-  // function esconderVacios(datos: Arbol) {
-  //   if (!datos.ultimos12) {
-  //     elementosU12.forEach((elemento) => elemento.classList.add('invisible'));
-  //   } else {
-  //     elementosU12.forEach((elemento) => elemento.classList.remove('invisible'));
-  //   }
-
-  //   if (!datos.vida) {
-  //     elementosVida.forEach((elemento) => elemento.classList.add('invisible'));
-  //   } else {
-  //     elementosVida.forEach((elemento) => elemento.classList.remove('invisible'));
-  //   }
-  // }
-
-  // const { mujeres, hombres } = edadPerpetrador.vida?.mayor18 as GrupoSexoEP;
-  // if (mujeres && hombres) {
-  //   const menores14 = mujeres.datos.reduce((acumulado, valor) => acumulado + valor.menor14, 0) / mujeres.datos.length;
-
-  //   console.log(menores14);
-  // }
-
-  // esconderVacios(edadPerpetrador);
-  // const gql = String.raw;
-
-  // const Peticion = gql`
-  //   query {
-  //     articulos {
-  //       traducciones {
-  //         titulo
-  //       }
-  //     }
-  //   }
-  // `;
-
-  // fetch('http://localhost:8055/graphql', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({
-  //     query: `articulos {
-  //       traducciones {
-  //         titulo
-  //       }
-  //     }`,
-  //   }),
-  // })
-  //   .then((res) => res.json())
-  //   .then((datos) => {
-  //     console.log(datos);
-  //   });
-</script>
+<script></script>
 
 <style lang="scss">
   .tituloGrafica {
@@ -299,8 +209,6 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     padding: 2em 0 0 0;
     line-height: 1;
     letter-spacing: 3px;
-    // border-left: 4px solid;
-    // padding-left: 0.3em;
   }
 
   .autores {
@@ -311,8 +219,6 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
     h2 {
       font-weight: 600;
-      //border-bottom: 2px solid white;
-      //border-top: 1px solid white;
     }
 
     ul {

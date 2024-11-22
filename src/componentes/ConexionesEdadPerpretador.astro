@@ -210,8 +210,6 @@
 
       destino.conexiones.forEach((lugar, ii) => {
         const pais = paises.find((pais) => pais.nombre === lugar.pais);
-        // const y2 = ii > 0 ? pais?.y : origenesHombres[ii - 1].conexiones.find((l) => l.pais === lugar.pais)?.destinoY2;
-        // const y1 = pais ? pais.y : 0;
         const y1 = i === 0 ? pais?.y : origenesHombres[i - 1].conexiones.find((l) => l.pais === lugar.pais)?.origenY2;
 
         lugar.origenY1 = y1 || 0;
