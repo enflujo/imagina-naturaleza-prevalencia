@@ -267,52 +267,30 @@
   });
 
   function crearInteracciones() {
-    // const epUnTercio14 = document.getElementById('epUnTercio14');
-    // if (epUnTercio14) {
-    //   epUnTercio14.onmouseenter = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.add('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //     const menor14 = svg.querySelectorAll(`.conexion.cmenor14`);
-    //     if (menor14.length) {
-    //       menor14.forEach((nodo) => nodo.classList.add('activo'));
-    //     }
-    //   };
-    //   epUnTercio14.onmouseleave = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.remove('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //   };
-    // }
-    // const epUnTercio15 = document.getElementById('epUnTercio15');
-    // if (epUnTercio15) {
-    //   epUnTercio15.onmouseenter = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.add('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //     const menor15 = svg.querySelectorAll(`.conexion.centre15y18`);
-    //     if (menor15.length) {
-    //       menor15.forEach((nodo) => nodo.classList.add('activo'));
-    //     }
-    //   };
-    //   epUnTercio15.onmouseleave = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.remove('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //   };
-    // }
+    const boton = document.getElementById('lugar');
+    if (boton) {
+      boton.addEventListener('mouseenter', () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.add('interactuando');
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+        const casa = svg.querySelectorAll(`.conexion.ccasa`);
+        if (casa.length) {
+          casa.forEach((nodo) => nodo.classList.add('activo'));
+        }
+      });
+
+      boton.addEventListener('mouseleave', () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.remove('interactuando');
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+      });
+    }
   }
 </script>
 

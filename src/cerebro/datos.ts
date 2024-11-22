@@ -5,6 +5,139 @@ import type { DatosEdadPerpetrador } from '@/tipos';
 
  */
 
+const tasaPrevalencia = {
+  nombres: {
+    vida: 'Lifetime',
+    ultimoAnio: 'Last year',
+  },
+  entre13y17: {
+    mujeres: {
+      totales: { vida: 0, ultimoAnio: 0 },
+      datos: [
+        { pais: 'Cambodia', vida: 0.5, ultimoAnio: 3.6 },
+        { pais: 'Colombia', vida: 15.7, ultimoAnio: 8.1 },
+        { pais: "Côte d'Ivoire", vida: 14.5, ultimoAnio: 8.6 },
+        { pais: 'El Salvador', vida: 8.5, ultimoAnio: 6.6 },
+        { pais: 'Haiti', vida: 1.8, ultimoAnio: 10.3 },
+        { pais: 'Honduras', vida: 13.3, ultimoAnio: 6.5 },
+        { pais: 'Kenya', vida: 18.9, ultimoAnio: 13.5 },
+        { pais: 'Lesotho', vida: 11.1, ultimoAnio: 7.9 },
+        { pais: 'Malawi', vida: 28.7, ultimoAnio: 25.8 },
+        { pais: 'Moldova', vida: 11.7, ultimoAnio: 7.5 },
+        { pais: 'Mozambique', vida: 17.0, ultimoAnio: 11.7 },
+        { pais: 'Namibia', vida: 7.5, ultimoAnio: 6.4 },
+        { pais: 'Nigeria', vida: 26.2, ultimoAnio: 16.8 },
+        { pais: 'Eswatini', vida: 29.7, ultimoAnio: 17.8 },
+        { pais: 'Tanzania', vida: 26.3, ultimoAnio: 16.6 },
+        { pais: 'Zambia', vida: 27.2, ultimoAnio: 19.0 },
+        { pais: 'Zimbabwe', vida: 3.1, ultimoAnio: 2.6 },
+      ],
+    },
+    hombres: {
+      totales: { vida: 0, ultimoAnio: 0 },
+      datos: [
+        { pais: 'Cambodia', vida: 0.0, ultimoAnio: 0.3 },
+        { pais: 'Colombia', vida: 9.3, ultimoAnio: 4.8 },
+        { pais: "Côte d'Ivoire", vida: 8.6, ultimoAnio: 3.7 },
+        { pais: 'El Salvador', vida: 4.1, ultimoAnio: 2.8 },
+        { pais: 'Haiti', vida: 2.6, ultimoAnio: 6.0 },
+        { pais: 'Honduras', vida: 7.3, ultimoAnio: 5.1 },
+        { pais: 'Kenya', vida: 7.7, ultimoAnio: 2.4 },
+        { pais: 'Lesotho', vida: 4.7, ultimoAnio: 3.5 },
+        { pais: 'Malawi', vida: 14.0, ultimoAnio: 12.9 },
+        { pais: 'Moldova', vida: 5.3, ultimoAnio: 5.4 },
+        { pais: 'Mozambique', vida: 8.9, ultimoAnio: 5.9 },
+        { pais: 'Namibia', vida: 6.7, ultimoAnio: 3.0 },
+        { pais: 'Nigeria', vida: 12.9, ultimoAnio: 8.7 },
+        { pais: 'Eswatini', vida: 0.0, ultimoAnio: 0.0 },
+        { pais: 'Tanzania', vida: 14.5, ultimoAnio: 6.7 },
+        { pais: 'Zambia', vida: 10.1, ultimoAnio: 5.5 },
+        { pais: 'Zimbabwe', vida: 0.1, ultimoAnio: 0.1 },
+      ],
+    },
+  },
+  entre18y24: {
+    mujeres: {
+      totales: { vida: 0, ultimoAnio: 0 },
+      datos: [
+        { pais: 'Cambodia', vida: 0.4, ultimoAnio: 3.6 },
+        { pais: 'Colombia', vida: 18.0, ultimoAnio: 10.8 },
+        { pais: "Côte d'Ivoire", vida: 19.5, ultimoAnio: 15.4 },
+        { pais: 'El Salvador', vida: 13.8, ultimoAnio: 5.6 },
+        { pais: 'Haiti', vida: 3.1, ultimoAnio: 20.4 },
+        { pais: 'Honduras', vida: 16.5, ultimoAnio: 7.1 },
+        { pais: 'Kenya', vida: 16.2, ultimoAnio: 14.7 },
+        { pais: 'Lesotho', vida: 20.8, ultimoAnio: 16.5 },
+        { pais: 'Malawi', vida: 22.6, ultimoAnio: 15.0 },
+        { pais: 'Moldova', vida: 14.3, ultimoAnio: 8.4 },
+        { pais: 'Mozambique', vida: 14.3, ultimoAnio: 10.6 },
+        { pais: 'Namibia', vida: 10.6, ultimoAnio: 9.3 },
+        { pais: 'Nigeria', vida: 25.0, ultimoAnio: 15.3 },
+        { pais: 'Eswatini', vida: 37.4, ultimoAnio: 23.9 },
+        { pais: 'Tanzania', vida: 25.2, ultimoAnio: 14.8 },
+        { pais: 'Zambia', vida: 20.3, ultimoAnio: 12.5 },
+        { pais: 'Zimbabwe', vida: 3.3, ultimoAnio: 4.5 },
+      ],
+    },
+    hombres: {
+      totales: { vida: 0, ultimoAnio: 0 },
+      datos: [
+        { pais: 'Cambodia', vida: 0.0, ultimoAnio: 1.0 },
+        { pais: 'Colombia', vida: 8.6, ultimoAnio: 7.5 },
+        { pais: "Côte d'Ivoire", vida: 15.9, ultimoAnio: 13.2 },
+        { pais: 'El Salvador', vida: 2.7, ultimoAnio: 2.0 },
+        { pais: 'Haiti', vida: 5.1, ultimoAnio: 15.4 },
+        { pais: 'Honduras', vida: 10.7, ultimoAnio: 9.1 },
+        { pais: 'Kenya', vida: 6.4, ultimoAnio: 8.2 },
+        { pais: 'Lesotho', vida: 14.4, ultimoAnio: 15.3 },
+        { pais: 'Malawi', vida: 15.6, ultimoAnio: 12.3 },
+        { pais: 'Moldova', vida: 5.3, ultimoAnio: 8.2 },
+        { pais: 'Mozambique', vida: 8.5, ultimoAnio: 8.8 },
+        { pais: 'Namibia', vida: 8.3, ultimoAnio: 6.4 },
+        { pais: 'Nigeria', vida: 11.0, ultimoAnio: 12.0 },
+        { pais: 'Eswatini', vida: 0.0, ultimoAnio: 0.0 },
+        { pais: 'Tanzania', vida: 11.4, ultimoAnio: 13.5 },
+        { pais: 'Zambia', vida: 10.3, ultimoAnio: 13.1 },
+        { pais: 'Zimbabwe', vida: 0.9, ultimoAnio: 0.2 },
+      ],
+    },
+  },
+};
+
+const sumaA = tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.vida, 0);
+tasaPrevalencia.entre13y17.mujeres.totales.vida = sumaA / tasaPrevalencia.entre13y17.mujeres.datos.length;
+tasaPrevalencia.entre13y17.mujeres.totales.ultimoAnio = tasaPrevalencia.entre13y17.mujeres.datos.reduce(
+  (suma, dato) => suma + dato.ultimoAnio,
+  0
+);
+const meanVida =
+  tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.vida, 0) /
+  tasaPrevalencia.entre13y17.mujeres.datos.length;
+const meanUltimoAnio =
+  tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.ultimoAnio, 0) /
+  tasaPrevalencia.entre13y17.mujeres.datos.length;
+const variance =
+  tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + Math.pow(dato.vida - meanVida, 2), 0) /
+  tasaPrevalencia.entre13y17.mujeres.datos.length;
+
+const standardDeviation = Math.sqrt(variance);
+
+console.log('Standard Deviation:', standardDeviation);
+console.log('Mean Vida:', meanVida);
+console.log('Mean Último Año:', meanUltimoAnio);
+const vidaMenoresMujeresOrdenado = tasaPrevalencia.entre13y17.mujeres.datos
+  .map((dato) => dato.vida)
+  .sort((a, b) => a - b);
+const centro = Math.floor(vidaMenoresMujeresOrdenado.length / 2);
+const median =
+  vidaMenoresMujeresOrdenado.length % 2 !== 0
+    ? vidaMenoresMujeresOrdenado[centro]
+    : (vidaMenoresMujeresOrdenado[centro - 1] + vidaMenoresMujeresOrdenado[centro]) / 2;
+
+console.log(tasaPrevalencia.entre13y17.mujeres.totales, median);
+
+export { tasaPrevalencia };
+
 export const lugarViolencia = {
   nombres: {
     n: 'Número de personas encuestadas',

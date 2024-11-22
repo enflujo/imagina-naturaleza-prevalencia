@@ -65,7 +65,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       <h2>Conclusiones</h2>
 
       <section id="conclusion1" class="conclusion">
-        <h3>The mean lifetime CSEA prevalence rate is very high (17 countries)</h3>
+        <h3>The mean lifetime CSEA prevalence rate is very high</h3>
+        <p class="paisesAnalizados">(17 countries)</p>
         <p>
           16.54% for women and 9.01% for men (as reported retrospectively by persons 18 to 24 years old). The
           probability that young men and woman 18 to 24 years old report they were victimized during the 12 months
@@ -74,7 +75,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       </section>
 
       <section id="conclusion2" class="conclusion">
-        <h3>Variation in CSEA prevalence across countries is huge (17 countries)</h3>
+        <h3>Variation in CSEA prevalence across countries is huge</h3>
+        <p class="paisesAnalizados">(17 countries)</p>
         <p>
           for both lifetime and last year prevalences, and from the reports of both age groups (13-17 and 18-24). The
           range difference between the maximum and minimum observed value is 37 percentage points for females.
@@ -89,7 +91,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       </section>
 
       <section id="conclusion4" class="conclusion">
-        <h3>CSEA happens very early in life, for both men and women (12 countries)</h3>
+        <h3>CSEA happens very early in life, for both men and women</h3>
+        <p class="paisesAnalizados">(12 countries)</p>
         <p>
           Approximately half of CSEA victims say that the first perpetration happened before they were 13 years old.
           Yet, it happens even earlier in life for girls: more than one third (37.6%) of the young woman (18-24 years
@@ -104,7 +107,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       </section>
 
       <section id="conclusion5" class="conclusion">
-        <h3>Poly-victimization is very common among CSEA victims (17 countries)</h3>
+        <h3>Poly-victimization is very common among CSEA victims</h3>
+        <p class="paisesAnalizados">(17 countries)</p>
         <p>
           According to the VACS data, the proportion of CSEA victims that were also victims of physical or emotional
           violence is approximately 43% for girls and 44% for boys.
@@ -112,7 +116,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       </section>
 
       <section id="conclusion6" class="conclusion">
-        <h3>Average educational attainment of both female and male CSEA victims is very low (15 countries)</h3>
+        <h3>Average educational attainment of both female and male CSEA victims is very low</h3>
+        <p class="paisesAnalizados">(15 countries)</p>
         <p>
           Less than 6% of the victims (18 to 24 years old) report having more than secondary education, and almost two
           thirds report having only primary education or less
@@ -156,8 +161,9 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <h3>The evidence provided by the VACS suggests home is not the safest place</h3>
         <p class="paisesAnalizados">(6 countries)</p>
         <p>
-          According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home. Home in
-          this case indicates the home setting and is either the victim's or perpetrator's home.
+          According to the VACS data, <span id="lugar" class="conexionConGrafica" style="color:#69d2e7"
+            >60 to 70% of CSEA victims report that the first event happened at home</span
+          >. Home in this case indicates the home setting and is either the victim's or perpetrator's home.
         </p>
 
         <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
@@ -270,10 +276,6 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     align-items: flex-start;
     justify-content: space-around;
   }
-
-  // #conclusiones {
-  //   width: $anchoColumna;
-  // }
 
   #grafica {
     position: sticky;
