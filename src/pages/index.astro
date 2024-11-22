@@ -2,8 +2,8 @@
 import ConexionesEdadPerpretador from '@/componentes/ConexionesEdadPerpretador.astro';
 import ConexionesRelacionPVMenores from '@/componentes/ConexionesRelacionPVMenores.astro';
 import ConexionesRelacionPVMayores from '@/componentes/ConexionesRelacionPVMayores.astro';
-import ConexionesTipoPerpretadorMenores from '@/componentes/ConexionesTipoPerpretadorMenores.astro';
-import ConexionesTipoPerpretadorMayores from '@/componentes/ConexionesTipoPerpretadorMayores.astro';
+import ConexionesEdadVictimaMenores from '@/componentes/ConexionesEdadVictimaMenores.astro';
+import ConexionesEdadVictimaMayores from '@/componentes/ConexionesEdadVictimaMayores.astro';
 import ConexionesLugarMenores from '@/componentes/ConexionesLugarMenores.astro';
 import ConexionesLugarMayores from '@/componentes/ConexionesLugarMayores.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
@@ -64,7 +64,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
 
       <h2>Conclusiones</h2>
 
-      <section id="conclusion1">
+      <section id="conclusion1" class="conclusion">
         <h3>The mean lifetime CSEA prevalence rate is very high (17 countries)</h3>
         <p>
           16.54% for women and 9.01% for men (as reported retrospectively by persons 18 to 24 years old). The
@@ -73,7 +73,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section id="conclusion2">
+      <section id="conclusion2" class="conclusion">
         <h3>Variation in CSEA prevalence across countries is huge (17 countries)</h3>
         <p>
           for both lifetime and last year prevalences, and from the reports of both age groups (13-17 and 18-24). The
@@ -81,14 +81,14 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section id="conclusion3">
+      <section id="conclusion3" class="conclusion">
         <h3>The mean lifetime CSEA prevalence is especially high for girls and young woman (17 countries)</h3>
         <p>
           Lifetime exposure to CSEA reported by children and youth 13 to 17 years old is 1.97 times higher for females.
         </p>
       </section>
 
-      <section id="conclusion4">
+      <section id="conclusion4" class="conclusion">
         <h3>CSEA happens very early in life, for both men and women (12 countries)</h3>
         <p>
           Approximately half of CSEA victims say that the first perpetration happened before they were 13 years old.
@@ -97,13 +97,13 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
 
         <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
-        <ConexionesTipoPerpretadorMenores />
+        <ConexionesEdadVictimaMenores />
 
         <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
-        <ConexionesTipoPerpretadorMayores />
+        <ConexionesEdadVictimaMayores />
       </section>
 
-      <section id="conclusion5">
+      <section id="conclusion5" class="conclusion">
         <h3>Poly-victimization is very common among CSEA victims (17 countries)</h3>
         <p>
           According to the VACS data, the proportion of CSEA victims that were also victims of physical or emotional
@@ -111,7 +111,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section id="conclusion6">
+      <section id="conclusion6" class="conclusion">
         <h3>Average educational attainment of both female and male CSEA victims is very low (15 countries)</h3>
         <p>
           Less than 6% of the victims (18 to 24 years old) report having more than secondary education, and almost two
@@ -119,11 +119,12 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         </p>
       </section>
 
-      <section id="conclusion7">
+      <section id="conclusion7" class="conclusion">
         <h3>
           The situation varies significantly across countries, and between men and woman in terms of the relationship
-          between victims of CSEA and their first perpetrator (6 countries)
+          between victims of CSEA and their first perpetrator
         </h3>
+        <p class="paisesAnalizados">(8 countries)</p>
         <p>
           The two most frequent relationships reported by females are: “current or Former Romantic Partners” and
           “friend, classmate, or neighbour”, with the first one being the most prevalent. For male victims the most
@@ -137,7 +138,7 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <ConexionesRelacionPVMayores />
       </section>
 
-      <section id="conclusion8">
+      <section id="conclusion8" class="conclusion">
         <h3>According to the VACS data, CSEA perpetrators are young</h3>
         <p class="paisesAnalizados">(9 countries)</p>
         <p>
@@ -151,9 +152,13 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <ConexionesEdadPerpretador />
       </section>
 
-      <section id="conclusion9">
-        <h3>The evidence provided by the VACS suggests home is not the safest place (6 countries)</h3>
-        <p>According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home.</p>
+      <section id="conclusion9" class="conclusion">
+        <h3>The evidence provided by the VACS suggests home is not the safest place</h3>
+        <p class="paisesAnalizados">(6 countries)</p>
+        <p>
+          According to the VACS data, 60 to 70% of CSEA victims report that the first event happened at home. Home in
+          this case indicates the home setting and is either the victim's or perpetrator's home.
+        </p>
 
         <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
         <ConexionesLugarMenores />
@@ -175,18 +180,24 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     padding: 0 0 0.4em 0;
   }
 
-  section {
+  .conclusion {
     margin: 10em 0 0 0;
+    h3,
+    p {
+      width: 100%;
+      margin: 0 auto;
+    }
 
     h3 {
-      display: flex;
+      margin-bottom: 0.3em;
       font-weight: 800;
       font-size: 2.5em;
       text-align: center;
+      display: block;
+    }
 
-      .icono {
-        height: 50px;
-      }
+    p {
+      font-size: 1.2em;
     }
 
     .paisesAnalizados {
@@ -194,8 +205,14 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       font-size: 1.2em;
       text-align: center;
       margin-bottom: 1.5em;
+      display: block;
+    }
+
+    .icono {
+      height: 50px;
     }
   }
+
   #contenedorMapa {
     position: relative;
     width: 80vw;
@@ -240,21 +257,6 @@ import Plantilla from '@/plantillas/Plantilla.astro';
             content: '';
           }
         }
-      }
-    }
-  }
-
-  #mapa {
-    background-color: rgb(0, 0, 0);
-    border: 3px solid white;
-
-    path {
-      fill: transparent;
-      stroke: rgb(77, 69, 69);
-
-      &.encuestado {
-        fill: rgb(245, 162, 162);
-        stroke: rgb(241, 210, 210);
       }
     }
   }
@@ -304,11 +306,26 @@ import Plantilla from '@/plantillas/Plantilla.astro';
     }
   }
 
-  section {
-    h3,
-    p {
-      width: 70%;
-      margin: 0 auto;
+  @media (max-width: 800px) {
+    .contenido {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .titulo {
+      font-size: 2.5em;
+      max-width: 80vw;
+    }
+
+    .autores {
+      width: 90%;
+    }
+
+    .conclusion {
+      h3,
+      p {
+        width: 70%;
+      }
     }
   }
 </style>
