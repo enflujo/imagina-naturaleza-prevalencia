@@ -5,7 +5,7 @@ export default defineConfig({
   compressHTML: true,
   outDir: './publico',
   site: 'https://imagina.uniandes.edu.co/',
-  base: '/prevalence-csea/',
+  base: '/especiales/prevalence-csea/',
   build: {
     assets: 'estaticos',
   },
