@@ -34,6 +34,6 @@ jobs:
           host: ${{ secrets.DOMINIO_IMAGINA }}
           username: ${{ secrets.USUARIO_IMAGINA }}
           password: ${{ secrets.CLAVE_IMAGINA }}
-          localDir: 'aplicaciones/www/publico'
+          localDir: 'publico'
           remoteDir: '/srv/www/wordpress/especiales/prevalence-csea/'
           removeExtraFilesOnServer: true
