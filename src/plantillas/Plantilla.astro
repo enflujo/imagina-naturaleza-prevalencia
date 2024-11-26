@@ -8,7 +8,8 @@ interface Props {
 const { titulo, descripcion, imagen } = Astro.props;
 
 const nombreProyecto = 'Prevalence and nature of child sexual exploitation and abuse';
-const descripcionGeneral = '';
+const descripcionGeneral =
+  'This site provides insights into the prevalence and nature of child sexual exploitation and abuse (CSEA) using data from the Violence Against Children and Youth Surveys (VACS) conducted in 17 countries. It highlights key findings, including variations in CSEA prevalence, age of first perpetration, poly-victimization, educational attainment, and relationships between victims and perpetrators.';
 const { pathname } = Astro.url;
 const tituloSEO = titulo ? `${titulo} | ${nombreProyecto}` : nombreProyecto;
 const descripcionSEO = descripcion || descripcionGeneral;
@@ -22,7 +23,7 @@ const altImg = imagen ? imagen.alt : nombreProyecto;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Descripción de la página" />
+
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href={new URL('favicon.ico', urlBase)} sizes="32x32" />
     <link rel="icon" href={new URL('favicon.svg', urlBase)} type="image/svg+xml" />
@@ -31,7 +32,7 @@ const altImg = imagen ? imagen.alt : nombreProyecto;
     <link rel="canonical" href={urlPagina} />
 
     <title>{tituloSEO}</title>
-    <meta name="description" content="Descripción del sitio...." />
+    <meta name="description" content={descripcionGeneral} />
     <!-- OpenGraph -->
     <meta property="og:locale" content="es_CO" />
     <meta property="og:site_name" content={nombreProyecto} />
