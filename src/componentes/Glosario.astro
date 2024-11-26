@@ -1,0 +1,88 @@
+---
+
+---
+
+<div id="glosario">
+  <span id="cerrarGlosario">X</span>
+  <h2>Glossary</h2>
+
+  <section>
+    <h3>Prevalence</h3>
+
+    <p>We analyze two types of CSEA prevalence:</p>
+
+    <ol>
+      <li>Lifetime exposure ("ever experienced")</li>
+      <li>Exposure in the last 12 months ("experienced in the last year")</li>
+    </ol>
+  </section>
+
+  <section>
+    <h3>VACS</h3>
+
+    <p>
+      VACS are nationally representative household surveys of adolescents and young people (ages 13 to 24) that generate
+      a wide range of information about violence victimization during childhood and adolescence. These surveys measure
+      the prevalence and circumstances surrounding sexual, physical and emotional violence in childhood (that is, before
+      turning 18 years old) by collecting the retrospective reports of young men and woman 18 to 24 years old, and the
+      direct reports of children and adolescents 13 to 17 years old.
+    </p>
+  </section>
+
+  <section>
+    <h3>CSEA</h3>
+    <p>Child sexual exploitation and abuse</p>
+  </section>
+</div>
+
+<style lang="scss">
+  #glosario {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40vw;
+    z-index: 1000;
+    background-color: rgb(64, 126, 112);
+    color: white;
+    padding: 2em;
+    height: 100vh;
+    overflow: auto;
+    transition: all 0.2s ease-in-out;
+    right: -100%;
+
+    &.visible {
+      right: 0;
+    }
+
+    section {
+      border-bottom: 1px dotted;
+      padding-bottom: 2em;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 1em;
+      border-bottom: 3px solid;
+      padding-bottom: 0.5em;
+    }
+
+    h3 {
+      font-size: 1.5em;
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  #cerrarGlosario {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.3em 1em;
+    cursor: pointer;
+    font-size: 2em;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+</style>

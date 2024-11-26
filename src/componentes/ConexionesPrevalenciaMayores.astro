@@ -3,7 +3,7 @@
 ---
 
 <div class="contenedorConexiones">
-  <svg width="100%" height="800px" id="conexiones4" class="graficaConexiones">
+  <svg width="100%" height="800px" id="conexionesPrevalencia2" class="graficaConexiones">
     <text x="25%" y="20px" class="nombreColumna" text-anchor="middle">Data for female victims</text>
     <text x="75%" y="20px" class="nombreColumna" text-anchor="middle">Data for male victims</text>
     <g class="conexiones"></g>
@@ -12,43 +12,39 @@
 </div>
 
 <script>
-  import { edadVictimas } from '@/cerebro/datos';
+  import { tasaPrevalencia } from '@/cerebro/datos';
   import info from '@/modulos/info';
-  import type { Conexion, GrupoConexion, LlavesEV, GrupoEV } from '@/tipos';
+  import type { Conexion, GrupoConexion, GrupoP, LlavesP } from '@/tipos';
   import { definirDims } from '@/utilidades/ayudasConexiones';
   import { convertirEscala } from '@enflujo/alquimia';
 
-  const svg = document.querySelector<SVGAElement>('#conexiones4');
+  const svg = document.querySelector<SVGAElement>('#conexionesPrevalencia2');
   if (!svg) throw new Error('No se encontró el elemento SVG');
   const semillas = svg.querySelector<SVGGElement>('.semillas');
   const conexiones = svg.querySelector<SVGGElement>('.conexiones');
 
   const contenedorInfo = info.elemento();
-  const { mujeres, hombres } = edadVictimas.vida.entre13y17;
+  const { mujeres, hombres } = tasaPrevalencia.entre18y24;
   const { alto, margenY, espacioEntre, margenCentro } = definirDims(600);
-  const llaves = Object.keys(edadVictimas.nombres).filter((nombre) => nombre !== 'n');
+  const llaves = Object.keys(tasaPrevalencia.nombres).filter((nombre) => nombre !== 'n');
 
   const coloresGrupos = {
-    menor14: '#69d2e7',
-    entre14y15: '#ecd078',
-    entre16y17: '#83af9b',
+    vida: '#69d2e7',
+    ultimoAnio: '#ecd078',
   };
   const crearMensaje = (conexion: Conexion, nombreGrupo: string, lado: 'izq' | 'der') => {
     const genero = lado === 'izq' ? 'female' : 'male';
     let mensaje = `In <span class="resaltar agrandar1-2 subrayar">${conexion.pais}</span>,`;
-    mensaje += `<span class="resaltar agrandar1-4${conexion.valor >= 10 ? ' grave' : ''}"> ${conexion.valor}%</span> of <span class="resaltar subrayar">${genero} victims</span>`;
-    mensaje += ` say that their first perpetration happened between the ages of: <span class="resaltar agrandar1-2">${nombreGrupo}</span>.`;
+    mensaje += `<span class="resaltar agrandar1-4${conexion.valor >= 10 ? ' grave' : ''}"> ${conexion.valor}%</span> of first time perpetrators are within the ages of: `;
+    mensaje += `<span class="resaltar agrandar1-2">${nombreGrupo}</span>`;
+    mensaje += ` for <span class="resaltar subrayar">${genero} victims.</span>`;
     return mensaje;
   };
 
   const origenesMujeres = procesarGrupoEtario(mujeres);
   const origenesHombres = procesarGrupoEtario(hombres);
-  const paises: { nombre: string; y: number }[] = [];
-
-  [...origenesMujeres[0].conexiones, ...origenesHombres[0].conexiones].forEach((lugar, i) => {
-    if (!paises.find((pais) => pais.nombre === lugar.pais)) {
-      paises.push({ nombre: lugar.pais, y: margenY + espacioEntre * (i + 1) + alto(i * 2) });
-    }
+  const paises = origenesMujeres[0].conexiones.map((lugar, i) => {
+    return { nombre: lugar.pais, y: margenY + espacioEntre * (i + 1) + alto(i * 2) };
   });
 
   definirConexiones();
@@ -90,9 +86,9 @@
       const xGrupo = lado === 'izq' ? '3px' : 'calc(100% - 5px)';
       grupo.setAttribute(
         'style',
-        `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave as keyof LlavesEV]};`
+        `transform: translate(${xGrupo}, ${origen.y}px);fill:${coloresGrupos[origen.llave as keyof LlavesP]};`
       );
-      const nombreGrupo = edadVictimas.nombres[origen.llave as keyof LlavesEV];
+      const nombreGrupo = tasaPrevalencia.nombres[origen.llave as keyof LlavesP];
       const semilla = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       semilla.setAttribute('x', lado === 'izq' ? '0' : '-40px');
       semilla.setAttribute('y', '0');
@@ -101,18 +97,18 @@
 
       const nombre = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       nombre.setAttribute('x', '0');
-      nombre.setAttribute('y', '-17px');
+      nombre.setAttribute('y', '-11px');
       nombre.setAttribute('font-weight', 'bold');
       nombre.setAttribute('font-size', '15');
       if (lado === 'der') nombre.setAttribute('text-anchor', 'end');
       nombre.innerHTML = nombreGrupo;
 
-      const valor = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      valor.setAttribute('x', '0');
-      valor.setAttribute('y', '-3px');
-      valor.setAttribute('font-size', '11');
-      if (lado === 'der') valor.setAttribute('text-anchor', 'end');
-      valor.innerHTML = `${origen.valor}%`;
+      // const valor = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      // valor.setAttribute('x', '0');
+      // valor.setAttribute('y', '-3px');
+      // valor.setAttribute('font-size', '11');
+      // if (lado === 'der') valor.setAttribute('text-anchor', 'end');
+      // valor.innerHTML = `${origen.valor}%`;
 
       origen.conexiones.forEach((conexion) => {
         const elemento = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -146,26 +142,25 @@
 
       grupo.appendChild(semilla);
       grupo.appendChild(nombre);
-      grupo.appendChild(valor);
+      // grupo.appendChild(valor);
 
       semillas?.append(grupo);
     });
   }
-
-  function procesarGrupoEtario(grupo: GrupoEV) {
+  function procesarGrupoEtario(grupo: GrupoP) {
     let yAcumulado = 0;
 
     return llaves
-      .sort((a, b) => grupo.totales[b as keyof LlavesEV] - grupo.totales[a as keyof LlavesEV])
+      .sort((a, b) => grupo.totales[b as keyof LlavesP] - grupo.totales[a as keyof LlavesP])
       .map((nombre, i) => {
-        const valor = grupo.totales[nombre as keyof LlavesEV];
+        const valor = grupo.totales[nombre as keyof LlavesP];
         const y = espacioEntre * (i + 1) + margenY + yAcumulado;
-        const acumulados: LlavesEV = { menor14: 0, entre14y15: 0, entre16y17: 0 };
+        const acumulados: LlavesP = { vida: 0, ultimoAnio: 0 };
 
         const conexiones = grupo.datos
           .map((lugar) => {
-            const valorLinea = lugar[nombre as keyof LlavesEV];
-            acumulados[nombre as keyof LlavesEV] += valorLinea;
+            const valorLinea = lugar[nombre as keyof LlavesP];
+            acumulados[nombre as keyof LlavesP] += valorLinea;
 
             return {
               pais: lugar.pais,
@@ -175,17 +170,17 @@
               origenY2: 0,
               destinoY1: 0,
               destinoY2: 0,
-              color: coloresGrupos[nombre as keyof LlavesEV],
+              color: coloresGrupos[nombre as keyof LlavesP],
             };
           })
           .sort((a, b) => b.valor - a.valor);
 
         const respuesta = {
-          llave: nombre as keyof LlavesEV,
+          llave: nombre as keyof LlavesP,
           y,
           valor,
           conexiones,
-          totalOrigen: acumulados[nombre as keyof LlavesEV] | 0,
+          totalOrigen: acumulados[nombre as keyof LlavesP] | 0,
         };
         yAcumulado += alto(valor);
         return respuesta;
@@ -194,8 +189,8 @@
 
   function definirConexiones() {
     origenesMujeres.forEach((origen, i) => {
-      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, origen.totalOrigen, 0, origen.valor - 4.4));
-      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
+      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, origen.totalOrigen, 0, origen.valor - 4.5));
+      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, 48, 0, 10));
       origen.conexiones.forEach((lugar, ii) => {
         const pais = paises.find((pais) => pais.nombre === lugar.pais);
         const y2 = i > 0 ? origenesMujeres[i - 1].conexiones.find((l) => l.pais === lugar.pais)?.destinoY2 : pais?.y;
@@ -212,8 +207,8 @@
     origenesMujeres.reverse(); // invertir orden para que se pinten las más gruesas encima de las menos
 
     origenesHombres.forEach((destino, i) => {
-      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, 100, 0, 10));
-      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, destino.totalOrigen, 0, destino.valor - 2));
+      const escalaYOrigen = (n: number) => alto(convertirEscala(n, 0, 48, 0, 10));
+      const escalaYDestino = (n: number) => alto(convertirEscala(n, 0, destino.totalOrigen, 0, destino.valor - 2.5));
 
       destino.conexiones.forEach((lugar, ii) => {
         const pais = paises.find((pais) => pais.nombre === lugar.pais);
@@ -272,51 +267,56 @@
   });
 
   function crearInteracciones() {
-    // const epUnTercio14 = document.getElementById('epUnTercio14');
-    // if (epUnTercio14) {
-    //   epUnTercio14.onmouseenter = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.add('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //     const menor14 = svg.querySelectorAll(`.conexion.cmenor14`);
-    //     if (menor14.length) {
-    //       menor14.forEach((nodo) => nodo.classList.add('activo'));
-    //     }
-    //   };
-    //   epUnTercio14.onmouseleave = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.remove('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //   };
-    // }
-    // const epUnTercio15 = document.getElementById('epUnTercio15');
-    // if (epUnTercio15) {
-    //   epUnTercio15.onmouseenter = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.add('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //     const menor15 = svg.querySelectorAll(`.conexion.centre15y18`);
-    //     if (menor15.length) {
-    //       menor15.forEach((nodo) => nodo.classList.add('activo'));
-    //     }
-    //   };
-    //   epUnTercio15.onmouseleave = () => {
-    //     if (!svg) return;
-    //     const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
-    //     svg.classList.remove('interactuando');
-    //     conexiones.forEach((conexion) => {
-    //       conexion.classList.remove('activo');
-    //     });
-    //   };
-    // }
+    const epUnTercio14 = document.getElementById('epUnTercio14');
+    if (epUnTercio14) {
+      epUnTercio14.addEventListener('mouseenter', () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.add('interactuando');
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+        const menor14 = svg.querySelectorAll(`.conexion.cmenor14`);
+        if (menor14.length) {
+          menor14.forEach((nodo) => nodo.classList.add('activo'));
+        }
+      });
+
+      epUnTercio14.addEventListener('mouseleave', () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.remove('interactuando');
+
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+      });
+    }
+
+    const epUnTercio15 = document.getElementById('epUnTercio15');
+    if (epUnTercio15) {
+      epUnTercio15.addEventListener('mouseenter', () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.add('interactuando');
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+        const menor15 = svg.querySelectorAll(`.conexion.centre15y18`);
+        if (menor15.length) {
+          menor15.forEach((nodo) => nodo.classList.add('activo'));
+        }
+      });
+
+      epUnTercio15.addEventListener('mouseleave', () => {
+        if (!svg) return;
+        const conexiones = svg.querySelectorAll<SVGPathElement>('.conexion');
+        svg.classList.remove('interactuando');
+
+        conexiones.forEach((conexion) => {
+          conexion.classList.remove('activo');
+        });
+      });
+    }
   }
 </script>

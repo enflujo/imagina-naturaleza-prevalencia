@@ -7,64 +7,80 @@ import ConexionesEdadVictimaMayores from '@/componentes/ConexionesEdadVictimaMay
 import ConexionesLugarMenores from '@/componentes/ConexionesLugarMenores.astro';
 import ConexionesLugarMayores from '@/componentes/ConexionesLugarMayores.astro';
 import Plantilla from '@/plantillas/Plantilla.astro';
+import BarrasPoly from '@/componentes/BarrasPoly.astro';
+import ConexionesEduacion from '@/componentes/ConexionesEduacion.astro';
+import ConexionesPrevalenciaMenores from '@/componentes/ConexionesPrevalenciaMenores.astro';
+import ConexionesPrevalenciaMayores from '@/componentes/ConexionesPrevalenciaMayores.astro';
+import Glosario from '@/componentes/Glosario.astro';
 ---
 
 <Plantilla>
   <nav id="navegacion">
-    <p class="tituloMenu">Menu</p>
     <ul>
-      <li><a href="#conclusion1"><span class="nombre">Mean lifetime CSEA prevalence is very high</span></a></li>
+      <li class="botonMenu"><a href="#intro">Intro</a></li>
+      <!-- <li>
+        <a href="#conclusion1" class="botonConclusion"
+          ><span class="nombre">Mean lifetime CSEA prevalence is very high</span></a
+        >
+      </li> -->
       <li>
-        <a href="#conclusion2"><span class="nombre">Variation in CSEA prevalence across countries is huge</span></a>
+        <a href="#conclusion2" class="botonConclusion"
+          ><span class="nombre">Variation in CSEA prevalence across countries is huge</span></a
+        >
       </li>
       <li>
-        <a href="#conclusion3">
-          <span class="nombre">Mean lifetime CSEA prevalence is especially high for girls and young woman</span>
-        </a>
+        <a href="#conclusion4" class="botonConclusion"><span class="nombre">CSEA happens very early in life</span></a>
       </li>
-      <li><a href="#conclusion4"><span class="nombre">CSEA happens very early in life</span></a></li>
-      <li><a href="#conclusion5"><span class="nombre">Poly-victimization is very common</span></a></li>
-      <li><a href="#conclusion6"><span class="nombre">Educational attainment is very low</span></a></li>
       <li>
-        <a href="#conclusion7"><span class="nombre">Relationship between victims and their first perpetrator</span></a>
+        <a href="#conclusion5" class="botonConclusion"><span class="nombre">Poly-victimization is very common</span></a>
       </li>
-      <li><a href="#conclusion8"><span class="nombre">Perpetrators are very young</span></a></li>
-      <li><a href="#conclusion9"><span class="nombre">Home is not the safest place</span></a></li>
+      <li>
+        <a href="#conclusion6" class="botonConclusion"><span class="nombre">Educational attainment is very low</span></a
+        >
+      </li>
+      <li>
+        <a href="#conclusion7" class="botonConclusion"
+          ><span class="nombre">Relationship between victims and their first perpetrator</span></a
+        >
+      </li>
+      <li>
+        <a href="#conclusion8" class="botonConclusion"><span class="nombre">Perpetrators are very young</span></a>
+      </li>
+      <li>
+        <a href="#conclusion9" class="botonConclusion"><span class="nombre">Home is not the safest place</span></a>
+      </li>
+      <li class="botonMenu abrirGlosario">Glossary</li>
+      <li class="botonMenu"><a href="#creditos">Credits</a></li>
     </ul>
   </nav>
-  <main>
-    <h1 class="titulo">Prevalence and nature of child sexual exploitation and abuse</h1>
 
-    <div class="autores">
-      <h2>Research team</h2>
-      <ul>
-        <li>Arturo Harker Roa, PhD</li>
-        <li>Maria Fernanda Rodríguez</li>
-        <li>Jorge Rodríguez</li>
-        <li>Paula Contreras</li>
-        <li>Maria Paula Marmolejo</li>
-        <li>Katherine Jaramillo</li>
-        <li>Julián Lopez</li>
-        <li>Daniel Mendivelso</li>
-        <li>Inga Vermeulen, PhD</li>
-        <li>Deborah Fry, PhD</li>
-      </ul>
-      <p></p>
-    </div>
+  <main>
+    <Glosario />
+    <h1 id="intro" class="titulo">Prevalence and nature of child sexual exploitation and abuse</h1>
 
     <div class="contenido">
-      <h2>Introduction</h2>
-      The analysis uses two definitions of <span class="resaltado">Prevalence</span> according to two different time-frames
-      of exposure to CSEA:
+      <div class="intro">
+        <p>Understanding <span class="resaltar">child sexual exploitation and abuse (CSEA)</span> is vital because:</p>
 
-      <ol>
-        <li>Lifetime exposure ("have you ever been")</li>
-        <li>Exposure in the las 12 months ("during the last 12 months have you been")</li>
-      </ol>
+        <ul class="listaCentrada">
+          <li>
+            It reveals the true scale of CSEA, often hidden due to underreporting, societal stigma and lack of reliable
+            data.
+          </li>
+          <li>It helps create effective policies and strategies to combat CSEA.</li>
+          <li>It identifies patterns and risk factors, aiding in prevention and early intervention.</li>
+        </ul>
 
-      <h2>Conclusiones</h2>
+        <p>
+          This study uses data from 17 countries, leveraging the <span id="defVacs" class="resaltar"
+            >Violence Against Children and Youth Surveys (VACS)</span
+          > to provide reliable insights and inform policies.
+        </p>
 
-      <section id="conclusion1" class="conclusion">
+        <p>The following sections present the key findings.</p>
+      </div>
+
+      <!-- <section id="conclusion1" class="conclusion">
         <h3>The mean lifetime CSEA prevalence rate is very high</h3>
         <p class="paisesAnalizados">(17 countries)</p>
         <p>
@@ -72,23 +88,49 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           probability that young men and woman 18 to 24 years old report they were victimized during the 12 months
           previous to the survey is 9.15% and 12.26%, respectively.
         </p>
-      </section>
+      </section> -->
 
       <section id="conclusion2" class="conclusion">
         <h3>Variation in CSEA prevalence across countries is huge</h3>
         <p class="paisesAnalizados">(17 countries)</p>
         <p>
-          for both lifetime and last year prevalences, and from the reports of both age groups (13-17 and 18-24). The
+          For both lifetime and last year prevalences, and from the reports of both age groups (13-17 and 18-24). The
           range difference between the maximum and minimum observed value is 37 percentage points for females.
         </p>
+
+        <h4 class="tituloGrafica">Reported by 13 to 17 years old</h4>
+        <ConexionesPrevalenciaMenores />
+
+        <h4 class="tituloGrafica">Reported by 18 to 24 years old</h4>
+        <ConexionesPrevalenciaMayores />
       </section>
 
-      <section id="conclusion3" class="conclusion">
-        <h3>The mean lifetime CSEA prevalence is especially high for girls and young woman (17 countries)</h3>
+      <div class="contexto">
         <p>
-          Lifetime exposure to CSEA reported by children and youth 13 to 17 years old is 1.97 times higher for females.
+          <a href="#conclusion1">The mean lifetime CSEA prevalence is especially high for girls and young woman.</a> Lifetime
+          exposure to CSEA reported by children and youth 13 to 17 years old is 1.97 times higher for females.
         </p>
-      </section>
+
+        <p>
+          However, variation across this sample of countries is similarly high for both young men and women. It is
+          important to highlight that there are many more differences across gender in the nature of CSEA. In the next
+          sections we will describe gender differences in terms of the victim's characteristics:
+        </p>
+
+        <ul>
+          <li><a href="#conclusion4">Age of first perpetration</a></li>
+          <li><a href="#conclusion5">Exposure to other types of violence</a></li>
+          <li><a href="#conclusion6">Educational attainment</a></li>
+        </ul>
+
+        Also perpetrator's characteristics:
+        <ul>
+          <li><a href="#conclusion7">Relationship to the victim</a></li>
+          <li><a href="#conclusion8">Age of the perpetration</a></li>
+        </ul>
+
+        <p>And lastly, the <a href="#conclusion9">location of the event</a>.</p>
+      </div>
 
       <section id="conclusion4" class="conclusion">
         <h3>CSEA happens very early in life, for both men and women</h3>
@@ -111,8 +153,20 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <p class="paisesAnalizados">(17 countries)</p>
         <p>
           According to the VACS data, the proportion of CSEA victims that were also victims of physical or emotional
-          violence is approximately 43% for girls and 44% for boys.
+          violence is approximately 43% for girls and 44% for boys. The graphics show extreme cases such as <span
+            id="polyTanzania"
+            class="conexionConGrafica"
+            style="color:rgb(353.136,120.53599999999999,101.024)"
+          >
+            Tanzania
+          </span>, <span id="polyHaiti" class="conexionConGrafica" style="color:rgb(258.468,154.668,150.612)"
+            >Haiti</span
+          >
+          and <span id="polyMalawi" class="conexionConGrafica" style="color:rgb(244.65,159.65,157.85)">Malawi</span>,
+          where this proportion exceeds 50%.
         </p>
+
+        <BarrasPoly />
       </section>
 
       <section id="conclusion6" class="conclusion">
@@ -122,6 +176,8 @@ import Plantilla from '@/plantillas/Plantilla.astro';
           Less than 6% of the victims (18 to 24 years old) report having more than secondary education, and almost two
           thirds report having only primary education or less
         </p>
+
+        <ConexionesEduacion />
       </section>
 
       <section id="conclusion7" class="conclusion">
@@ -173,17 +229,143 @@ import Plantilla from '@/plantillas/Plantilla.astro';
         <ConexionesLugarMayores />
       </section>
     </div>
+
+    <footer id="creditos">
+      <div class="autores">
+        <h2>Research team</h2>
+        <ul>
+          <li>
+            <a href="https://gobierno.uniandes.edu.co/es/profesores/arturo-harker-roa" target="_blank"
+              >Arturo Harker Roa, PhD</a
+            >
+          </li>
+          <li>Maria Fernanda Rodríguez</li>
+          <li>Jorge Rodríguez</li>
+          <li>Paula Contreras</li>
+          <li>Maria Paula Marmolejo</li>
+          <li>Katherine Jaramillo</li>
+          <li>Julián Lopez</li>
+          <li>Daniel Mendivelso</li>
+          <li>
+            <a href="https://www.research.ed.ac.uk/en/persons/inga-vermeulen" target="_blank">Inga Vermeulen, PhD</a>
+          </li>
+          <li><a href="https://www.ed.ac.uk/profile/deborah-fry" target="_blank">Deborah Fry, PhD</a></li>
+        </ul>
+      </div>
+
+      <div class="organizaciones">
+        <span class="logo">
+          <a href="https://imagina.uniandes.edu.co/">
+            <img src=`${import.meta.env.BASE_URL}/logo_imagina.svg` alt="Logo Centro Imagina" />
+          </a>
+        </span>
+
+        <div class="subOrg">
+          <h4>Developed by</h4>
+
+          <p><a href="https://enflujo.com/equipo/juan-camilo-gonzalez/" target="_blank">Juan Camilo González</a></p>
+          <span class="logo">
+            <a href="https://enflujo.com">
+              <img src=`${import.meta.env.BASE_URL}/enflujo_andes.svg` alt="Logo Laboratorio EnFlujo" />
+            </a>
+          </span>
+        </div>
+      </div>
+    </footer>
   </main>
 </Plantilla>
 
-<script></script>
+<script>
+  const cerrarGlosario = document.getElementById('cerrarGlosario');
+  const glosario = document.getElementById('glosario');
+  const botonesAbrirGlosario = document.querySelectorAll('.abrirGlosario');
+
+  if (cerrarGlosario && glosario) {
+    cerrarGlosario.addEventListener('click', () => {
+      glosario.classList.remove('visible');
+    });
+  }
+
+  if (botonesAbrirGlosario.length && glosario) {
+    botonesAbrirGlosario.forEach((boton) => {
+      boton.addEventListener('click', () => {
+        glosario.classList.add('visible');
+      });
+    });
+  }
+</script>
 
 <style lang="scss">
-  .tituloGrafica {
-    font-size: 2em;
-    margin: 1em 0 0 0;
-    border-bottom: 2px solid;
-    padding: 0 0 0.4em 0;
+  #navegacion {
+    .botonMenu {
+      font-size: 0.75em;
+      margin: 0.5em 0 0 1em;
+      color: white;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.411);
+      }
+
+      a,
+      a:link,
+      a:visited {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+  .intro {
+    font-size: 1.5em;
+    margin-top: 2em;
+    padding: 1em;
+    background-color: #69d2e73f;
+
+    ol,
+    li {
+      font-size: 0.8em;
+
+      li {
+        margin-bottom: 0.5em;
+      }
+    }
+
+    .resaltar {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .listaCentrada {
+      list-style: none;
+      font-weight: bold;
+      font-size: 1.5em;
+
+      li {
+        margin-bottom: 1em;
+      }
+    }
+  }
+  .contexto {
+    font-size: 1.8em;
+    margin-top: 3em;
+    padding: 1em;
+    background-color: rgb(12, 5, 5);
+
+    p {
+      line-height: 1.3;
+    }
+
+    a,
+    a:link,
+    a:visited {
+      color: #69d2e7;
+      text-decoration: underline;
+    }
+
+    .resaltar {
+      font-weight: bold;
+      text-decoration: underline;
+    }
   }
 
   .conclusion {
@@ -237,7 +419,6 @@ import Plantilla from '@/plantillas/Plantilla.astro';
   .autores {
     width: 80%;
     margin: 0;
-    border-bottom: 1px dotted white;
     font-size: 0.95em;
 
     h2 {
@@ -248,26 +429,24 @@ import Plantilla from '@/plantillas/Plantilla.astro';
       list-style: none;
       margin: 0;
       padding: 0;
-      font-style: italic;
-
-      li {
-        display: inline-block;
-        &:after {
-          content: ',';
-          display: inline-block;
-          margin: 0 3px;
-        }
-
-        &:last-child {
-          &:after {
-            content: '';
-          }
-        }
-      }
     }
   }
 
-  $anchoColumna: 45vw;
+  .organizaciones {
+    margin-top: 1em;
+  }
+
+  .logo {
+    img {
+      height: 80px;
+    }
+  }
+
+  .subOrg {
+    img {
+      height: 40px;
+    }
+  }
 
   .contenido {
     position: relative;

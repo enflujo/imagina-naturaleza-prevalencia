@@ -1,0 +1,282 @@
+---
+import { polyvictimizacion } from '@/cerebro/datos';
+import { escalaColores } from '@enflujo/alquimia';
+const color = escalaColores(0, 50, '#69d2e7', '#fc9d9a');
+polyvictimizacion.entre13y17.mujeres.datos.sort((a, b) => b.si - a.si);
+polyvictimizacion.entre18y24.mujeres.datos.sort((a, b) => b.si - a.si);
+polyvictimizacion.entre13y17.hombres.datos.sort((a, b) => b.si - a.si);
+polyvictimizacion.entre18y24.hombres.datos.sort((a, b) => b.si - a.si);
+---
+
+<div class="contenedorGrafica">
+  <h4 class="tituloCentrado">Female Victims</h4>
+
+  <div class="contenedorBarras">
+    <div class="col col1">
+      <h5 class="tituloGrafica">Reported by 13 to 17 years old</h5>
+      {
+        polyvictimizacion.entre13y17.mujeres.datos.map(({ pais, si, n }) => (
+          <div class="barra" data-porcentaje={si} data-numero={n} data-pais={pais} data-lado="izq">
+            <span class="texto">
+              {pais}: <span class="porcentajeEnTexto">{si}%</span>
+            </span>
+            <span class="valor" style={{ width: `${si}%`, backgroundColor: color(si) }} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="col col2">
+      <h5 class="tituloGrafica">Reported by 18 to 24 years old</h5>
+      {
+        polyvictimizacion.entre18y24.mujeres.datos.map(({ pais, si, n }) => (
+          <div class="barra" data-porcentaje={si} data-numero={n} data-pais={pais} data-lado="der">
+            <span class="texto">
+              {pais}: <span class="porcentajeEnTexto">{si}%</span>
+            </span>
+            <span class="valor" style={{ width: `${si}%`, backgroundColor: color(si) }} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <h4 class="tituloCentrado">Male Victims</h4>
+
+  <div class="contenedorBarras">
+    <div class="col col1">
+      <h5 class="tituloGrafica">Reported by 13 to 17 years old</h5>
+      {
+        polyvictimizacion.entre13y17.hombres.datos.map(({ pais, si, n }) => (
+          <div class="barra" data-porcentaje={si} data-numero={n} data-pais={pais} data-lado="izq">
+            <span class="texto">
+              {pais}: <span class="porcentajeEnTexto">{si}%</span>
+            </span>
+            <span class="valor" style={{ width: `${si}%`, backgroundColor: color(si) }} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="col col2">
+      <h5 class="tituloGrafica">Reported by 18 to 24 years old</h5>
+      {
+        polyvictimizacion.entre18y24.hombres.datos.map(({ pais, si, n }) => (
+          <div class="barra" data-porcentaje={si} data-numero={n} data-pais={pais} data-lado="der">
+            <span class="texto">
+              {pais}: <span class="porcentajeEnTexto">{si}%</span>
+            </span>
+            <span class="valor" style={{ width: `${si}%`, backgroundColor: color(si) }} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  const barras = document.querySelectorAll<HTMLDivElement>('.barra');
+  import info from '@/modulos/info';
+  const contenedorInfo = info.elemento();
+  const contenedores = document.querySelectorAll<HTMLDivElement>('.contenedorBarras');
+  const contenedorGeneral = document.querySelector<HTMLDivElement>('.contenedorGrafica');
+
+  const crearMensaje = (pais: string, porcentaje: string, numero: string, lado: string) => {
+    const genero = lado === 'izq' ? 'female' : 'male';
+    let mensaje = `In <span class="resaltar agrandar1-2 subrayar">${pais}</span>,`;
+    mensaje += `<span class="resaltar agrandar1-4${+porcentaje >= 10 ? ' grave' : ''}"> ${porcentaje}%</span>`;
+    mensaje += ` of <span class="resaltar agrandar1-2">${numero}</span> <span class="resaltar subrayar">${genero}</span> victims reported poly-victimization.`;
+    return mensaje;
+  };
+
+  crearInteracciones();
+
+  if (contenedores && contenedores.length) {
+    contenedores.forEach((elemento) => {
+      elemento.addEventListener('mousemove', (evento) => {
+        Object.assign(contenedorInfo.style, {
+          top: `${evento.pageY - contenedorInfo.clientHeight - 10}px`,
+          left: `${evento.pageX}px`,
+        });
+      });
+    });
+  }
+
+  if (barras && barras.length) {
+    barras.forEach((barra) => {
+      const pais = barra.dataset.pais;
+      const porcentaje = barra.dataset.porcentaje;
+      const numero = barra.dataset.numero;
+      const lado = barra.dataset.lado;
+
+      if (!pais || !porcentaje || !numero || !lado) return;
+
+      barra.addEventListener('mouseover', () => {
+        contenedorInfo.innerHTML = crearMensaje(pais, porcentaje, numero, lado);
+        info.mostrar();
+
+        if (!contenedorGeneral) return;
+        contenedorGeneral.classList.add('interactuando');
+        barra.classList.add('activo');
+      });
+
+      barra.addEventListener('mouseout', () => {
+        info.esconder();
+
+        if (!contenedorGeneral) return;
+        contenedorGeneral.classList.remove('interactuando');
+        barra.classList.remove('activo');
+      });
+    });
+  }
+
+  function crearInteracciones() {
+    if (!contenedorGeneral) return;
+    const polyTanzania = document.getElementById('polyTanzania');
+
+    if (polyTanzania) {
+      polyTanzania.addEventListener('mouseenter', () => {
+        const barras = contenedorGeneral.querySelectorAll<HTMLDivElement>('[data-pais="Tanzania"]');
+        if (!barras.length) return;
+
+        contenedorGeneral.classList.add('interactuando');
+        barras.forEach((barra) => {
+          barra.classList.add('activo');
+        });
+      });
+
+      polyTanzania.addEventListener('mouseleave', () => {
+        const barras = contenedorGeneral.querySelectorAll<HTMLDivElement>('[data-pais="Tanzania"]');
+        if (!barras.length) return;
+
+        contenedorGeneral.classList.remove('interactuando');
+        barras.forEach((barra) => {
+          barra.classList.remove('activo');
+        });
+      });
+    }
+
+    const polyHaiti = document.getElementById('polyHaiti');
+
+    if (polyHaiti) {
+      polyHaiti.addEventListener('mouseenter', () => {
+        const barras = contenedorGeneral.querySelectorAll<HTMLDivElement>('[data-pais="Haiti"]');
+        if (!barras.length) return;
+
+        contenedorGeneral.classList.add('interactuando');
+        barras.forEach((barra) => {
+          barra.classList.add('activo');
+        });
+      });
+
+      polyHaiti.addEventListener('mouseleave', () => {
+        const barras = contenedorGeneral.querySelectorAll<HTMLDivElement>('[data-pais="Haiti"]');
+        if (!barras.length) return;
+
+        contenedorGeneral.classList.remove('interactuando');
+        barras.forEach((barra) => {
+          barra.classList.remove('activo');
+        });
+      });
+    }
+
+    const polyMalawi = document.getElementById('polyMalawi');
+
+    if (polyMalawi) {
+      polyMalawi.addEventListener('mouseenter', () => {
+        const barras = contenedorGeneral.querySelectorAll<HTMLDivElement>('[data-pais="Malawi"]');
+        if (!barras.length) return;
+
+        contenedorGeneral.classList.add('interactuando');
+        barras.forEach((barra) => {
+          barra.classList.add('activo');
+        });
+      });
+
+      polyMalawi.addEventListener('mouseleave', () => {
+        const barras = contenedorGeneral.querySelectorAll<HTMLDivElement>('[data-pais="Malawi"]');
+        if (!barras.length) return;
+
+        contenedorGeneral.classList.remove('interactuando');
+        barras.forEach((barra) => {
+          barra.classList.remove('activo');
+        });
+      });
+    }
+  }
+</script>
+
+<style lang="scss">
+  .contenedorGrafica {
+    &.interactuando {
+      .barra {
+        opacity: 0.5;
+      }
+
+      .barra.activo {
+        opacity: 1;
+      }
+    }
+  }
+
+  .contenedorBarras {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .barra {
+    position: relative;
+    height: 20px;
+    width: 100%;
+    background-color: #f0f0f021;
+    cursor: pointer;
+
+    .valor {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      display: block;
+    }
+
+    .texto {
+      position: absolute;
+      z-index: 3;
+      padding: 0 0.3em 0;
+
+      .porcentajeEnTexto {
+        font-size: 0.7em;
+      }
+    }
+  }
+
+  .col {
+    width: 48%;
+
+    &.col2 {
+      text-align: right;
+
+      .barra {
+        .valor,
+        .texto {
+          right: 0;
+        }
+      }
+    }
+  }
+
+  .tituloGrafica {
+    border: none;
+    font-size: 1.5em;
+  }
+
+  .tituloCentrado {
+    text-align: center;
+    font-size: 2em;
+    border-bottom: 2px solid;
+    padding: 0 0 0.4em 0;
+    display: inline-block;
+    margin: 0.8em 0 0 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+</style>

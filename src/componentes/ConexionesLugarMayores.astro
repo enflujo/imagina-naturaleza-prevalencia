@@ -6,6 +6,8 @@
   <svg width="100%" height="600px" id="conexiones7" class="graficaConexiones">
     <text x="25%" y="20px" class="nombreColumna" text-anchor="middle">Data for female victims</text>
     <text x="75%" y="20px" class="nombreColumna" text-anchor="middle">Data for male victims</text>
+    <g class="conexiones"></g>
+    <g class="semillas"></g>
   </svg>
 </div>
 
@@ -18,6 +20,8 @@
 
   const svg = document.querySelector<SVGAElement>('#conexiones7');
   if (!svg) throw new Error('No se encontró el elemento SVG');
+  const semillas = svg.querySelector<SVGGElement>('.semillas');
+  const conexiones = svg.querySelector<SVGGElement>('.conexiones');
 
   const contenedorInfo = info.elemento();
   const { mujeres, hombres } = lugarViolencia.vida.entre18y24;
@@ -137,14 +141,14 @@
             left: `${evento.pageX}px`,
           });
         });
-        svg?.appendChild(elemento);
+        conexiones?.appendChild(elemento);
       });
 
       grupo.appendChild(semilla);
       grupo.appendChild(nombre);
       grupo.appendChild(valor);
 
-      svg?.append(grupo);
+      semillas?.append(grupo);
     });
   }
   function procesarGrupoEtario(grupo: GrupoLV) {

@@ -6,6 +6,8 @@
   <svg width="100%" height="600px" id="conexiones2" class="graficaConexiones">
     <text x="25%" y="20px" class="nombreColumna" text-anchor="middle">Data for female victims</text>
     <text x="75%" y="20px" class="nombreColumna" text-anchor="middle">Data for male victims</text>
+    <g class="conexiones"></g>
+    <g class="semillas"></g>
   </svg>
 </div>
 
@@ -18,6 +20,8 @@
 
   const svg = document.querySelector<SVGAElement>('#conexiones2');
   if (!svg) throw new Error('No se encontró el elemento SVG');
+  const semillas = svg.querySelector<SVGGElement>('.semillas');
+  const conexiones = svg.querySelector<SVGGElement>('.conexiones');
 
   const contenedorInfo = info.elemento();
   const { mujeres, hombres } = tipoPerpetrador.vida.entre13y17;
@@ -139,14 +143,14 @@
             left: `${evento.pageX}px`,
           });
         });
-        svg?.appendChild(elemento);
+        conexiones?.appendChild(elemento);
       });
 
       grupo.appendChild(semilla);
       grupo.appendChild(nombre);
       grupo.appendChild(valor);
 
-      svg?.append(grupo);
+      semillas?.append(grupo);
     });
   }
   function procesarGrupoEtario(grupo: GrupoTP) {
@@ -322,36 +326,3 @@
     }
   }
 </script>
-
-<style lang="scss" is:global>
-  .graficaConexiones {
-    z-index: 1;
-    margin-top: 4em;
-    text {
-      fill: white;
-      z-index: 9;
-    }
-    .conexion {
-      transition: all 0.15s ease-in-out;
-    }
-
-    &.interactuando {
-      .conexion {
-        opacity: 0.2;
-
-        &.activo {
-          opacity: 1;
-        }
-      }
-    }
-
-    .origen {
-      font-size: 0.75em;
-    }
-
-    .nombreColumna {
-      font-size: 19px;
-      font-weight: bold;
-    }
-  }
-</style>

@@ -2,23 +2,11 @@ name: 🦍 Despliegue
 
 on:
   push:
-    branches: ['main']
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
+    branches: [main]
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    name: 🐘 Desplegar
     runs-on: ubuntu-latest
 
     steps:
@@ -27,24 +15,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 🐜 Activar Corepack
+        run: corepack enable
+
       - name: 🐝 Usar Node
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+          cache: 'yarn'
 
       - name: 🦒 Instalar dependencias y hacer build
         run: |
-          yarn install --frozen-lockfile
+          yarn install --immutable
           yarn build
-
-      - name: 🦋 Configurar servidor
-        uses: actions/configure-pages@v5
-
-      - name: 🦝 Subir archivos
-        uses: actions/upload-pages-artifact@v3
+      - name: 🦅 Enviar por SFTP
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          path: './publico'
-
-      - name: 🦍 Desplegando página en Github
-        id: deployment
-        uses: actions/deploy-pages@v4
+          host: ${{ secrets.DOMINIO_IMAGINA }}
+          username: ${{ secrets.USUARIO_IMAGINA }}
+          password: ${{ secrets.CLAVE_IMAGINA }}
+          localDir: 'aplicaciones/www/publico'
+          remoteDir: '/srv/www/wordpress/especiales/prevalence-csea/'
+          removeExtraFilesOnServer: true

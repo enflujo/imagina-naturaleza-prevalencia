@@ -4,8 +4,8 @@ export default defineConfig({
   publicDir: './estaticos',
   compressHTML: true,
   outDir: './publico',
-  site: 'https://enflujo.com',
-  base: '/imagina-naturaleza-prevalencia/',
+  site: 'https://imagina.uniandes.edu.co/',
+  base: '/prevalence-csea/',
   build: {
     assets: 'estaticos',
   },

@@ -3,7 +3,156 @@ import type { DatosEdadPerpetrador } from '@/tipos';
  * 
 
 
+
  */
+
+export const educacion = {
+  nombres: {
+    n: 'Número de personas encuestadas',
+    primariaMenos: 'Less than primary',
+    primaria: 'Primary',
+    secundaria: 'Secondary',
+    masSecundaria: 'More than Secondary',
+  },
+  entre18y24: {
+    mujeres: {
+      totales: { n: 3797, primariaMenos: 16.02, primaria: 45.32, secundaria: 33.07, masSecundaria: 5.58 },
+      datos: [
+        { pais: 'Cambodia', n: 22, primariaMenos: 29.7, primaria: 35.8, secundaria: 26.8, masSecundaria: 7.8 },
+        { pais: 'Colombia', n: 170, primariaMenos: 0.0, primaria: 10.3, secundaria: 74.1, masSecundaria: 15.6 },
+        { pais: "Cote d'Ivoire", n: 152, primariaMenos: 51.6, primaria: 46.4, secundaria: 2.0, masSecundaria: 0.0 },
+        { pais: 'El Salvador', n: 80, primariaMenos: 0.7, primaria: 64.3, secundaria: 30.1, masSecundaria: 4.9 },
+        { pais: 'Honduras', n: 418, primariaMenos: 8.0, primaria: 52.7, secundaria: 35.7, masSecundaria: 3.6 },
+        { pais: 'Kenya', n: 123, primariaMenos: 4.7, primaria: 41.0, secundaria: 49.8, masSecundaria: 4.6 },
+        { pais: 'Lesotho', n: 695, primariaMenos: 0.2, primaria: 23.7, secundaria: 68.2, masSecundaria: 7.8 },
+        { pais: 'Malawi', n: 213, primariaMenos: 0.0, primaria: 80.1, secundaria: 18.3, masSecundaria: 1.6 },
+        { pais: 'Moldova', n: 74, primariaMenos: 1.7, primaria: 22.0, secundaria: 47.5, masSecundaria: 28.9 },
+        { pais: 'Namibia', n: 241, primariaMenos: 18.3, primaria: 54.6, secundaria: 27.2, masSecundaria: 0.0 },
+        { pais: 'Nigeria', n: 320, primariaMenos: 4.1, primaria: 14.8, secundaria: 74.2, masSecundaria: 6.8 },
+        { pais: 'Eswatini', n: 481, primariaMenos: 38.1, primaria: 61.5, secundaria: 0.0, masSecundaria: 0.4 },
+        { pais: 'Tanzania', n: 315, primariaMenos: 0.6, primaria: 65.4, secundaria: 32.2, masSecundaria: 1.8 },
+        { pais: 'Zambia', n: 190, primariaMenos: 49.8, primaria: 46.8, secundaria: 3.4, masSecundaria: 0.0 },
+        { pais: 'Zimbabwe', n: 303, primariaMenos: 32.8, primaria: 60.6, secundaria: 6.6, masSecundaria: 0.0 },
+      ],
+    },
+    hombres: {
+      totales: { n: 3329, primariaMenos: 16.44, primaria: 45.22, secundaria: 33.2, masSecundaria: 5.14 },
+      datos: [
+        { pais: 'Cambodia', n: 177, primariaMenos: 0.0, primaria: 9.2, secundaria: 76.8, masSecundaria: 14.0 },
+        { pais: "Cote d'Ivoire", n: 139, primariaMenos: 58.3, primaria: 40.6, secundaria: 1.1, masSecundaria: 0.0 },
+        { pais: 'El Salvador', n: 71, primariaMenos: 0.8, primaria: 64.8, secundaria: 29.0, masSecundaria: 5.3 },
+        { pais: 'Honduras', n: 424, primariaMenos: 7.3, primaria: 52.3, secundaria: 36.8, masSecundaria: 3.6 },
+        { pais: 'Kenya', n: 105, primariaMenos: 6.7, primaria: 41.8, secundaria: 47.1, masSecundaria: 4.4 },
+        { pais: 'Lesotho', n: 606, primariaMenos: 0.1, primaria: 25.3, secundaria: 66.3, masSecundaria: 8.4 },
+        { pais: 'Malawi', n: 198, primariaMenos: 0.0, primaria: 80.1, secundaria: 17.2, masSecundaria: 2.7 },
+        { pais: 'Moldova', n: 79, primariaMenos: 1.5, primaria: 20.7, secundaria: 51.8, masSecundaria: 26.0 },
+        { pais: 'Namibia', n: 188, primariaMenos: 18.9, primaria: 57.0, secundaria: 24.0, masSecundaria: 0.0 },
+        { pais: 'Nigeria', n: 329, primariaMenos: 4.4, primaria: 16.6, secundaria: 73.5, masSecundaria: 5.5 },
+        { pais: 'Eswatini', n: 399, primariaMenos: 41.1, primaria: 58.6, secundaria: 0.0, masSecundaria: 0.3 },
+        { pais: 'Tanzania', n: 269, primariaMenos: 0.7, primaria: 67.0, secundaria: 30.6, masSecundaria: 1.7 },
+        { pais: 'Zambia', n: 185, primariaMenos: 52.0, primaria: 45.9, secundaria: 2.1, masSecundaria: 0.0 },
+        { pais: 'Zimbabwe', n: 160, primariaMenos: 38.3, primaria: 53.2, secundaria: 8.5, masSecundaria: 0.0 },
+      ],
+    },
+  },
+};
+
+export const polyvictimizacion = {
+  nombres: {
+    n: 'Número de personas encuestadas',
+    si: 'Yes',
+  },
+  entre13y17: {
+    mujeres: {
+      totales: { n: 17635, si: 32.9 },
+      datos: [
+        { pais: 'Cambodia', n: 522, si: 24.5 },
+        { pais: 'Colombia', n: 665, si: 30.4 },
+        { pais: "Cote d'Ivoire", n: 497, si: 39.5 },
+        { pais: 'El Salvador', n: 438, si: 20.9 },
+        { pais: 'Haiti', n: 636, si: 52.2 },
+        { pais: 'Honduras', n: 1101, si: 27.6 },
+        { pais: 'Kenya', n: 653, si: 30.0 },
+        { pais: 'Lesotho', n: 3411, si: 19.5 },
+        { pais: 'Malawi', n: 455, si: 47.5 },
+        { pais: 'Moldova', n: 530, si: 15.8 },
+        { pais: 'Mozambique', n: 879, si: 17.8 },
+        { pais: 'Namibia', n: 1777, si: 24.2 },
+        { pais: 'Nigeria', n: 797, si: 36.7 },
+        { pais: 'Eswatini', n: 570, si: 29.7 },
+        { pais: 'Tanzania', n: 919, si: 84.4 },
+        { pais: 'Zambia', n: 384, si: 41.6 },
+        { pais: 'Zimbabwe', n: 3401, si: 16.4 },
+      ],
+    },
+    hombres: {
+      totales: { n: 10644, si: 19.2 },
+      datos: [
+        { pais: 'Cambodia', n: 642, si: 0.0 },
+        { pais: 'Colombia', n: 625, si: 27.7 },
+        { pais: "Cote d'Ivoire", n: 591, si: 28.9 },
+        { pais: 'El Salvador', n: 716, si: 11.0 },
+        { pais: 'Haiti', n: 758, si: 20.9 },
+        { pais: 'Honduras', n: 1394, si: 15.4 },
+        { pais: 'Kenya', n: 380, si: 16.6 },
+        { pais: 'Lesotho', n: 749, si: 11.4 },
+        { pais: 'Malawi', n: 615, si: 41.4 },
+        { pais: 'Moldova', n: 566, si: 10.7 },
+        { pais: 'Mozambique', n: 455, si: 9.8 },
+        { pais: 'Namibia', n: 415, si: 18.5 },
+        { pais: 'Nigeria', n: 1050, si: 37.8 },
+        { pais: 'Tanazania', n: 895, si: 14.5 },
+        { pais: 'Zambia', n: 401, si: 31.5 },
+        { pais: 'Zimbabwe', n: 392, si: 11.5 },
+      ],
+    },
+  },
+  entre18y24: {
+    mujeres: {
+      totales: { n: 21735, si: 35.1 },
+      datos: [
+        { pais: 'Cambodia', n: 599, si: 26.1 },
+        { pais: 'Colombia', n: 741, si: 33.1 },
+        { pais: "Cote d'Ivoire", n: 703, si: 41.7 },
+        { pais: 'El Salvador', n: 618, si: 27.4 },
+        { pais: 'Haiti', n: 821, si: 56.9 },
+        { pais: 'Honduras', n: 1436, si: 30.7 },
+        { pais: 'Kenya', n: 691, si: 27.5 },
+        { pais: 'Lesotho', n: 3690, si: 32.0 },
+        { pais: 'Malawi', n: 574, si: 40.2 },
+        { pais: 'Moldova', n: 494, si: 24.3 },
+        { pais: 'Mozambique', n: 1248, si: 15.5 },
+        { pais: 'Namibia', n: 2434, si: 25.8 },
+        { pais: 'Nigeria', n: 969, si: 39.6 },
+        { pais: 'Eswatini', n: 650, si: 37.4 },
+        { pais: 'Tanzania', n: 1049, si: 77.5 },
+        { pais: 'Zambia', n: 507, si: 38.7 },
+        { pais: 'Zimbabwe', n: 4511, si: 22.2 },
+      ],
+    },
+    hombres: {
+      totales: { n: 10780, si: 20.7 },
+      datos: [
+        { pais: 'Cambodia', n: 613, si: 0.0 },
+        { pais: 'Colombia', n: 674, si: 18.8 },
+        { pais: "Cote d'Ivoire", n: 617, si: 33.0 },
+        { pais: 'El Salvador', n: 664, si: 8.8 },
+        { pais: 'Haiti', n: 701, si: 22.9 },
+        { pais: 'Honduras', n: 1265, si: 20.4 },
+        { pais: 'Kenya', n: 408, si: 15.8 },
+        { pais: 'Lesotho', n: 718, si: 23.7 },
+        { pais: 'Malawi', n: 518, si: 45.4 },
+        { pais: 'Moldova', n: 412, si: 17.6 },
+        { pais: 'Mozambique', n: 424, si: 10.7 },
+        { pais: 'Namibia', n: 565, si: 21.7 },
+        { pais: 'Nigeria', n: 1387, si: 35.0 },
+        { pais: 'Tanazania', n: 876, si: 11.4 },
+        { pais: 'Zambia', n: 527, si: 32.6 },
+        { pais: 'Zimbabwe', n: 411, si: 13.1 },
+      ],
+    },
+  },
+};
 
 const tasaPrevalencia = {
   nombres: {
@@ -12,7 +161,7 @@ const tasaPrevalencia = {
   },
   entre13y17: {
     mujeres: {
-      totales: { vida: 0, ultimoAnio: 0 },
+      totales: { vida: 50, ultimoAnio: 50 },
       datos: [
         { pais: 'Cambodia', vida: 0.5, ultimoAnio: 3.6 },
         { pais: 'Colombia', vida: 15.7, ultimoAnio: 8.1 },
@@ -34,7 +183,7 @@ const tasaPrevalencia = {
       ],
     },
     hombres: {
-      totales: { vida: 0, ultimoAnio: 0 },
+      totales: { vida: 50, ultimoAnio: 50 },
       datos: [
         { pais: 'Cambodia', vida: 0.0, ultimoAnio: 0.3 },
         { pais: 'Colombia', vida: 9.3, ultimoAnio: 4.8 },
@@ -58,7 +207,7 @@ const tasaPrevalencia = {
   },
   entre18y24: {
     mujeres: {
-      totales: { vida: 0, ultimoAnio: 0 },
+      totales: { vida: 50, ultimoAnio: 50 },
       datos: [
         { pais: 'Cambodia', vida: 0.4, ultimoAnio: 3.6 },
         { pais: 'Colombia', vida: 18.0, ultimoAnio: 10.8 },
@@ -80,7 +229,7 @@ const tasaPrevalencia = {
       ],
     },
     hombres: {
-      totales: { vida: 0, ultimoAnio: 0 },
+      totales: { vida: 50, ultimoAnio: 50 },
       datos: [
         { pais: 'Cambodia', vida: 0.0, ultimoAnio: 1.0 },
         { pais: 'Colombia', vida: 8.6, ultimoAnio: 7.5 },
@@ -104,37 +253,46 @@ const tasaPrevalencia = {
   },
 };
 
-const sumaA = tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.vida, 0);
-tasaPrevalencia.entre13y17.mujeres.totales.vida = sumaA / tasaPrevalencia.entre13y17.mujeres.datos.length;
-tasaPrevalencia.entre13y17.mujeres.totales.ultimoAnio = tasaPrevalencia.entre13y17.mujeres.datos.reduce(
-  (suma, dato) => suma + dato.ultimoAnio,
-  0
-);
-const meanVida =
-  tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.vida, 0) /
-  tasaPrevalencia.entre13y17.mujeres.datos.length;
-const meanUltimoAnio =
-  tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.ultimoAnio, 0) /
-  tasaPrevalencia.entre13y17.mujeres.datos.length;
-const variance =
-  tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + Math.pow(dato.vida - meanVida, 2), 0) /
-  tasaPrevalencia.entre13y17.mujeres.datos.length;
+for (const grupo in tasaPrevalencia) {
+  if (grupo !== 'nombres') {
+    const llaveGrupo = grupo as 'entre13y17' | 'entre18y24';
+    for (const grupoEdad in tasaPrevalencia[llaveGrupo]) {
+      const grupoSexo = tasaPrevalencia[llaveGrupo][grupoEdad as 'mujeres' | 'hombres'];
+      const totales = grupoSexo.totales;
+      const datos = grupoSexo.datos;
+      const sumaVida = datos.reduce((suma, dato) => suma + dato.vida, 0);
+      totales.vida = sumaVida / datos.length;
+      const sumaUltimoAnio = datos.reduce((suma, dato) => suma + dato.ultimoAnio, 0);
+      totales.ultimoAnio = sumaUltimoAnio / datos.length;
+    }
+  }
+}
 
-const standardDeviation = Math.sqrt(variance);
+// const meanVida =
+//   tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.vida, 0) /
+//   tasaPrevalencia.entre13y17.mujeres.datos.length;
+// const meanUltimoAnio =
+//   tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + dato.ultimoAnio, 0) /
+//   tasaPrevalencia.entre13y17.mujeres.datos.length;
+// const variance =
+//   tasaPrevalencia.entre13y17.mujeres.datos.reduce((suma, dato) => suma + Math.pow(dato.vida - meanVida, 2), 0) /
+//   tasaPrevalencia.entre13y17.mujeres.datos.length;
 
-console.log('Standard Deviation:', standardDeviation);
-console.log('Mean Vida:', meanVida);
-console.log('Mean Último Año:', meanUltimoAnio);
-const vidaMenoresMujeresOrdenado = tasaPrevalencia.entre13y17.mujeres.datos
-  .map((dato) => dato.vida)
-  .sort((a, b) => a - b);
-const centro = Math.floor(vidaMenoresMujeresOrdenado.length / 2);
-const median =
-  vidaMenoresMujeresOrdenado.length % 2 !== 0
-    ? vidaMenoresMujeresOrdenado[centro]
-    : (vidaMenoresMujeresOrdenado[centro - 1] + vidaMenoresMujeresOrdenado[centro]) / 2;
+// const standardDeviation = Math.sqrt(variance);
 
-console.log(tasaPrevalencia.entre13y17.mujeres.totales, median);
+// console.log('Standard Deviation:', standardDeviation);
+// console.log('Mean Vida:', meanVida);
+// console.log('Mean Último Año:', meanUltimoAnio);
+// const vidaMenoresMujeresOrdenado = tasaPrevalencia.entre13y17.mujeres.datos
+//   .map((dato) => dato.vida)
+//   .sort((a, b) => a - b);
+// const centro = Math.floor(vidaMenoresMujeresOrdenado.length / 2);
+// const median =
+//   vidaMenoresMujeresOrdenado.length % 2 !== 0
+//     ? vidaMenoresMujeresOrdenado[centro]
+//     : (vidaMenoresMujeresOrdenado[centro - 1] + vidaMenoresMujeresOrdenado[centro]) / 2;
+
+// console.log(tasaPrevalencia, median);
 
 export { tasaPrevalencia };
 
